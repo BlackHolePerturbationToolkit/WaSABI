@@ -1,9 +1,8 @@
 (* ::Package:: *)
 
 BeginPackage["WASABI`",
-  {"WASABI`Inspiral`"(*,
-   "WASABI`Amplitude`",
-   "WASABI`Waveform`",
+  {"WASABI`Inspiral`",
+   "WASABI`Waveform`"(*,
    "WASABI`Utilities`"*)}]
    
 EndPackage[]

@@ -24,25 +24,28 @@ GetInspiralEquations::usage = "Fetches the coupled equations describing the insp
 IntInspiral::usage = "Determines the inspiral by integrating the inspiral equations.";
 
 (*Parameters*)
+t::usage="Observer time"
 x::usage="Inverse separation variable ((m1+m2)\[CapitalOmega]\!\(\*SuperscriptBox[\()\), \(2/3\)]\)";
 \[Nu]::usage="Symmetric mass ratio";
 xC::usage="x/\!\(\*SubscriptBox[\(x\), \(Isco\)]\), where \!\(\*SubscriptBox[\(x\), \(Isco\)]\) is the geodesic value of x at the ISCO";
 m10::usage="Initial primary's mass";
 m2::usage="Secondary's mass";
 m1::usage="Primary's mass";
-m0::usage="Initial total mass";
-m::usage="total mass";
+M0::usage="Initial total mass";
+M::usage="Total mass";
 \[Chi]1::usage="Dimensionless spin 1, (normalised by \!\(\*SubscriptBox[\(m\), \(1\)]\))";
 \[Chi]0::usage="Initial primary's dimensionless spin (normalised by \!\(\*SubscriptBox[\(m\), \(1\)]\))";
 \[Chi]2::usage="Dimensionless spin 2, (normalised by \!\(\*SubscriptBox[\(m\), \(2\)]\))";
-\[Chi]t1::usage="\!\(\*FractionBox[\(m1\), \(m\)]\)*\[Chi]1";
-\[Chi]t2::usage="\!\(\*FractionBox[\(m2\), \(m\)]\)*\[Chi]2";
+\[Chi]t1::usage="\!\(\*FractionBox[\(m1\), \(M\)]\)*\[Chi]1";
+\[Chi]t2::usage="\!\(\*FractionBox[\(m2\), \(M\)]\)*\[Chi]2";
 \[Epsilon]0::usage="Initial small mass ratio m2/m10";
 \[Epsilon]::usage="Small mass ratio m2/m1";
 \[Sigma]::usage="...";
 s::usage="...";
 \[Omega]::usage="Waveform frequency \!\(\*SubscriptBox[\(\[Omega]\), \(22\)]\)/2";
 \[Phi]::usage="Waveform phase";
+\[ScriptL]::usage="Spin weighted spherical harmonic mode number"
+m::usage="Spin weighted spherical harmonic mode number"
 
 
 (* ::Subsection:: *)
@@ -84,7 +87,7 @@ Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]]
 
 
 (* ::Text:: *)
-(*Takes inspiral equations and integrates. Add option to specify different stop conditions, with default to be xC=1+\[Delta].*)
+(*Takes inspiral equations and integrates. Nothing fancy.*)
 (**)
 (*To do: *)
 (*Add description of initial conditions (or make a function).*)
@@ -102,7 +105,7 @@ integrations=NDSolveValue[Join[equations, initialconds, {WhenEvent[stopcond,"Sto
 
 
 paramsstr=Table[ToString[params[[n]]],{n,1,Length[params]}];
-AssociationThread[paramsstr->integrations]
+Append[AssociationThread[paramsstr->integrations],"Parameters"->params]
 
 ];
 
