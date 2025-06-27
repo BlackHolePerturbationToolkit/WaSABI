@@ -19,8 +19,11 @@ BeginPackage["WASABI`Inspiral`"];
 (*Usage messages*)
 
 
+(*Fucntions*)
 GetInspiralEquations::usage = "Fetches the coupled equations describing the inspiral evolution.";
 IntInspiral::usage = "Determines the inspiral by integrating the inspiral equations.";
+
+(*Parameters*)
 x::usage="Inverse separation variable ((m1+m2)\[CapitalOmega]\!\(\*SuperscriptBox[\()\), \(2/3\)]\)";
 \[Nu]::usage="Symmetric mass ratio";
 xC::usage="x/\!\(\*SubscriptBox[\(x\), \(Isco\)]\), where \!\(\*SubscriptBox[\(x\), \(Isco\)]\) is the geodesic value of x at the ISCO";
@@ -38,6 +41,8 @@ m::usage="total mass";
 \[Epsilon]::usage="Small mass ratio m2/m1";
 \[Sigma]::usage="...";
 s::usage="...";
+\[Omega]::usage="Waveform frequency \!\(\*SubscriptBox[\(\[Omega]\), \(22\)]\)/2";
+\[Phi]::usage="Waveform phase";
 
 
 (* ::Subsection:: *)
@@ -80,16 +85,24 @@ Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]]
 
 (* ::Text:: *)
 (*Takes inspiral equations and integrates. Add option to specify different stop conditions, with default to be xC=1+\[Delta].*)
+(**)
+(*To do: *)
+(*Add description of initial conditions (or make a function).*)
+(*Add options for precision and accuracy goal.*)
+(*Add default stopping condition.*)
 
 
-IntInspiral[model_, initialconds_, stopcond_]:=Block[{tparam, params, equations, integrations},
+IntInspiral[model_, initialconds_, stopcond_]:=Block[{tparam, params, equations, integrations, paramsstr},
+(*Add options for precision and accuracy goal*)
+(*Add default stopping condition*)
 
 {tparam, params, equations}=GetInspiralEquations[model];
 
-integrations=NDSolveValue[Join[equations, initialconds, {WhenEvent[stopcond,"StopIntegration"]}],params,{tparam,0,\[Infinity]}, PrecisionGoal->10,AccuracyGoal->10]
+integrations=NDSolveValue[Join[equations, initialconds, {WhenEvent[stopcond,"StopIntegration"]}],params,{tparam,0,\[Infinity]}, PrecisionGoal->10,AccuracyGoal->10];
 
-(*Then return association list of solutions, first test*)
 
+paramsstr=Table[ToString[params[[n]]],{n,1,Length[params]}];
+AssociationThread[paramsstr->integrations]
 
 ];
 
