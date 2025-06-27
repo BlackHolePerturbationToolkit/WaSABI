@@ -5,4 +5,5 @@ BeginPackage["WASABI`",
    "WASABI`Amplitude`",
    "WASABI`Waveform`",
    "WASABI`Utilities`"*)}]
+   
 EndPackage[]
