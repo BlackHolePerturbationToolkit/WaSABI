@@ -20,6 +20,7 @@ BeginPackage["WASABI`Waveform`"];
 
 
 (*Fucntions*)
+ModeList::usage = "Returns the list of available amplitude modes";
 GetAmplitudes::usage = "Fetches the waveform amplitudes.";
 WaveformMode::usage = "Returns a given spin weighted spherical harmonic mode amplitude of the gravitaional wave strain";
 
@@ -29,6 +30,8 @@ WaveformMode::usage = "Returns a given spin weighted spherical harmonic mode amp
 
 
 GetAmplitudes::nomodel = "Unknown model";
+GetAmplitudes::nomode = "Mode not available";
+GetAmplitudes::notlist = "Input should be a list";
 
 
 (* ::Subsection:: *)
@@ -46,21 +49,31 @@ Begin["`Private`"];
 (*Pass in a string label of model,  returns association of all available mode amplitudes for the model.*)
 (**)
 (*To do:*)
-(*Query available modes*)
-(*Specify which modes you want*)
-(*Add relations for negative m modes etc.*)
+(*Add relations for negative m modes.*)
 
 
-GetAmplitudes[model_, evolveprimary_:True]:=Block[{filelocation},
+GetAmplitudes[model_, modes_:{}]:=Block[{filelocation,amps, selectedamps},
 
-filelocation=If[evolveprimary==True,
-Which[model=="DevTest","AmplitudeModels/devtestAmp.m", model=="1PAT1","AmplitudeModelsModels/1PAT1eAmp.m",model=="1PAT1R","AmplitudeModels/1PAT1ReAmp.m",model=="Hybrid","AmplitudeModels/HybrideAmp.m",True, Message[GetAmplitudes::nomodel]],
-Which[model=="1PAT1","AmplitudeModels/1PAT1Amp.m",model=="1PAT1R","AmplitudeModels/1PAT1RAmp.m",model=="Hybrid","AmplitudeModels/HybridAmp.m",True, Message[GetAmplitudes::nomodel]]
-];
+filelocation=
+Which[model=="DevTest","AmplitudeModels/devtestAmp.m", model=="1PAT1","AmplitudeModelsModels/1PAT1eAmp.m",model=="1PAT1R","AmplitudeModels/1PAT1ReAmp.m",model=="Hybrid","AmplitudeModels/HybrideAmp.m",True, Message[GetAmplitudes::nomodel]];
+(*Return error if modes is not a list*)
+(*Return error if requested mode is not available*)
+
+(*Amplitude files saved as association list.*)
+amps=Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]];
+
+selectedamps=If[modes=={}, amps, KeyTake[amps, modes]
+]]
+
+
+ModeList[model_]:=Block[{filelocation, amps},
+
+filelocation=
+Which[model=="DevTest","AmplitudeModels/devtestAmp.m", model=="1PAT1","AmplitudeModelsModels/1PAT1eAmp.m",model=="1PAT1R","AmplitudeModels/1PAT1ReAmp.m",model=="Hybrid","AmplitudeModels/HybrideAmp.m",True, Message[GetAmplitudes::nomodel]];
 
 (*Assume amplitude files saved as association list with iconised expressions for all the amplitudes available.*)
-Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]]
-
+amps=Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]];
+Keys[amps]
 ]
 
 
@@ -69,17 +82,19 @@ Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]]
 
 
 (* ::Text:: *)
-(*Trivial function in which you pass in the given inspiral rules and amplitude, and it returns the waveform mode. *)
+(*Trivial function in which you pass in the given inspiral rules and time values, and it returns the timeseries of the waveform mode. (Pass in the inspiral to avoid repeated integration).*)
 
 
-WaveformMode[mode_, amp_, inspiral_]:= Block[{\[ScriptL]=mode[[1]],m=mode[[2]]},
-Do[
-(*Set variables in amplitude to their time dependent quantities*)
-inspiral["Parameters"][[i]][t_]:=inspiral[ToString[inspiral["Parameters"][[i]]]][t],{i,1,Length[inspiral["Parameters"][[i]]]}];
+WaveformMode[Ampmodel_, mode_, inspiral_,tvals_]:= Block[{amp, modevals, l, m},
+amp=GetAmplitudes[Ampmodel, {mode}][mode];
+modevals=ToExpression@StringReplace[mode, {"(" -> "{", ")" -> "}" }];
+l=modevals[[1]];
+m=modevals[[2]];
 
-(amp*Exp[-I m \[Phi][t]])
-(*Need to think about how best to do this in precessing case? Or do not release precessing case until frame figured out?*)
+EvaluateOnInspiral[amp*Exp[-I m \[Phi]], inspiral, tvals]
 ]
+(*Need to think about how best to do this in precessing case? Or do not release precessing case until frame figured out?*)
+
 
 
 (* ::Section:: *)

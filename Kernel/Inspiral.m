@@ -22,6 +22,7 @@ BeginPackage["WASABI`Inspiral`"];
 (*Fucntions*)
 GetInspiralEquations::usage = "Fetches the coupled equations describing the inspiral evolution.";
 IntInspiral::usage = "Determines the inspiral by integrating the inspiral equations.";
+EvaluateOnInspiral::usage = "Evaluates symbolic functions along a given timeseries of a given inspiral";
 
 (*Parameters*)
 t::usage="Observer time"
@@ -68,14 +69,16 @@ Begin["`Private`"];
 
 (* ::Text:: *)
 (*Pass in a string label of model, fetch the inspiral equations which should return: The list of all independent variables joined with the list of dependent variables, the relation of the dependent variables to the independent variables joined with the equations describing the evolution of the independent variables.*)
+(**)
+(*Can either add evolve primary as an argument here, or name the models differently?*)
 
 
-GetInspiralEquations[model_,evolveprimary_:True]:=Block[{filelocation},
+GetInspiralEquations[model_(*,evolveprimary_:True*)]:=Block[{filelocation},
 
-filelocation=If[evolveprimary==True,
-Which[model=="DevTest","InspiralModels/devtest.m", model=="1PAT1","InspiralModels/1PAT1e.m",model=="1PAT1R","InspiralModels/1PAT1Re.m",model=="Hybrid","InspiralModels/Hybride.m",True, Message[GetInspiralEquations::nomodel]],
+filelocation=(*If[evolveprimary==True,*)
+Which[model=="DevTest","InspiralModels/devtest.m", model=="1PAT1","InspiralModels/1PAT1e.m",model=="1PAT1R","InspiralModels/1PAT1Re.m",model=="Hybrid","InspiralModels/Hybride.m",True, Message[GetInspiralEquations::nomodel]](*,
 Which[model=="1PAT1","InspiralModels/1PAT1.m",model=="1PAT1R","InspiralModels/1PAT1R.m",model=="Hybrid","InspiralModels/Hybrid.m",True, Message[GetInspiralEquations::nomodel]]
-];
+]*);
 
 Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]]
 
@@ -109,6 +112,20 @@ Append[AssociationThread[paramsstr->integrations],"Parameters"->params]
 
 ];
 
+
+
+(* ::Text:: *)
+(*To do: Warning message when Max[tvals]>tmax[inspiral]*)
+
+
+EvaluateOnInspiral[quantity_, inspiral_, tvals_]:= Block[{amp, params, totimevalsrule, quantoninsp},
+
+params=inspiral["Parameters"];
+totimevalsrule=Table[params[[i]]->Evaluate[inspiral[ToString[params[[i]]]][tvals]],{i,1,Length[params]}];
+
+quantoninsp=quantity//.totimevalsrule;
+TimeSeries[quantoninsp,{tvals}]
+]
 
 
 (* ::Section:: *)
