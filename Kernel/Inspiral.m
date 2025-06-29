@@ -22,9 +22,9 @@ BeginPackage["WASABI`Inspiral`"];
 (*Fucntions*)
 GetInspiralEquations::usage = "Fetches the coupled equations describing the inspiral evolution.";
 IntInspiral::usage = "Determines the inspiral by integrating the inspiral equations.";
-EvaluateOnInspiral::usage = "Evaluates symbolic functions along a given timeseries of a given inspiral";
+InspiralEvaluate::usage = "Evaluates symbolic functions along a given timeseries of a given inspiral";
 
-(*Parameters*)
+(*Parameters - tidy all of this.*)
 t::usage="Observer time"
 x::usage="Inverse separation variable ((m1+m2)\[CapitalOmega]\!\(\*SuperscriptBox[\()\), \(2/3\)]\)";
 \[Nu]::usage="Symmetric mass ratio";
@@ -45,7 +45,7 @@ M::usage="Total mass";
 s::usage="...";
 \[Omega]::usage="Waveform frequency \!\(\*SubscriptBox[\(\[Omega]\), \(22\)]\)/2";
 \[Phi]::usage="Waveform phase";
-\[ScriptL]::usage="Spin weighted spherical harmonic mode number"
+l::usage="Spin weighted spherical harmonic mode number"
 m::usage="Spin weighted spherical harmonic mode number"
 
 
@@ -54,6 +54,7 @@ m::usage="Spin weighted spherical harmonic mode number"
 
 
 GetInspiralEquations::nomodel = "Unknown model";
+InspiralEvaluate::tovershoot = "Time series overshoots the inspiral time.";
 
 
 (* ::Subsection:: *)
@@ -73,12 +74,9 @@ Begin["`Private`"];
 (*Can either add evolve primary as an argument here, or name the models differently?*)
 
 
-GetInspiralEquations[model_(*,evolveprimary_:True*)]:=Block[{filelocation},
+GetInspiralEquations[model_]:=Block[{filelocation},
 
-filelocation=(*If[evolveprimary==True,*)
-Which[model=="DevTest","InspiralModels/devtest.m", model=="1PAT1","InspiralModels/1PAT1e.m",model=="1PAT1R","InspiralModels/1PAT1Re.m",model=="Hybrid","InspiralModels/Hybride.m",True, Message[GetInspiralEquations::nomodel]](*,
-Which[model=="1PAT1","InspiralModels/1PAT1.m",model=="1PAT1R","InspiralModels/1PAT1R.m",model=="Hybrid","InspiralModels/Hybrid.m",True, Message[GetInspiralEquations::nomodel]]
-]*);
+filelocation=Which[model=="DevTest","InspiralModels/devtest.m", model=="1PAT1","InspiralModels/1PAT1e.m",model=="1PAT1R","InspiralModels/1PAT1Re.m",model=="Hybrid","InspiralModels/Hybride.m",True, Message[GetInspiralEquations::nomodel];Return[]];
 
 Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]]
 
@@ -95,7 +93,7 @@ Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]]
 (*To do: *)
 (*Add description of initial conditions (or make a function).*)
 (*Add options for precision and accuracy goal.*)
-(*Add default stopping condition.*)
+(*Add default stopping condition? May be model dependent.*)
 
 
 IntInspiral[model_, initialconds_, stopcond_]:=Block[{tparam, params, equations, integrations, paramsstr},
@@ -114,14 +112,13 @@ Append[AssociationThread[paramsstr->integrations],"Parameters"->params]
 
 
 
-(* ::Text:: *)
-(*To do: Warning message when Max[tvals]>tmax[inspiral]*)
-
-
-EvaluateOnInspiral[quantity_, inspiral_, tvals_]:= Block[{amp, params, totimevalsrule, quantoninsp},
+InspiralEvaluate[quantity_, inspiral_, tvals_]:= Block[{amp, params, totimevalsrule, quantoninsp, tmax},
 
 params=inspiral["Parameters"];
-totimevalsrule=Table[params[[i]]->Evaluate[inspiral[ToString[params[[i]]]][tvals]],{i,1,Length[params]}];
+tmax=Max[inspiral[ToString[params[[1]]]]["Domain"]];
+
+totimevalsrule=If[tmax<Max[tvals], Message[InspiralEvaluate::tovershoot];Return[],
+Table[params[[i]]->Evaluate[inspiral[ToString[params[[i]]]][tvals]],{i,1,Length[params]}]];
 
 quantoninsp=quantity//.totimevalsrule;
 TimeSeries[quantoninsp,{tvals}]
