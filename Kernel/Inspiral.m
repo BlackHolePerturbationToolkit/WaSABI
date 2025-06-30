@@ -91,9 +91,9 @@ Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]]
 (*Takes inspiral equations and integrates. Nothing fancy.*)
 (**)
 (*To do: *)
-(*Add description of initial conditions (or make a function).*)
+(*Add description of initial conditions (store format required for each model in respective inspiral .m files which can be fetched with a function?).*)
 (*Add options for precision and accuracy goal.*)
-(*Add default stopping condition? May be model dependent.*)
+(*Add default stopping condition? Likely model dependent.*)
 
 
 IntInspiral[model_, initialconds_, stopcond_]:=Block[{tparam, params, equations, integrations, paramsstr},
