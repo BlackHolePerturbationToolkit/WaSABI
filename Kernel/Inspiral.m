@@ -20,12 +20,13 @@ BeginPackage["WASABI`Inspiral`"];
 
 
 (*Fucntions*)
+ListInspiralModels::usage = "Lists available inspiral models"
 GetInspiralEquations::usage = "Fetches the coupled equations describing the inspiral evolution.";
 IntInspiral::usage = "Determines the inspiral by integrating the inspiral equations.";
 InspiralEvaluate::usage = "Evaluates symbolic functions along a given timeseries of a given inspiral";
 
-(*Parameters - tidy all of this.*)
-t::usage="Observer time"
+(*Parameters - tidy and double check all of this.*)
+t::usage="Asymptotic observer time"
 x::usage="Inverse separation variable ((m1+m2)\[CapitalOmega]\!\(\*SuperscriptBox[\()\), \(2/3\)]\)";
 \[Nu]::usage="Symmetric mass ratio";
 xC::usage="x/\!\(\*SubscriptBox[\(x\), \(Isco\)]\), where \!\(\*SubscriptBox[\(x\), \(Isco\)]\) is the geodesic value of x at the ISCO";
@@ -44,7 +45,7 @@ M::usage="Total mass";
 \[Sigma]::usage="...";
 s::usage="...";
 \[Omega]::usage="Waveform frequency \!\(\*SubscriptBox[\(\[Omega]\), \(22\)]\)/2";
-\[Phi]::usage="Waveform phase";
+\[Phi]::usage="Waveform phase"; (*Fix me, old SF models use complex amps and this is orbital phase*)
 l::usage="Spin weighted spherical harmonic mode number"
 m::usage="Spin weighted spherical harmonic mode number"
 
@@ -74,11 +75,21 @@ Begin["`Private`"];
 (*Can either add evolve primary as an argument here, or name the models differently?*)
 
 
-GetInspiralEquations[model_]:=Block[{filelocation},
+ListInspiralModels[]:=Block[{inspiraldirctory, inspiralmodels},
 
-filelocation=Which[model=="DevTest","InspiralModels/devtest.m", model=="1PAT1","InspiralModels/1PAT1e.m",model=="1PAT1R","InspiralModels/1PAT1Re.m",model=="Hybrid","InspiralModels/Hybride.m",True, Message[GetInspiralEquations::nomodel];Return[]];
+inspiraldirctory=StringJoin[StringDelete[FindFile["WASABI`"],"/Kernel/WASABI.m"],"/InspiralModels"];
+inspiralmodels=StringDelete[StringDelete[FileNames["*.m", inspiraldirctory], StringJoin[inspiraldirctory,"/"]],".m"];
 
-Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]]
+inspiralmodels
+
+]
+
+
+GetInspiralEquations[model_/;StringQ[model]]:=Block[{filelocation},
+
+filelocation=If[MemberQ[ListInspiralModels[],model], filelocation=StringJoin[StringDelete[FindFile["WASABI`"],"/Kernel/WASABI.m"],"/InspiralModels/",model,".m"],  Message[GetInspiralEquations::nomodel];Return[]];
+
+Get[filelocation]
 
 ]
 
@@ -91,16 +102,19 @@ Get[StringJoin[$UserBaseDirectory,"/Applications/WASABI/",filelocation]]
 (*Takes inspiral equations and integrates. Nothing fancy.*)
 (**)
 (*To do: *)
-(*Add description of initial conditions (store format required for each model in respective inspiral .m files which can be fetched with a function?).*)
+(*Add bounds to initial conditions - r0 too big -> Data not available.*)
 (*Add options for precision and accuracy goal.*)
 (*Add default stopping condition? Likely model dependent.*)
 
 
-IntInspiral[model_, initialconds_, stopcond_]:=Block[{tparam, params, equations, integrations, paramsstr},
+IntInspiral[model_, initialconds_, stopcond_]:=Block[{insp,tparam, params, equations, integrations, paramsstr},
 (*Add options for precision and accuracy goal*)
 (*Add default stopping condition*)
 
-{tparam, params, equations}=GetInspiralEquations[model];
+insp=GetInspiralEquations[model];
+tparam=insp["IntegrationVariable"];
+params=insp["Parameters"];
+equations=insp["InspiralEquations"];
 
 integrations=NDSolveValue[Join[equations, initialconds, {WhenEvent[stopcond,"StopIntegration"]}],params,{tparam,0,\[Infinity]}, PrecisionGoal->10,AccuracyGoal->10];
 
