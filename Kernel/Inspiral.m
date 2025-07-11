@@ -25,9 +25,9 @@ GetInspiralEquations::usage = "Fetches the coupled equations describing the insp
 IntInspiral::usage = "Determines the inspiral by integrating the inspiral equations.";
 InspiralEvaluate::usage = "Evaluates symbolic functions along a given timeseries of a given inspiral";
 
-(*Parameters - tidy and double check all of this.*)
+(*Parameters - tidy and fix definitions/conventions. Standardise notation across models.*)
 t::usage="Asymptotic observer time"
-x::usage="Inverse separation variable ((m1+m2)\[CapitalOmega]\!\(\*SuperscriptBox[\()\), \(2/3\)]\)";
+x::usage="Inverse separation variable ((m1+m2)\[Omega]\!\(\*SuperscriptBox[\()\), \(2/3\)]\)";
 \[Nu]::usage="Symmetric mass ratio";
 xC::usage="x/\!\(\*SubscriptBox[\(x\), \(Isco\)]\), where \!\(\*SubscriptBox[\(x\), \(Isco\)]\) is the geodesic value of x at the ISCO";
 m10::usage="Initial primary's mass";
