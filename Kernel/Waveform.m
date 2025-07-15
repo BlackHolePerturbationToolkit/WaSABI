@@ -99,13 +99,12 @@ Keys[amps]
 (*Trivial function in which you pass in the given inspiral rules and time values, and it returns the timeseries of the waveform mode. (Pass in the inspiral to avoid repeated integration). There's no reason for the convention to be real or imaginary amplitudes. Will work for either. Just need to label phase accordingly.*)
 
 
-WaveformMode[Ampmodel_, mode_, inspiral_,tvals_]:= Block[{amp, modevals, l, m},
+WaveformMode[Ampmodel_, mode_, inspiral_,tvals_]:= Block[{amp, modevals, ll, mm},
 amp=GetAmplitudes[Ampmodel, {mode}][mode];
 modevals=ToExpression@StringReplace[mode, {"(" -> "{", ")" -> "}" }];
-l=modevals[[1]];
-m=modevals[[2]];
-
-InspiralEvaluate[amp*Exp[-I m \[Phi]], inspiral, tvals]
+ll=modevals[[1]];
+mm=modevals[[2]];
+InspiralEvaluate[amp*Exp[-I mm \[Phi]], inspiral, tvals]
 ]
 
 
