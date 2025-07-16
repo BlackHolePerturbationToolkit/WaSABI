@@ -1,8 +1,9 @@
 (* ::Package:: *)
 
-BeginPackage["WASABI`",
-  {"WASABI`Inspiral`",
-   "WASABI`Waveform`"(*,
-   "WASABI`Utilities`"*)}]
+BeginPackage["WASABI`"]
    
 EndPackage[]
+
+Get["WASABI`Inspiral`"];
+Get["WASABI`Waveform`"];
+(*Get["WASABI`Utilities`"];*)
