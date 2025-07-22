@@ -74,7 +74,7 @@ BinaryInspiralModel /:
   summary = {BoxForm`SummaryItem[{"Model: ", assoc["Model"]}],
              Row[{BoxForm`SummaryItem[{"M: ", assoc["InitialConditions"]["M"]}], "  ",
                   BoxForm`SummaryItem[{"\[Nu]: ", assoc["InitialConditions"]["\[Nu]"]}]}]};
-  extended = {};
+  extended = {BoxForm`SummaryItem[{"Trajectory: ", SymbolName /@ assoc["Inspiral"]["Parameters"]}]};
   BoxForm`ArrangeSummaryBox[
     BinaryInspiralModel,
     bim,
