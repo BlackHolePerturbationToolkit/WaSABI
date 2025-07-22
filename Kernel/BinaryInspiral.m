@@ -111,8 +111,8 @@ BinaryInspiralModel[assoc_]["Waveform"][t:(_?NumericQ|{_?NumericQ..})] :=
 (*Trajectory*)
 
 
-BinaryInspiralModel[assoc_]["Trajectory"][t:(_?NumericQ|{_?NumericQ..})] :=
-  assoc["Trajectory"][t];
+BinaryInspiralModel[assoc_]["Trajectory"][param_][t:(_?NumericQ|{_?NumericQ..})] :=
+  assoc["Inspiral"][param][t];
 
 
 (* ::Section:: *)
