@@ -39,6 +39,9 @@ BinaryInspiralModel::usage = "BinaryInspiralModel[...] represents a binary inspi
 (*Error Messages*)
 
 
+BinaryInspiral::nomodel = "Unknown model `1`.";
+
+
 (* ::Subsection::Closed:: *)
 (*Begin Private section*)
 
@@ -55,6 +58,10 @@ Options[BinaryInspiral] = {"Model" -> "1PAT1"};
 
 BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model, inspiral, amplitudes, tmax},
   model = OptionValue["Model"];
+  If[!WASABI`Inspiral`Private`InspiralModelExistsQ[model] || !WASABI`Waveform`Private`WaveformModelExistsQ[model],
+    Message[BinaryInspiral::nomodel, model];
+    Return[$Failed];
+  ];
   inspiral = WASABI`Inspiral`Private`IntInspiral[model, ics];
   amplitudes = WASABI`Waveform`Private`GetAmplitudes[model];
   tmax = Max[inspiral[[1]]["Domain"]];

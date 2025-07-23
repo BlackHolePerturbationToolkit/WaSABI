@@ -36,7 +36,6 @@ WaveformMode::usage = "Returns a given spin weighted spherical harmonic mode amp
 (*Error messages*)
 
 
-GetAmplitudes::nomodel = "Unknown model";
 GetAmplitudes::nomode = "Mode not available";
 GetAmplitudes::notlist = "Input should be a list of strings for each (l,m) mode";
 
@@ -52,11 +51,15 @@ $WASABIAmplitudeDirectory = FileNameJoin[{FileNameDrop[FindFile["WASABI`"], -2],
 (*List amplitude models:*)
 
 
-ListAmplitudeModels[] :=
+ListAmplitudeModels[] := ListAmplitudeModels[] =
  Module[{ampdirctory, ampmodels},
   ampmodels = FileBaseName /@ FileNames["*.m", $WASABIAmplitudeDirectory];
   ampmodels
 ]
+
+
+WaveformModelExistsQ[model_String] :=
+  MemberQ[ListAmplitudeModels[], model];
 
 
 (* ::Text:: *)
@@ -69,11 +72,6 @@ GetAmplitudes[model_, modes_:{}] := GetAmplitudes[model, modes] =
  Module[{filelocation, amps, selectedamps},
   If[!ListQ[modes],
     Message[GetAmplitudes::notlist];
-    Return[];
-  ];
-
-  If[!MemberQ[ListAmplitudeModels[], model],
-    Message[GetAmplitudes::nomodel];
     Return[];
   ];
 

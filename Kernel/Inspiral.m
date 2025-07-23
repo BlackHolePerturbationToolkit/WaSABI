@@ -36,7 +36,6 @@ InspiralEvaluate::usage = "Evaluates symbolic functions along a given timeseries
 (*Error messages*)
 
 
-GetInspiralEquations::nomodel = "Unknown model";
 InspiralEvaluate::tovershoot = "Time series overshoots the inspiral time.";
 
 
@@ -53,20 +52,19 @@ InspiralEvaluate::tovershoot = "Time series overshoots the inspiral time.";
 $WASABIInspiralDirectory = FileNameJoin[{FileNameDrop[FindFile["WASABI`"], -2], "InspiralModels"}];
 
 
-ListInspiralModels[] :=
+ListInspiralModels[] := ListInspiralModels[] =
  Module[{inspiralmodels},
   inspiralmodels = FileBaseName /@ FileNames["*.m", $WASABIInspiralDirectory];
   inspiralmodels
 ]
 
 
+InspiralModelExistsQ[model_String] :=
+  MemberQ[ListInspiralModels[], model];
+
+
 GetInspiralEquations[model_String] := GetInspiralEquations[model] =
  Module[{filelocation, equations},
-  If[!MemberQ[ListInspiralModels[], model],
-    Message[GetInspiralEquations::nomodel];
-    Return[];
-  ];
-
   filelocation = First[FileNames[model<>".m", $WASABIInspiralDirectory]];
 
   Begin["WASABI`Inspiral`Model"<>model<>"`"];
