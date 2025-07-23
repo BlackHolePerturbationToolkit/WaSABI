@@ -32,7 +32,7 @@ ClearAttributes[{BinaryInspiral, BinaryInspiralModel}, {Protected, ReadProtected
 BinaryInspiral::usage = "BinaryInspiral[ics] generates a BinaryInspiralModel representing a binary inspiral.";
 
 
-BinaryInspiralModel::usage = "BinaryInspiral[...] represents a binary inspiral.";
+BinaryInspiralModel::usage = "BinaryInspiralModel[...] represents a binary inspiral.";
 
 
 (* ::Subsection:: *)
