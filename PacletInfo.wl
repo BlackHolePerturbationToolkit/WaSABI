@@ -23,6 +23,7 @@ Paclet[
       {
         "Guides/WASABI"
       }
-    }
+    },
+    {"Asset", "Root" -> ".", "Assets" -> {{"AmplitudeModels", "AmplitudeModels"}, {"InspiralModels", "InspiralModels"}}}
   }
 ]
