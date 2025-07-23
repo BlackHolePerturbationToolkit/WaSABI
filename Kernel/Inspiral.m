@@ -103,7 +103,9 @@ IntInspiral[model_, ics_] :=
   paramsstr = SymbolName /@ params;
   initparams = Pick[params, paramsstr, Alternatives@@Keys[ics]];
   initialconds = Map[#[0] == SymbolName[#]&, initparams] /. ics;
-  stopcond = {WhenEvent[WASABI`Inspiral`Model1PAT1`r0[WASABI`Inspiral`Model1PAT1`t] <= 7, "StopIntegration"]};
+  stopcond = If[model=="1PAT1",
+    {WhenEvent[WASABI`Inspiral`Model1PAT1`r0[WASABI`Inspiral`Model1PAT1`t] <= 7, "StopIntegration"]},
+    {WhenEvent[WASABI`Inspiral`Model0PA`r0[WASABI`Inspiral`Model0PA`t] <= 7, "StopIntegration"]}];
 
   integrations = NDSolveValue[Join[equations, initialconds, stopcond], params, {tparam, 0, \[Infinity]}, PrecisionGoal->10, AccuracyGoal->10];
 
