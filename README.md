@@ -2,7 +2,7 @@
 
 Copyright (c) 20125 Black Hole Perturbation Toolkit
 
-[![DOI](https://zenodo.org/badge/16358046.svg)](https://zenodo.org/badge/latestdoi/16358046)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16358046.svg)](https://doi.org/10.5281/zenodo.16358046)
 
 A package to generate gravitational waveforms from SF theory and SF-PN Hybrids.
 
