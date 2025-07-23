@@ -114,18 +114,6 @@ IntInspiral[model_, ics_] :=
 
 
 
-InspiralEvaluate[quantity_, inspiral_, tvals_] :=
- Module[{amp, params, totimevalsrule, quantoninsp, tmax},
-  params = inspiral["Parameters"];
-  tmax = Max[inspiral[[1]]["Domain"]];
-  totimevalsrule = If[tmax<Max[tvals], Message[InspiralEvaluate::tovershoot];Return[],
-  Table[params[[i]]->Evaluate[inspiral[ToString[params[[i]]]][tvals]],{i,1,Length[params]}]];
-
-  quantoninsp=quantity//.totimevalsrule;
-  TimeSeries[quantoninsp,{tvals}]
-]
-
-
 (* ::Section:: *)
 (*Close the package*)
 
