@@ -42,6 +42,9 @@ BinaryInspiralModel::usage = "BinaryInspiralModel[...] represents a binary inspi
 BinaryInspiral::nomodel = "Unknown model `1`.";
 
 
+BinaryInspiralModel::nomode = "Mode `1` not available in model `2`.";
+
+
 (* ::Subsection::Closed:: *)
 (*Begin Private section*)
 
@@ -63,7 +66,7 @@ BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model, inspiral, amplitud
     Return[$Failed];
   ];
   inspiral = WASABI`Inspiral`Private`IntInspiral[model, ics];
-  amplitudes = WASABI`Waveform`Private`GetAmplitudes[model];
+  amplitudes = KeyMap[First[StringCases[#,"("~~l_~~","~~m_~~")":>{ToExpression[l],ToExpression[m]}]]&, WASABI`Waveform`Private`GetAmplitudes[model]];
   tmax = Max[inspiral[[1]]["Domain"]];
   BinaryInspiralModel[<|"Model" -> model, "InitialConditions" -> ics, "Inspiral" -> inspiral, "Amplitudes" -> amplitudes, "Duration" -> tmax|>]
 ];
@@ -116,12 +119,19 @@ Keys[m_BinaryInspiralModel] ^:= DeleteCases[Join[Keys[m[[-1]]], {"Waveform", "Tr
 (*Waveform*)
 
 
+BinaryInspiralModel[assoc_]["Waveform"]["Modes"] := Keys[assoc["Amplitudes"]];
+
+
 BinaryInspiralModel[assoc_]["Waveform"][l_, m_][t:(_?NumericQ|{_?NumericQ..})] :=
  Module[{params, paramvals, \[Phi]p},
+  If[!MemberQ[BinaryInspiralModel[assoc]["Waveform"]["Modes"], {l,m}],
+    Message[BinaryInspiralModel::nomode, {l,m}, assoc["Model"]];
+    Return[$Failed];
+  ];
   params = assoc["Inspiral"]["Parameters"];
   paramvals = Map[# -> assoc["Inspiral"][SymbolName[#]][t] &, params];
   \[Phi]p = SelectFirst[params, SymbolName[#] == "\[Phi]"&];
-  assoc["Amplitudes"]["("<>ToString[l]<>","<>ToString[m]<>")"] Exp[-I m \[Phi]p] /. paramvals
+  assoc["Amplitudes"][{l,m}] Exp[-I m \[Phi]p] /. paramvals
 ];
 
 
