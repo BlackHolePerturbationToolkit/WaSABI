@@ -53,11 +53,12 @@ Begin["`Private`"];
 Options[BinaryInspiral] = {"Model" -> "1PAT1"};
 
 
-BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model, inspiral, amplitudes},
+BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model, inspiral, amplitudes, tmax},
   model = OptionValue["Model"];
   inspiral = WASABI`Inspiral`Private`IntInspiral[model, ics];
   amplitudes = WASABI`Waveform`Private`GetAmplitudes[model];
-  BinaryInspiralModel[<|"Model" -> model, "InitialConditions" -> ics, "Inspiral" -> inspiral, "Amplitudes" -> amplitudes|>]
+  tmax = Max[inspiral[[1]]["Domain"]];
+  BinaryInspiralModel[<|"Model" -> model, "InitialConditions" -> ics, "Inspiral" -> inspiral, "Amplitudes" -> amplitudes, "Duration" -> tmax|>]
 ];
 
 
@@ -75,7 +76,8 @@ BinaryInspiralModel /:
   summary = {BoxForm`SummaryItem[{"Model: ", assoc["Model"]}],
              Row[{BoxForm`SummaryItem[{"M: ", assoc["InitialConditions"]["M"]}], "  ",
                   BoxForm`SummaryItem[{"\[Nu]: ", assoc["InitialConditions"]["\[Nu]"]}]}]};
-  extended = {BoxForm`SummaryItem[{"Trajectory: ", SymbolName /@ assoc["Inspiral"]["Parameters"]}]};
+  extended = {BoxForm`SummaryItem[{"Trajectory: ", SymbolName /@ assoc["Inspiral"]["Parameters"]}],
+              BoxForm`SummaryItem[{"Duration: ", assoc["Duration"]}]};
   BoxForm`ArrangeSummaryBox[
     BinaryInspiralModel,
     bim,
