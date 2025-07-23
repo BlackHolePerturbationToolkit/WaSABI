@@ -42,6 +42,9 @@ BinaryInspiralModel::usage = "BinaryInspiralModel[...] represents a binary inspi
 BinaryInspiral::nomodel = "Unknown model `1`.";
 
 
+BinaryInspiral::ics = "Invalid initial conditions `1` for model `2`.";
+
+
 BinaryInspiralModel::nomode = "Mode `1` not available in model `2`.";
 
 
@@ -64,6 +67,10 @@ BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model, inspiral, amplitud
   If[!WASABI`Inspiral`Private`InspiralModelExistsQ[model] || !WASABI`Waveform`Private`WaveformModelExistsQ[model],
     Message[BinaryInspiral::nomodel, model];
     Return[$Failed];
+  ];
+  If[Sort[Keys[ics]] != {"M", "r0", "\[Nu]", "\[Phi]"},
+      Message[BinaryInspiral::ics, ics, model];
+      Return[$Failed];
   ];
   inspiral = WASABI`Inspiral`Private`IntInspiral[model, ics];
   amplitudes = KeyMap[First[StringCases[#,"("~~l_~~","~~m_~~")":>{ToExpression[l],ToExpression[m]}]]&, WASABI`Waveform`Private`GetAmplitudes[model]];
