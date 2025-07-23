@@ -53,10 +53,11 @@ Begin["`Private`"];
 Options[BinaryInspiral] = {"Model" -> "1PAT1"};
 
 
-BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model, inspiral},
+BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model, inspiral, amplitudes},
   model = OptionValue["Model"];
   inspiral = WASABI`Inspiral`Private`IntInspiral[model, ics];
-  BinaryInspiralModel[<|"Model" -> model, "InitialConditions" -> ics, "Inspiral" -> inspiral|>]
+  amplitudes = WASABI`Waveform`Private`GetAmplitudes[model];
+  BinaryInspiralModel[<|"Model" -> model, "InitialConditions" -> ics, "Inspiral" -> inspiral, "Amplitudes" -> amplitudes|>]
 ];
 
 
@@ -93,18 +94,26 @@ BinaryInspiralModel /:
 BinaryInspiralModel[assoc_]["Inspiral"] := Missing["KeyAbsent", "Inspiral"];
 
 
+BinaryInspiralModel[assoc_]["Amplitudes"] := Missing["KeyAbsent", "Amplitudes"];
+
+
 BinaryInspiralModel[assoc_][key_String] /; !MemberQ[{"Waveform", "Trajectory"}, key] && KeyExistsQ[assoc, key] := assoc[key];
 
 
-Keys[m_BinaryInspiralModel] ^:= DeleteCases[Join[Keys[m[[-1]]], {"Waveform", "Trajectory"}], "Inspiral"];
+Keys[m_BinaryInspiralModel] ^:= DeleteCases[Join[Keys[m[[-1]]], {"Waveform", "Trajectory"}], "Inspiral" | "Amplitudes"];
 
 
 (* ::Subsection:: *)
 (*Waveform*)
 
 
-BinaryInspiralModel[assoc_]["Waveform"][t:(_?NumericQ|{_?NumericQ..})] :=
-  assoc["Waveform"][t];
+BinaryInspiralModel[assoc_]["Waveform"][l_, m_][t:(_?NumericQ|{_?NumericQ..})] :=
+ Module[{params, paramvals, \[Phi]p},
+  params = assoc["Inspiral"]["Parameters"];
+  paramvals = Map[# -> assoc["Inspiral"][SymbolName[#]][t] &, params];
+  \[Phi]p = SelectFirst[params, SymbolName[#] == "\[Phi]"&];
+  assoc["Amplitudes"]["("<>ToString[l]<>","<>ToString[m]<>")"] Exp[-I m \[Phi]p] /. paramvals
+];
 
 
 (* ::Subsection:: *)
