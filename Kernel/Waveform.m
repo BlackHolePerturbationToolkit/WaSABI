@@ -92,19 +92,7 @@ GetAmplitudes[model_, modes_:{}] := GetAmplitudes[model, modes] =
 
 
 ModeList[model_] :=
- Module[{filelocation, amps},
-  If[!MemberQ[ListAmplitudeModels[], model],
-    Message[GetAmplitudes::nomodel];
-    Return[];
-  ];
-  filelocation = First[FileNames[model<>".m", $WASABIAmplitudeDirectory]];
-
-  (*Assume amplitude files saved as association list with iconised expressions for all the amplitudes available.*)
-  Begin["WASABI`Inspiral`Model"<>model<>"`"];
-  amps = Get[filelocation];
-  End[];
-  Keys[amps]
-]
+  Keys[GetAmplitudes[model]];
 
 
 (* ::Section:: *)
