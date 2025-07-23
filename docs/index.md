@@ -31,4 +31,4 @@ In addition to acknowledging the Black Hole Perturbation Toolkit as suggested on
 
 ## Authors and contributors
 
-Barry Wardell, Josh Mathews, Loïc Honit
+Barry Wardell, Josh Mathews, Loïc Honet
