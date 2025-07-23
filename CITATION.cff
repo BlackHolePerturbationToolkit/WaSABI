@@ -16,6 +16,11 @@ authors:
     orcid: 'https://orcid.org/0000-0002-5477-8470'
     email: josh.mat@nus.edu.sg
     affiliation: National University of Singapore
+  - given-names: Loïc
+    family-names: Honet
+    orcid: 'https://orcid.org/0009-0007-2863-6085'
+    email: loic.honet@ulb.be
+    affiliation: Université libre de Bruxelles
 identifiers:
   - type: doi
     value: 10.5281/zenodo.16358046
