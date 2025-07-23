@@ -1,10 +1,10 @@
 (* ::Package:: *)
 
 (* ::Input::Initialization:: *)
-datadirectory=StringJoin[StringDelete[FindFile["WASABI`"],"/Kernel/WASABI.m"],"/InspiralModels/sf_data"];
+datadirectory = FileNameJoin[{WASABI`Inspiral`Private`$WASABIInspiralDirectory, "sf_data"}];
 
-\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH]=Interpolation[Get[StringJoin[datadirectory,"/1SFCircShwarzDotEHorizon.m"]]];
-\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI] =Interpolation[Get[StringJoin[datadirectory,"/1SFCircShwarzDotEInf.m"]]];
+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH] = Interpolation[Get[FileNameJoin[{datadirectory, "1SFCircShwarzDotEHorizon.m"}]]];
+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI] = Interpolation[Get[FileNameJoin[{datadirectory, "1SFCircShwarzDotEInf.m"}]]];
 
 \[ScriptCapitalF]1[r0_]:=\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI][r0]+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][r0];
 
