@@ -36,9 +36,6 @@ InspiralEvaluate::usage = "Evaluates symbolic functions along a given timeseries
 (*Error messages*)
 
 
-InspiralEvaluate::tovershoot = "Time series overshoots the inspiral time.";
-
-
 (* ::Section:: *)
 (*Get Forcing terms*)
 
