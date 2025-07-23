@@ -60,7 +60,7 @@ ListInspiralModels[] :=
 ]
 
 
-GetInspiralEquations[model_String] :=
+GetInspiralEquations[model_String] := GetInspiralEquations[model] =
  Module[{filelocation, equations},
   If[!MemberQ[ListInspiralModels[], model],
     Message[GetInspiralEquations::nomodel];

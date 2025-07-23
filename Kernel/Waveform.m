@@ -12,7 +12,7 @@
 (*Create Package*)
 
 
-BeginPackage["WASABI`Waveform`",{"WASABI`Inspiral`"}];
+BeginPackage["WASABI`Waveform`"];
 
 
 (* ::Subsection:: *)
@@ -65,7 +65,7 @@ ListAmplitudeModels[] :=
 (*Add relations for negative m modes.*)
 
 
-GetAmplitudes[model_, modes_:{}] :=
+GetAmplitudes[model_, modes_:{}] := GetAmplitudes[model, modes] =
  Module[{filelocation, amps, selectedamps},
   If[!ListQ[modes],
     Message[GetAmplitudes::notlist];
