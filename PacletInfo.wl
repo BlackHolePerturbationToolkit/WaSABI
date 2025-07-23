@@ -2,7 +2,7 @@
 
 Paclet[
   "Name" -> "WASABI",
-  "Version" -> "0.1.1",
+  "Version" -> "0.1.2",
   "MathematicaVersion" -> "10.2+",
   "Creator" -> "Black Hole Perturbation Toolkit",
   "Description" -> "A package to generate gravitational waveforms from SF theory and SF-PN Hybrids.",
