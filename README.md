@@ -1,6 +1,6 @@
 # WASABI
 
-Copyright (c) 20125 Black Hole Perturbation Toolkit
+Copyright (c) 2025 Black Hole Perturbation Toolkit
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16358046.svg)](https://doi.org/10.5281/zenodo.16358046)
 
