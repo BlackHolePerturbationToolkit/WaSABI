@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: WASABI
+title: WaSABI
 message: >-
   If you use this software, please cite its Zenodo record
   and include the acknowledgment "This work makes use of
@@ -25,7 +25,7 @@ identifiers:
   - type: doi
     value: 10.5281/zenodo.16358046
     description: Latest release on Zenodo
-repository-code: 'https://github.com/BlackHolePerturbationToolkit/WASABI'
+repository-code: 'https://github.com/BlackHolePerturbationToolkit/WaSABI'
 date-released: 2025-07-23
 abstract: >-
   A package to generate gravitational waveforms from SF theory and SF-PN Hybrids.

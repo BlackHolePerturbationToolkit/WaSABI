@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Title:: *)
-(*Inspiral subpackage of WASABI*)
+(*Inspiral subpackage of WaSABI*)
 
 
 (* ::Chapter:: *)
@@ -12,7 +12,7 @@
 (*Create Package*)
 
 
-BeginPackage["WASABI`Inspiral`"];
+BeginPackage["WaSABI`Inspiral`"];
 
 
 (* ::Subsection:: *)
@@ -46,12 +46,12 @@ InspiralEvaluate::usage = "Evaluates symbolic functions along a given timeseries
 (*Can either add evolve primary as an argument here, or name the models differently?*)
 
 
-$WASABIInspiralDirectory = FileNameJoin[{FileNameDrop[FindFile["WASABI`"], -2], "InspiralModels"}];
+$WaSABIInspiralDirectory = FileNameJoin[{FileNameDrop[FindFile["WaSABI`"], -2], "InspiralModels"}];
 
 
 ListInspiralModels[] := ListInspiralModels[] =
  Module[{inspiralmodels},
-  inspiralmodels = FileBaseName /@ FileNames["*.m", $WASABIInspiralDirectory];
+  inspiralmodels = FileBaseName /@ FileNames["*.m", $WaSABIInspiralDirectory];
   inspiralmodels
 ]
 
@@ -62,9 +62,9 @@ InspiralModelExistsQ[model_String] :=
 
 GetInspiralEquations[model_String] := GetInspiralEquations[model] =
  Module[{filelocation, equations},
-  filelocation = First[FileNames[model<>".m", $WASABIInspiralDirectory]];
+  filelocation = First[FileNames[model<>".m", $WaSABIInspiralDirectory]];
 
-  Begin["WASABI`Inspiral`Model"<>model<>"`"];
+  Begin["WaSABI`Inspiral`Model"<>model<>"`"];
   equations = Get[filelocation];
   End[];
   
@@ -99,10 +99,10 @@ IntInspiral[model_, ics_] :=
   initparams = Pick[params, paramsstr, Alternatives@@Keys[ics]];
   initialconds = Map[#[0] == SymbolName[#]&, initparams] /. ics;
   stopcond = If[model=="1PAT1",
-    {WhenEvent[WASABI`Inspiral`Model1PAT1`r0[WASABI`Inspiral`Model1PAT1`t] <= 7, "StopIntegration"]},
-    {WhenEvent[WASABI`Inspiral`Model0PA`r0[WASABI`Inspiral`Model0PA`t] <= 7, "StopIntegration"]}];
+    {WhenEvent[WaSABI`Inspiral`Model1PAT1`r0[WaSABI`Inspiral`Model1PAT1`t] <=7, "StopIntegration"]},
+    {WhenEvent[WaSABI`Inspiral`Model0PA`r0[WaSABI`Inspiral`Model0PA`t] <= 7, "StopIntegration"]}];
 
-  integrations = NDSolveValue[Join[equations, initialconds, stopcond], params, {tparam, 0, \[Infinity]}, PrecisionGoal->10, AccuracyGoal->10];
+  integrations = NDSolveValue[Echo@Join[equations, initialconds, stopcond], Echo@params, {tparam, 0, \[Infinity]}, PrecisionGoal->10, AccuracyGoal->10];
 
   Append[AssociationThread[paramsstr -> integrations], "Parameters" -> params]
 ];

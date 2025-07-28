@@ -1,4 +1,4 @@
-# WASABI
+# WaSABI
 
 Copyright (c) 2025 Black Hole Perturbation Toolkit
 
@@ -6,7 +6,7 @@ Copyright (c) 2025 Black Hole Perturbation Toolkit
 
 A package to generate gravitational waveforms from SF theory and SF-PN Hybrids.
 
-Further details can be found on the [package homepage](https://bhptoolkit.org/WASABI).
+Further details can be found on the [package homepage](https://bhptoolkit.org/WaSABI).
 
 ### License
 

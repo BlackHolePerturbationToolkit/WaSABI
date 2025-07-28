@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Input::Initialization:: *)
-datadirectory = FileNameJoin[{WASABI`Waveform`Private`$WASABIAmplitudeDirectory, "sf_amp_data"}];
+datadirectory = FileNameJoin[{WaSABI`Waveform`Private`$WaSABIAmplitudeDirectory, "sf_amp_data"}];
 Do[Z\[ScriptCapitalI][ll,mm]=Interpolation[Get[FileNameJoin[{datadirectory,"1SFTeukampSchwarzCirc"<>ToString[ll]<>ToString[mm]<>".m"}]]], {ll,2,5}, {mm,1,ll}]
 
 Z\[ScriptCapitalI][l_,m_?Negative][r0_]:=(-1)^l Conjugate[Z\[ScriptCapitalI][l,-m][r0]];

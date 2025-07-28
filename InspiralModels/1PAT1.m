@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Input::Initialization:: *)
-datadirectory = FileNameJoin[{WASABI`Inspiral`Private`$WASABIInspiralDirectory, "sf_data"}];
+datadirectory = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data"}];
 
 \[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH] = Interpolation[Get[FileNameJoin[{datadirectory, "1SFCircShwarzDotEHorizon.m"}]]];
 \[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI] = Interpolation[Get[FileNameJoin[{datadirectory, "1SFCircShwarzDotEInf.m"}]]];

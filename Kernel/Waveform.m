@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Title:: *)
-(*Waveform subpackage of WASABI*)
+(*Waveform subpackage of WaSABI*)
 
 
 (* ::Chapter:: *)
@@ -12,7 +12,7 @@
 (*Create Package*)
 
 
-BeginPackage["WASABI`Waveform`"];
+BeginPackage["WaSABI`Waveform`"];
 
 
 (* ::Subsection:: *)
@@ -44,7 +44,7 @@ GetAmplitudes::notlist = "Input should be a list of strings for each (l,m) mode"
 (*Get Amplitudes*)
 
 
-$WASABIAmplitudeDirectory = FileNameJoin[{FileNameDrop[FindFile["WASABI`"], -2], "AmplitudeModels"}];
+$WaSABIAmplitudeDirectory = FileNameJoin[{FileNameDrop[FindFile["WaSABI`"], -2], "AmplitudeModels"}];
 
 
 (* ::Text:: *)
@@ -53,7 +53,7 @@ $WASABIAmplitudeDirectory = FileNameJoin[{FileNameDrop[FindFile["WASABI`"], -2],
 
 ListAmplitudeModels[] := ListAmplitudeModels[] =
  Module[{ampdirctory, ampmodels},
-  ampmodels = FileBaseName /@ FileNames["*.m", $WASABIAmplitudeDirectory];
+  ampmodels = FileBaseName /@ FileNames["*.m", $WaSABIAmplitudeDirectory];
   ampmodels
 ]
 
@@ -75,9 +75,9 @@ GetAmplitudes[model_, modes_:{}] := GetAmplitudes[model, modes] =
     Return[];
   ];
 
-  filelocation = First[FileNames[model<>".m", $WASABIAmplitudeDirectory]];
+  filelocation = First[FileNames[model<>".m", $WaSABIAmplitudeDirectory]];
 
-  Begin["WASABI`Inspiral`Model"<>model<>"`"];
+  Begin["WaSABI`Inspiral`Model"<>model<>"`"];
   amps = Get[filelocation];
   End[];
 

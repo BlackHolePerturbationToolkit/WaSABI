@@ -12,9 +12,9 @@
 (*BeginPackage*)
 
 
-BeginPackage["WASABI`BinaryInspiral`",
-  {"WASABI`Inspiral`",
-   "WASABI`Waveform`"}
+BeginPackage["WaSABI`BinaryInspiral`",
+  {"WaSABI`Inspiral`",
+   "WaSABI`Waveform`"}
 ];
 
 
@@ -64,7 +64,7 @@ Options[BinaryInspiral] = {"Model" -> "1PAT1"};
 
 BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model, inspiral, amplitudes, tmax},
   model = OptionValue["Model"];
-  If[!WASABI`Inspiral`Private`InspiralModelExistsQ[model] || !WASABI`Waveform`Private`WaveformModelExistsQ[model],
+  If[!WaSABI`Inspiral`Private`InspiralModelExistsQ[model] || !WaSABI`Waveform`Private`WaveformModelExistsQ[model],
     Message[BinaryInspiral::nomodel, model];
     Return[$Failed];
   ];
@@ -72,8 +72,8 @@ BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model, inspiral, amplitud
       Message[BinaryInspiral::ics, ics, model];
       Return[$Failed];
   ];
-  inspiral = WASABI`Inspiral`Private`IntInspiral[model, ics];
-  amplitudes = KeyMap[First[StringCases[#,"("~~l_~~","~~m_~~")":>{ToExpression[l],ToExpression[m]}]]&, WASABI`Waveform`Private`GetAmplitudes[model]];
+  inspiral = WaSABI`Inspiral`Private`IntInspiral[model, ics];
+  amplitudes = KeyMap[First[StringCases[#,"("~~l_~~","~~m_~~")":>{ToExpression[l],ToExpression[m]}]]&, WaSABI`Waveform`Private`GetAmplitudes[model]];
   tmax = Max[inspiral[[1]]["Domain"]];
   BinaryInspiralModel[<|"Model" -> model, "InitialConditions" -> ics, "Inspiral" -> inspiral, "Amplitudes" -> amplitudes, "Duration" -> tmax|>]
 ];

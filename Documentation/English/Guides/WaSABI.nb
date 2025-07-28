@@ -20,7 +20,7 @@ WindowFrame->Normal*)
 Notebook[{
 
 Cell[CellGroupData[{
-Cell["WASABI", "GuideTitle",
+Cell["WaSABI", "GuideTitle",
  CellID->30302606,ExpressionUUID->"2707f377-9f4a-40f5-a446-86b127de6f6f"],
 
 Cell["\<\
@@ -40,7 +40,7 @@ Cell[TextData[{
  Cell[BoxData[
   ButtonBox["BinaryInspiral",
    BaseStyle->"Link",
-   ButtonData->"paclet:WASABI/ref/BinaryInspiral"]], "InlineGuideFunction",
+   ButtonData->"paclet:WaSABI/ref/BinaryInspiral"]], "InlineGuideFunction",
   TaggingRules->{"PageType" -> "Function"},
   CellTags->"c40ac8e4-27e1-4161-a8df-4d4f38357a23",ExpressionUUID->
   "2184716e-fcbe-4447-aeeb-a1b336f1ff92"],
@@ -54,7 +54,7 @@ Cell[TextData[{
  Cell[BoxData[
   ButtonBox["BinaryInspiralModel",
    BaseStyle->"Link",
-   ButtonData->"paclet:WASABI/ref/BinaryInspiralModel"]], 
+   ButtonData->"paclet:WaSABI/ref/BinaryInspiralModel"]], 
   "InlineGuideFunction",
   TaggingRules->{"PageType" -> "Function"},
   CellTags->"c5c6736a-1ff4-4e4e-8fcf-2d9846cbae62",ExpressionUUID->
@@ -105,10 +105,10 @@ Cell[TextData[ButtonBox["Black Hole Perturbation Toolkit",
  CellChangeTimes->{{3.962248629632234*^9, 3.962248651240251*^9}},
  CellID->1978513200,ExpressionUUID->"70b22930-4a19-40f5-8ba9-6d24bd1905ae"],
 
-Cell[TextData[ButtonBox["WASABI",
+Cell[TextData[ButtonBox["WaSABI",
  BaseStyle->"Hyperlink",
  ButtonData->{
-   URL["https://bhptoolkit.org/WASABI"], None}]], "RelatedLinks",
+   URL["https://bhptoolkit.org/WaSABI"], None}]], "RelatedLinks",
  CellChangeTimes->{{3.962248629632234*^9, 3.962248681760453*^9}},
  CellID->3092842,ExpressionUUID->"8b62afdf-582e-40fd-aa6b-f664e9a1a976"]
 }, Open  ]],
@@ -141,15 +141,15 @@ Cell["Guide", "Categorization",
  CellLabel->"Entity Type",
  CellID->757708137,ExpressionUUID->"cda33e40-7a04-4bef-be52-cd6dd8bc8c6c"],
 
-Cell["WASABI", "Categorization",
+Cell["WaSABI", "Categorization",
  CellLabel->"Paclet Name",
  CellID->222631849,ExpressionUUID->"65bd8ce8-331a-40ba-a776-519ab9d34ec3"],
 
-Cell["WASABI`", "Categorization",
+Cell["WaSABI`", "Categorization",
  CellLabel->"Context",
  CellID->856973069,ExpressionUUID->"4a60bd60-f6eb-418e-b116-3da9eeada386"],
 
-Cell["WASABI/guide/WASABI", "Categorization",
+Cell["WaSABI/guide/WaSABI", "Categorization",
  CellLabel->"URI",
  CellID->2121033901,ExpressionUUID->"471cc970-6ef2-4fa3-89bd-db0c5839c668"]
 }, Closed]],
@@ -166,7 +166,7 @@ Cell["XXXX", "Keywords",
 },
 WindowSize->{700, 770},
 WindowMargins->{{Automatic, 387}, {Automatic, 95}},
-TaggingRules-><|"Paclet" -> "WASABI"|>,
+TaggingRules-><|"Paclet" -> "WaSABI"|>,
 FrontEndVersion->"14.0 for Mac OS X x86 (64-bit) (December 12, 2023)",
 StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "GuidePageStylesExt.nb", 
   CharacterEncoding -> "UTF-8"],
