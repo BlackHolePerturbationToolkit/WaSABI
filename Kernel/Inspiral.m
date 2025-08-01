@@ -102,7 +102,7 @@ IntInspiral[model_, ics_] :=
     {WhenEvent[WaSABI`Inspiral`Model1PAT1`r0[WaSABI`Inspiral`Model1PAT1`t] <=7, "StopIntegration"]},
     {WhenEvent[WaSABI`Inspiral`Model0PA`r0[WaSABI`Inspiral`Model0PA`t] <= 7, "StopIntegration"]}];
 
-  integrations = NDSolveValue[Echo@Join[equations, initialconds, stopcond], Echo@params, {tparam, 0, \[Infinity]}, PrecisionGoal->10, AccuracyGoal->10];
+  integrations = NDSolveValue[Join[equations, initialconds, stopcond], params, {tparam, 0, \[Infinity]}, PrecisionGoal->10, AccuracyGoal->10];
 
   Append[AssociationThread[paramsstr -> integrations], "Parameters" -> params]
 ];
