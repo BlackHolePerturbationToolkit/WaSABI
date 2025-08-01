@@ -96,7 +96,7 @@ IntInspiral[model_, ics_] :=
   paramsstr = SymbolName /@ params;
   initparams = Pick[params, paramsstr, Alternatives@@Keys[ics]];
   initialconds = Map[#[0] == SymbolName[#]&, initparams] /. ics;
-  stopcond = {WhenEvent[Evaluate[insp["StopCondition"]], "StopIntegration"]};
+  stopcond = {WhenEvent[Evaluate[insp["StopCondition"] /. ics], "StopIntegration"]};
 
   integrations = NDSolveValue[Join[equations, initialconds, stopcond], params, {tparam, 0, \[Infinity]}, PrecisionGoal->10, AccuracyGoal->10];
 
