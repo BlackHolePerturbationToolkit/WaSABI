@@ -82,8 +82,6 @@ GetInspiralEquations[model_String] := GetInspiralEquations[model] =
 (*To do: *)
 (*Add bounds to initial conditions - r0 too big -> Data not available.*)
 (*Add options for precision and accuracy goal.*)
-(*Add default stopping condition? Likely model dependent.*)
-(*Move hardcoded stop condition into model.*)
 
 
 IntInspiral[model_, ics_] :=
@@ -98,9 +96,7 @@ IntInspiral[model_, ics_] :=
   paramsstr = SymbolName /@ params;
   initparams = Pick[params, paramsstr, Alternatives@@Keys[ics]];
   initialconds = Map[#[0] == SymbolName[#]&, initparams] /. ics;
-  stopcond = If[model=="1PAT1",
-    {WhenEvent[WaSABI`Inspiral`Model1PAT1`r0[WaSABI`Inspiral`Model1PAT1`t] <=7, "StopIntegration"]},
-    {WhenEvent[WaSABI`Inspiral`Model0PA`r0[WaSABI`Inspiral`Model0PA`t] <= 7, "StopIntegration"]}];
+  stopcond = {WhenEvent[Evaluate[insp["StopCondition"]], "StopIntegration"]};
 
   integrations = NDSolveValue[Join[equations, initialconds, stopcond], params, {tparam, 0, \[Infinity]}, PrecisionGoal->10, AccuracyGoal->10];
 
