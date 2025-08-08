@@ -1,13 +1,14 @@
 (* ::Package:: *)
 
 (* ::Input::Initialization:: *)
-datadirectory = FileNameJoin[{WaSABI`Waveform`Private`$WaSABIAmplitudeDirectory, "sf_amp_data"}];
+directory1SF = FileNameJoin[{WaSABI`Waveform`Private`$WaSABIAmplitudeDirectory, "sf_amp_data/1SF/Schwarz_Circ"}];
+directory2SF = FileNameJoin[{WaSABI`Waveform`Private`$WaSABIAmplitudeDirectory, "sf_amp_data/2SF/Schwarz_Circ"}];
 
-Do[Z\[ScriptCapitalI][ll,mm]=Interpolation[Get[FileNameJoin[{datadirectory, "1SFTeukampSchwarzCirc"<>ToString[ll]<>ToString[mm]<>".m"}]]], {ll,2,5}, {mm,1,ll}]
+Do[Z\[ScriptCapitalI][ll,mm]=Interpolation[Get[FileNameJoin[{directory1SF, "1SFTeukampSchwarzCirc"<>ToString[ll]<>ToString[mm]<>".m"}]]], {ll,2,5}, {mm,1,ll}]
 
 Z\[ScriptCapitalI][l_,m_?Negative][r0_]:=(-1)^l Conjugate[Z\[ScriptCapitalI][l,-m][r0]];
 
-Do[Z2\[ScriptCapitalI][ll,mm]=Function[{r0},Exp[Interpolation[Get[FileNameJoin[{datadirectory, "2SFTeukampSchwarzCirc"<>ToString[ll]<>ToString[mm]<>".m"}]]][Log[r0]]]], {ll,2,5}, {mm,1,ll}]
+Do[Z2\[ScriptCapitalI][ll,mm]=Function[{r0},Exp[Interpolation[Get[FileNameJoin[{directory2SF, "2SFTeukampSchwarzCirc"<>ToString[ll]<>ToString[mm]<>".m"}]]][Log[r0]]]], {ll,2,5}, {mm,1,ll}]
 
 Z2\[ScriptCapitalI][l_,m_?Negative][r0_]:=(-1)^l Conjugate[Z2\[ScriptCapitalI][l,-m][r0]];
 

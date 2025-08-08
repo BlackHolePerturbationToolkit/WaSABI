@@ -1,0 +1,28 @@
+Data for linear corrections in the secondary spin q*s of the fluxes and amplitudes. All data is formated as association.
+q=\mu/M is the asymmetric mass ratio, s the dimensionless secondary spin.  |s|=1 when the test body is an extremal Kerr BH. 
+
+"SMRfluxdataWithSecondarySpin2025_36x36.m" contains the small spin corrections to the fluxes at infinity (key "chi2inf") and horizon (key "chi2inf"). The adiabatic flux data is provided by  Maarten van de Meent.
+
+The remain files contain the adiabatic amplitudes (keys "A0spinlm") and the linear in spin corrections to the amplitudes (keys "A1spinlm"). For instance
+
+"SMR_l2_amplitudedataWithSecondarySpin2025_36x36.m" stores amplitudes for l = 2 and all positive m modes. The key "A0spi22" loads the adiabatic amplitudes for the 22 modes, while "A1spin22" load the spin correction for the same mode.
+ 
+<-------------------------------------------------------------------------------------------->
+IMPORTAT NOTE: all amplitudes now follow the convention of the BHPToolkit, specifically of the "Teukolsky" package. This convention is different from the one adopted in the folder "Lin_corr_fluxes_secondary_spin_fixed_freq" and "Lin_corr_fluxes_secondary_spin_fixed_radius". 
+The spin corrections to the amplitudes stored here differ by a minus respect to the data in "Lin_corr_fluxes_secondary_spin_fixed_freq" and "Lin_corr_fluxes_secondary_spin_fixed_radius".
+<--------------------------------------------------------------------------------------------->
+
+The 1PA  corrections in the spin were computed in the fixed frequency scheme: the orbital radius r is shifted by the small body spin in such a way that the coordinate-time frequencies of the spinning body are the same of the referential geodesics. In other words, the azimuthal frequency shift due to the secondary spin \delta \Omega_\phi, vanishes, i.e \delta \Omega_\phi = 0. 
+All data are for spins-aligned, circular equatorial orbits, computed in a Chebyshev grid. The grid used for the data shown here is better designed than the grid used in the folder "Lin_corr_fluxes_secondary_spin_fixed_freq"
+
+Convention used: a>0 (a<0) denotes prograde (retrograde) orbits, while  the z-component of the angular momentum is L_z>0 and aligned to z-axis centered on the primary. Thus, the coordinate time azimuthal frequency \Omega_\phi is always positive.
+
+Truncation error sum over l, worst case (highest value primary spin prograde orbits, strong field) 
+- 5.2 10^(-8) for adiabatic fluxes
+- 5.0 10^(-6) for secondary spin corrections to the fluxes
+
+%--------------------------------------------------------------------------------------------------
+The data was produced with a modified version of the code in Piovano et al Phys. Rev. D 104, 124019 (https://doi.org/10.1103/PhysRevD.104.124019 )(or  https://arxiv.org/abs/2105.07083 )
+%--------------------------------------------------------------------------------------------------
+
+

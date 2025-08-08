@@ -1,12 +1,14 @@
 (* ::Package:: *)
 
 (* ::Input::Initialization:: *)
-datadirectory = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data"}];
+directory1SF = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/1SF_Flux/Schwarz_Circ"}];
+directory2SF = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/2SF_Flux/Schwarz_Circ"}];
+directory1SFLocalInvar = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/1SF_Local_Invariants/Schwarz_Circ"}];
 
-\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH] = Interpolation[Get[FileNameJoin[{datadirectory, "1SFCircShwarzDotEHorizon.m"}]]];
-\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI] = Interpolation[Get[FileNameJoin[{datadirectory, "1SFCircShwarzDotEInf.m"}]]];
-\[ScriptCapitalF]2\[ScriptCapitalE]\[ScriptCapitalI] = Function[{r0},Re[Exp[Interpolation[Get[FileNameJoin[{datadirectory, "2SFCircShwarzDotEInf.m"}]]][Log[r0]]]]];
-z = Interpolation[Get[FileNameJoin[{datadirectory, "1SFCircShwarzRedshfit.m"}]]];
+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH] = Interpolation[Get[FileNameJoin[{directory1SF, "1SFCircShwarzDotEHorizon.m"}]]];
+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI] = Interpolation[Get[FileNameJoin[{directory1SF, "1SFCircShwarzDotEInf.m"}]]];
+\[ScriptCapitalF]2\[ScriptCapitalE]\[ScriptCapitalI] = Function[{r0},Re[Exp[Interpolation[Get[FileNameJoin[{director2SF, "2SFCircShwarzDotEInf.m"}]]][Log[r0]]]]];
+z = Interpolation[Get[FileNameJoin[{directory1SFLocalInvar, "1SFCircShwarzRedshfit.m"}]]];
 
 \[ScriptCapitalF]1[r0_]:=\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI][r0]+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][r0];
 EFLx[x_]:=(1/2 z[x]-x/3z'[x]-1+Sqrt[1-3x]+x/6  (7-24x)/(1-3x)^(3/2));
