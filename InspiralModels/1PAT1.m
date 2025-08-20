@@ -19,7 +19,8 @@ F1[r0_]:=With[{M=1},(3(1-3 M/r0)^(3/2) Sqrt[M/r0])/(M^2 (1-6 M /r0)) (\[ScriptCa
 
 variables={\[CapitalOmega],r0,\[Phi],\[Nu],M};
 evolutionequations={\[CapitalOmega]'[t]==\[Nu][t] F0[r0[t]]+\[Nu][t]^2 F1[r0[t]],\[Phi]'[t]==\[CapitalOmega][t],\[CapitalOmega][t]==Sqrt[M[t]/r0[t]^3],\[Nu]'[t]==0 , M'[t]==0};
-InitialConditionFormat="{r0[0]==_,\[Phi][0]==_, \[Nu][0]==_, M[0]==_}";
+InitialConditionFormat={"M", "r0", "\[Nu]", "\[Phi]"};
+stopcondition = r0[t] <= Max[6.25, 6.05 + 4.5 "\[Nu]" - 1.5 "\[Nu]"^2];
 
 
-<|"IntegrationVariable"->t, "Parameters"->variables, "InspiralEquations"->evolutionequations, "InitialConditionsFormat"->InitialConditionFormat|>
+<|"IntegrationVariable"->t, "Parameters"->variables, "InspiralEquations"->evolutionequations, "InitialConditionsFormat"->InitialConditionFormat, "StopCondition" -> stopcondition|>
