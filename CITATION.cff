@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+title: WaSABI
+message: >-
+  If you use this software, please cite its Zenodo record
+  and include the acknowledgment "This work makes use of
+  the Black Hole Perturbation Toolkit." in any papers.
+type: software
+authors:
+  - given-names: Barry
+    family-names: Wardell
+    email: barry.wardell@gmail.com
+    orcid: 'https://orcid.org/0000-0001-6176-9006'
+    affiliation: University College Dublin
+  - given-names: Josh
+    family-names: Mathews
+    orcid: 'https://orcid.org/0000-0002-5477-8470'
+    email: josh.mat@nus.edu.sg
+    affiliation: National University of Singapore
+  - given-names: Loïc
+    family-names: Honet
+    orcid: 'https://orcid.org/0009-0007-2863-6085'
+    email: loic.honet@ulb.be
+    affiliation: Université libre de Bruxelles
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.16358046
+    description: Latest release on Zenodo
+repository-code: 'https://github.com/BlackHolePerturbationToolkit/WaSABI'
+date-released: 2025-07-23
+abstract: >-
+  A package to generate gravitational waveforms from SF theory and SF-PN Hybrids.
+license: MIT
+version: 0.2.0

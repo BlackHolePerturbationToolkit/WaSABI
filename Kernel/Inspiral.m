@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Title:: *)
-(*Inspiral subpackage of WASABI*)
+(*Inspiral subpackage of WaSABI*)
 
 
 (* ::Chapter:: *)
@@ -12,7 +12,7 @@
 (*Create Package*)
 
 
-BeginPackage["WASABI`Inspiral`"];
+BeginPackage["WaSABI`Inspiral`"];
 
 
 (* ::Subsection:: *)
@@ -36,10 +36,6 @@ InspiralEvaluate::usage = "Evaluates symbolic functions along a given timeseries
 (*Error messages*)
 
 
-GetInspiralEquations::nomodel = "Unknown model";
-InspiralEvaluate::tovershoot = "Time series overshoots the inspiral time.";
-
-
 (* ::Section:: *)
 (*Get Forcing terms*)
 
@@ -50,26 +46,25 @@ InspiralEvaluate::tovershoot = "Time series overshoots the inspiral time.";
 (*Can either add evolve primary as an argument here, or name the models differently?*)
 
 
-$WASABIInspiralDirectory = FileNameJoin[{FileNameDrop[FindFile["WASABI`"], -2], "InspiralModels"}];
+$WaSABIInspiralDirectory = FileNameJoin[{FileNameDrop[FindFile["WaSABI`"], -2], "InspiralModels"}];
 
 
-ListInspiralModels[] :=
+ListInspiralModels[] := ListInspiralModels[] =
  Module[{inspiralmodels},
-  inspiralmodels = FileBaseName /@ FileNames["*.m", $WASABIInspiralDirectory];
+  inspiralmodels = FileBaseName /@ FileNames["*.m", $WaSABIInspiralDirectory];
   inspiralmodels
 ]
 
 
-GetInspiralEquations[model_String] :=
+InspiralModelExistsQ[model_String] :=
+  MemberQ[ListInspiralModels[], model];
+
+
+GetInspiralEquations[model_String] := GetInspiralEquations[model] =
  Module[{filelocation, equations},
-  If[!MemberQ[ListInspiralModels[], model],
-    Message[GetInspiralEquations::nomodel];
-    Return[];
-  ];
+  filelocation = First[FileNames[model<>".m", $WaSABIInspiralDirectory]];
 
-  filelocation = First[FileNames[model<>".m", $WASABIInspiralDirectory]];
-
-  Begin["WASABI`Inspiral`Model"<>model<>"`"];
+  Begin["WaSABI`Inspiral`Model"<>model<>"`"];
   equations = Get[filelocation];
   End[];
   
@@ -88,10 +83,9 @@ GetInspiralEquations[model_String] :=
 (*Add bounds to initial conditions - r0 too big -> Data not available.*)
 (*Add options for precision and accuracy goal.*)
 (*Add default stopping condition? Likely model dependent.*)
-(*Move hardcoded stop condition into model.*)
 
 
-IntInspiral[model_, ics_] :=
+IntInspiral[model_, ics_, prec_, acc_] :=
  Module[{insp, tparam, params, equations, integrations, paramsstr, initparams, initialconds, stopcond},
   (*Add options for precision and accuracy goal*)
   (*Add default stopping condition*)
@@ -103,25 +97,12 @@ IntInspiral[model_, ics_] :=
   paramsstr = SymbolName /@ params;
   initparams = Pick[params, paramsstr, Alternatives@@Keys[ics]];
   initialconds = Map[#[0] == SymbolName[#]&, initparams] /. ics;
-  stopcond = {WhenEvent[WASABI`Inspiral`Model1PAT1`r0[WASABI`Inspiral`Model1PAT1`t] <= 7, "StopIntegration"]};
-
-  integrations = NDSolveValue[Join[equations, initialconds, stopcond], params, {tparam, 0, \[Infinity]}, PrecisionGoal->10, AccuracyGoal->10];
+  stopcond = {WhenEvent[Evaluate[insp["StopCondition"] /. ics], "StopIntegration"]};
+  integrations = NDSolveValue[Join[equations, initialconds, stopcond], params, {tparam, 0, \[Infinity]}, PrecisionGoal->prec, AccuracyGoal->acc];
 
   Append[AssociationThread[paramsstr -> integrations], "Parameters" -> params]
 ];
 
-
-
-InspiralEvaluate[quantity_, inspiral_, tvals_] :=
- Module[{amp, params, totimevalsrule, quantoninsp, tmax},
-  params = inspiral["Parameters"];
-  tmax = Max[inspiral[[1]]["Domain"]];
-  totimevalsrule = If[tmax<Max[tvals], Message[InspiralEvaluate::tovershoot];Return[],
-  Table[params[[i]]->Evaluate[inspiral[ToString[params[[i]]]][tvals]],{i,1,Length[params]}]];
-
-  quantoninsp=quantity//.totimevalsrule;
-  TimeSeries[quantoninsp,{tvals}]
-]
 
 
 (* ::Section:: *)

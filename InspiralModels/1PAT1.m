@@ -1,12 +1,14 @@
 (* ::Package:: *)
 
 (* ::Input::Initialization:: *)
-datadirectory=StringJoin[StringDelete[FindFile["WASABI`"],"/Kernel/WASABI.m"],"/InspiralModels/sf_data"];
+directory1SF = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/1SF_Flux/Schwarz_Circ"}];
+directory2SF = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/2SF_Flux/Schwarz_Circ"}];
+directory1SFLocalInvar = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/1SF_Local_Invariants/Schwarz_Circ"}];
 
-\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH]=Interpolation[Get[StringJoin[datadirectory,"/1SFCircShwarzDotEHorizon.m"]]];
-\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI] =Interpolation[Get[StringJoin[datadirectory,"/1SFCircShwarzDotEInf.m"]]];
-\[ScriptCapitalF]2\[ScriptCapitalE]\[ScriptCapitalI]=Function[{r0},Re[Exp[Interpolation[Get[StringJoin[datadirectory,"/2SFCircShwarzDotEInf.m"]]][Log[r0]]]]];
-z=Interpolation[Get[StringJoin[datadirectory,"/1SFCircShwarzRedshfit.m"]]];
+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH] = Interpolation[Get[FileNameJoin[{directory1SF, "1SFCircShwarzDotEHorizon.m"}]]];
+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI] = Interpolation[Get[FileNameJoin[{directory1SF, "1SFCircShwarzDotEInf.m"}]]];
+\[ScriptCapitalF]2\[ScriptCapitalE]\[ScriptCapitalI] = Function[{r0},Re[Exp[Interpolation[Get[FileNameJoin[{director2SF, "2SFCircShwarzDotEInf.m"}]]][Log[r0]]]]];
+z = Interpolation[Get[FileNameJoin[{directory1SFLocalInvar, "1SFCircShwarzRedshfit.m"}]]];
 
 \[ScriptCapitalF]1[r0_]:=\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI][r0]+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][r0];
 EFLx[x_]:=(1/2 z[x]-x/3z'[x]-1+Sqrt[1-3x]+x/6  (7-24x)/(1-3x)^(3/2));
@@ -17,7 +19,8 @@ F1[r0_]:=With[{M=1},(3(1-3 M/r0)^(3/2) Sqrt[M/r0])/(M^2 (1-6 M /r0)) (\[ScriptCa
 
 variables={\[CapitalOmega],r0,\[Phi],\[Nu],M};
 evolutionequations={\[CapitalOmega]'[t]==\[Nu][t] F0[r0[t]]+\[Nu][t]^2 F1[r0[t]],\[Phi]'[t]==\[CapitalOmega][t],\[CapitalOmega][t]==Sqrt[M[t]/r0[t]^3],\[Nu]'[t]==0 , M'[t]==0};
-InitialConditionFormat="{r0[0]==_,\[Phi][0]==_, \[Nu][0]==_, M[0]==_}";
+InitialConditionFormat={"M", "r0", "\[Nu]", "\[Phi]"};
+stopcondition = r0[t] <= Max[6.25, 6.05 + 4.5 "\[Nu]" - 1.5 "\[Nu]"^2];
 
 
-<|"IntegrationVariable"->t, "Parameters"->variables, "InspiralEquations"->evolutionequations, "InitialConditionsFormat"->InitialConditionFormat|>
+<|"IntegrationVariable"->t, "Parameters"->variables, "InspiralEquations"->evolutionequations, "InitialConditionsFormat"->InitialConditionFormat, "StopCondition" -> stopcondition|>
