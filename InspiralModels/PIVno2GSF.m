@@ -18933,7 +18933,7 @@ m'[t]==Fm[\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t]
 \[Delta]m'[t]==F\[Delta]m[\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]],
 \[Delta]\[Nu]'[t]==F\[Delta]\[Nu][\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]],
 \[Delta]\[Chi]'[t]==F\[Delta]\[Chi][\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]};
-InitialConditionFormat={\[Omega],\[Phi], \[Nu], m,\[Chi]1,\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]};
+InitialConditionFormat={"\[Omega]","\[Phi]", "\[Nu]", "m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"};
 
 
 <|"IntegrationVariable"->t, "Parameters"->variables, "InspiralEquations"->evolutionequations, "InitialConditionsFormat"->InitialConditionFormat|>

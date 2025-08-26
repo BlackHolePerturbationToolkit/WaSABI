@@ -7,7 +7,7 @@ directory1SFLocalInvar = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDi
 
 \[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH] = Interpolation[Get[FileNameJoin[{directory1SF, "1SFCircShwarzDotEHorizon.m"}]]];
 \[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI] = Interpolation[Get[FileNameJoin[{directory1SF, "1SFCircShwarzDotEInf.m"}]]];
-\[ScriptCapitalF]2\[ScriptCapitalE]\[ScriptCapitalI] = Function[{r0},Re[Exp[Interpolation[Get[FileNameJoin[{director2SF, "2SFCircShwarzDotEInf.m"}]]][Log[r0]]]]];
+\[ScriptCapitalF]2\[ScriptCapitalE]\[ScriptCapitalI] = Function[{r0},Re[Exp[Interpolation[Get[FileNameJoin[{directory2SF, "2SFCircShwarzDotEInf.m"}]]][Log[r0]]]]];
 z = Interpolation[Get[FileNameJoin[{directory1SFLocalInvar, "1SFCircShwarzRedshfit.m"}]]];
 
 \[ScriptCapitalF]1[r0_]:=\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI][r0]+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][r0];
