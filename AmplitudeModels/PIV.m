@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Function on phase space*)
 
 
@@ -458,36 +458,37 @@ d\[Delta]\[Chi]d\[Chi][\[Omega]_,\[Phi]_,\[Nu]_,m_,\[Chi]1_,\[Chi]2_,\[Delta]m_,
 d\[Delta]\[Chi]d\[Nu][\[Omega]_,\[Phi]_,\[Nu]_,m_,\[Chi]1_,\[Chi]2_,\[Delta]m_,\[Delta]\[Nu]_,\[Delta]\[Chi]_]:=-(\[Delta]\[Chi]/\[Nu])
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Construct Interpolations*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Fetch data*)
 
 
-directoryamp = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIAmplitudeDirectory, "sf_amp_data/1SF/Kerr_Circ"}];
-directoryamp2 = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIAmplitudeDirectory, "sf_amp_data/1SF/Schwarz_Circ"}];
-directoryamp3 = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIAmplitudeDirectory, "sf_amp_data/2SF/Schwarz_Circ"}];
+directoryamp = FileNameJoin[{WaSABI`Waveform`Private`$WaSABIAmplitudeDirectory, "sf_amp_data/1SF/Kerr_Circ"}];
+directoryamp2 = FileNameJoin[{WaSABI`Waveform`Private`$WaSABIAmplitudeDirectory, "sf_amp_data/1SF/Schwarz_Circ"}];
+directoryamp3 = FileNameJoin[{WaSABI`Waveform`Private`$WaSABIAmplitudeDirectory, "sf_amp_data/2SF/Schwarz_Circ"}];
+directory1SF = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/1SF_Flux/Kerr_Circ"}];
 
 fluxdata1SF=Get[FileNameJoin[{directory1SF,"SMRfluxdata2025_36x36.data"}]];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*\[ScriptCapitalF]\[ScriptCapitalI]*)
 
 
 \[ScriptCapitalF]\[ScriptCapitalI]int1SFKerr = Interpolation[Table[{{Log[1-fluxdata1SF[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/fluxdata1SF[[i]]["r"]]},N[fluxdata1SF[[i]]["r"]^5 fluxdata1SF[[i]]["inf"]["Value"]]},{i,1,Length[fluxdata1SF]}],Method->"Hermite",InterpolationOrder->{All,All}];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*\[ScriptCapitalF]\[ScriptCapitalH]*)
 
 
 \[ScriptCapitalF]\[ScriptCapitalH]int1SFKerr = Interpolation[Table[{{Log[1-fluxdata1SF[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/fluxdata1SF[[i]]["r"]]},N[fluxdata1SF[[i]]["r"]^5 fluxdata1SF[[i]]["hor"]["Value"]]},{i,1,Length[fluxdata1SF]}],Method->"Hermite",InterpolationOrder->{All,All}];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*\[Delta]x*)
 
 
@@ -495,15 +496,14 @@ Re1SFAmp22int=Interpolation[Get[FileNameJoin[{directoryamp, "ReAmp1SFKerr22.m"}]
 Im1SFAmp22int=Interpolation[Get[FileNameJoin[{directoryamp, "ImAmp1SFKerr22.m"}]],Method->"Hermite",InterpolationOrder->{All,All}];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Real 22 amplitude  1SF*)
 
 
 RealAmp1SFKerr22=Interpolation[Get[FileNameJoin[{directoryamp, "1SF_RealAmp_KerrCirc_22.m"}]],Method->"Hermite",InterpolationOrder->{All,All}];
-(*Insert 2SF real amp and 1SF real amp schwarz
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*2SF*)
 
 
@@ -515,16 +515,17 @@ ReZ2\[ScriptCapitalI]data[ll,mm]=Table[{Z2\[ScriptCapitalI]data[ll,mm][[i]][[1]]
 ImZ2\[ScriptCapitalI]data[ll,mm]=Table[{Z2\[ScriptCapitalI]data[ll,mm][[i]][[1]],Im[Z2\[ScriptCapitalI]data[ll,mm][[i]][[2]]]},{i,1,Length[Z2\[ScriptCapitalI]data[ll,mm]]}];
 ReZ\[ScriptCapitalI]data[ll,mm]=Table[{Z\[ScriptCapitalI]data[ll,mm][[i]][[1]],Re[Z\[ScriptCapitalI]data[ll,mm][[i]][[2]]]},{i,1,Length[Z\[ScriptCapitalI]data[ll,mm]]}];
 ImZ\[ScriptCapitalI]data[ll,mm]=Table[{Z\[ScriptCapitalI]data[ll,mm][[i]][[1]],Im[Z\[ScriptCapitalI]data[ll,mm][[i]][[2]]]},{i,1,Length[Z\[ScriptCapitalI]data[ll,mm]]}];
-
-ReZ2\[ScriptCapitalI]interpolation[ll,mm]=Interpolation[ReZ2\[ScriptCapitalI]data];
-ImZ2\[ScriptCapitalI]interpolation[ll,mm]=Interpolation[ImZ2\[ScriptCapitalI]data];
-ReZ2\[ScriptCapitalI][ll,mm]=Function[{r0},Cos[ImZ2\[ScriptCapitalI]interpolation[ll,mm][Log[r0]]]Exp[ReZ2\[ScriptCapitalI]interpolation[ll,mm][Log[r0]]]];
-ImZ2\[ScriptCapitalI][ll,mm]=Function[{r0},Sin[ImZ2\[ScriptCapitalI]interpolation[ll,mm][Log[r0]]]Exp[ReZ2\[ScriptCapitalI]interpolation[ll,mm][Log[r0]]]];
-
-ReZ\[ScriptCapitalI][ll,mm]=Interpolation[ReZ\[ScriptCapitalI]data];
-ImZ\[ScriptCapitalI][ll,mm]=Interpolation[ImZ\[ScriptCapitalI]data];
+ReZ2\[ScriptCapitalI]interpolation[ll,mm]=Interpolation[ReZ2\[ScriptCapitalI]data[ll,mm]];
+ImZ2\[ScriptCapitalI]interpolation[ll,mm]=Interpolation[ImZ2\[ScriptCapitalI]data[ll,mm]];
+ImZ\[ScriptCapitalI][ll,mm]=Interpolation[ImZ\[ScriptCapitalI]data[ll,mm]];
+ReZ\[ScriptCapitalI][ll,mm]=Interpolation[ReZ\[ScriptCapitalI]data[ll,mm]];
 
 , {ll,2,(*5*)2}, {mm,1,ll}];
+
+ReZ2\[ScriptCapitalI][ll_,mm_][r0_]:=Cos[ImZ2\[ScriptCapitalI]interpolation[ll,mm][Log[r0]]]Exp[ReZ2\[ScriptCapitalI]interpolation[ll,mm][Log[r0]]];
+ImZ2\[ScriptCapitalI][ll_,mm_][r0_]:=Sin[ImZ2\[ScriptCapitalI]interpolation[ll,mm][Log[r0]]]Exp[ReZ2\[ScriptCapitalI]interpolation[ll,mm][Log[r0]]];
+
+
 
 With[{M=1},
 Reh0PAamp[l_,m_][r0_]:=(-2(-ReZ\[ScriptCapitalI][l,m][r0]))/(I m Sqrt[M/r0^3])^2;
@@ -538,12 +539,11 @@ RealAmp1SFSchw22[r0_]:=((Reh0PAamp[2,2][r0])^2+(Imh0PAamp[2,2][r0])^2)^(1/2);
 RealAmp2SFSchw22[r0_]:=(Imh0PAamp[2,2][r0] Imh1PAamp[2,2][r0]+Reh0PAamp[2,2][r0] Reh1PAamp[2,2][r0])/RealAmp1SFSchw22[r0];
 
 
-
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Hybridised mode amplitudes*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Mode amplitudes*)
 
 
