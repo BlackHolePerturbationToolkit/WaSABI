@@ -21,6 +21,7 @@ variables={\[CapitalOmega],r0,\[Phi],\[Nu],M};
 evolutionequations={\[CapitalOmega]'[t]==\[Nu][t] F0[r0[t]]+\[Nu][t]^2 F1[r0[t]],\[Phi]'[t]==\[CapitalOmega][t],\[CapitalOmega][t]==Sqrt[M[t]/r0[t]^3],\[Nu]'[t]==0 , M'[t]==0};
 InitialConditionFormat={"M", "r0", "\[Nu]", "\[Phi]"};
 stopcondition = r0[t] <= Max[6.25, 6.05 + 4.5 "\[Nu]" - 1.5 "\[Nu]"^2];
+parameterspacecoverage = {6.05<"r0"<30};
 
 
-<|"IntegrationVariable"->t, "Parameters"->variables, "InspiralEquations"->evolutionequations, "InitialConditionsFormat"->InitialConditionFormat, "StopCondition" -> stopcondition|>
+<|"IntegrationVariable"->t, "Parameters"->variables, "InspiralEquations"->evolutionequations, "InitialConditionsFormat"->InitialConditionFormat, "StopCondition" -> stopcondition, "ParameterSpaceCoverage" -> parameterspacecoverage|>

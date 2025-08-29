@@ -35,7 +35,7 @@ BinaryInspiral::usage = "BinaryInspiral[ics] generates a BinaryInspiralModel rep
 BinaryInspiralModel::usage = "BinaryInspiralModel[...] represents a binary inspiral.";
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Error Messages*)
 
 
@@ -43,6 +43,9 @@ BinaryInspiral::nomodel = "Unknown model `1`.";
 
 
 BinaryInspiral::ics = "Invalid initial conditions `1` for model `2`.";
+
+
+BinaryInspiral::icsout = "Initial conditions `1`  out of supported parameter space coverage for model `2`.";
 
 
 BinaryInspiralModel::nomode = "Mode `1` not available in model `2`.";
@@ -71,10 +74,15 @@ BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model,prec,acc, inspiral,
     Message[BinaryInspiral::nomodel, model];
     Return[$Failed];
   ];
-  If[Sort[Keys[ics]] != WaSABI`Inspiral`Private`GetInspiralEquations[model][["InitialConditionsFormat"]],
+  If[Sort[Keys[ics]] != Sort[WaSABI`Inspiral`Private`GetInspiralEquations[model][["InitialConditionsFormat"]]],
       Message[BinaryInspiral::ics, ics, model];
       Return[$Failed];
   ];
+  If[Not@(And@@(WaSABI`Inspiral`Private`GetInspiralEquations[model][["ParameterSpaceCoverage"]]/.ics)),
+      Message[BinaryInspiral::icsout, ics, model];
+      Return[$Failed];
+  ];
+  
   inspiral = WaSABI`Inspiral`Private`IntInspiral[model, ics, prec, acc];
   amplitudes = KeyMap[First[StringCases[#,"("~~l_~~","~~m_~~")":>{ToExpression[l],ToExpression[m]}]]&, WaSABI`Waveform`Private`GetAmplitudes[model]];
   tmax = Max[inspiral[[1]]["Domain"]];
