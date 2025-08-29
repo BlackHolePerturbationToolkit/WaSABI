@@ -8,7 +8,7 @@
 (*Define usage for public functions*)
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Create Package*)
 
 
@@ -36,14 +36,8 @@ InspiralEvaluate::usage = "Evaluates symbolic functions along a given timeseries
 (*Error messages*)
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Get Forcing terms*)
-
-
-(* ::Text:: *)
-(*Pass in a string label of model, fetch the inspiral equations which should return: The list of all independent variables joined with the list of dependent variables, the relation of the dependent variables to the independent variables joined with the equations describing the evolution of the independent variables.*)
-(**)
-(*Can either add evolve primary as an argument here, or name the models differently?*)
 
 
 $WaSABIInspiralDirectory = FileNameJoin[{FileNameDrop[FindFile["WaSABI`"], -2], "InspiralModels"}];
@@ -72,7 +66,7 @@ GetInspiralEquations[model_String] := GetInspiralEquations[model] =
 ]
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Integrate Inspiral*)
 
 
@@ -81,14 +75,11 @@ GetInspiralEquations[model_String] := GetInspiralEquations[model] =
 (**)
 (*To do: *)
 (*Add bounds to initial conditions - r0 too big -> Data not available.*)
-(*Add options for precision and accuracy goal.*)
-(*Add default stopping condition? Likely model dependent.*)
 
 
 IntInspiral[model_, ics_, prec_, acc_] :=
  Module[{insp, tparam, params, equations, integrations, paramsstr, initparams, initialconds, stopcond},
-  (*Add options for precision and accuracy goal*)
-  (*Add default stopping condition*)
+
 
   insp = GetInspiralEquations[model];
   tparam = insp["IntegrationVariable"];
@@ -105,7 +96,7 @@ IntInspiral[model_, ics_, prec_, acc_] :=
 
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Close the package*)
 
 

@@ -4,7 +4,7 @@
 (*BinaryInspiral*)
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Create Package*)
 
 
@@ -58,7 +58,7 @@ BinaryInspiralModel::nomode = "Mode `1` not available in model `2`.";
 Begin["`Private`"];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*BinaryInspiral*)
 
 
@@ -90,7 +90,7 @@ BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model,prec,acc, inspiral,
 ];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*BinaryInspiralModel*)
 
 
@@ -161,7 +161,7 @@ BinaryInspiralModel[assoc_]["Trajectory"][param_][t:(_?NumericQ|{_?NumericQ..})]
   assoc["Inspiral"][param][t];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*End Package*)
 
 
