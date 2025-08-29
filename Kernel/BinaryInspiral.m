@@ -4,7 +4,7 @@
 (*BinaryInspiral*)
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Create Package*)
 
 
@@ -55,7 +55,7 @@ BinaryInspiralModel::nomode = "Mode `1` not available in model `2`.";
 Begin["`Private`"];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*BinaryInspiral*)
 
 
@@ -71,7 +71,7 @@ BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model,prec,acc, inspiral,
     Message[BinaryInspiral::nomodel, model];
     Return[$Failed];
   ];
-  If[Sort[Keys[ics]] != WaSABI`Inspiral`Private`GetInspiralEquations[model][["InitialConditionsFormat"]],
+  If[Sort[Keys[ics]] != Sort[WaSABI`Inspiral`Private`GetInspiralEquations[model][["InitialConditionsFormat"]]],
       Message[BinaryInspiral::ics, ics, model];
       Return[$Failed];
   ];
@@ -82,7 +82,7 @@ BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model,prec,acc, inspiral,
 ];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*BinaryInspiralModel*)
 
 
@@ -153,7 +153,7 @@ BinaryInspiralModel[assoc_]["Trajectory"][param_][t:(_?NumericQ|{_?NumericQ..})]
   assoc["Inspiral"][param][t];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*End Package*)
 
 
