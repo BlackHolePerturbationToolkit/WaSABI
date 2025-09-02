@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Dependent variables*)
 
 
@@ -593,6 +593,7 @@ directory2SF = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "
 directory1SFLocalInvar = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/1SF_Local_Invariants/Kerr_Circ"}];
 directorySecSpin = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/Leading_S2_Flux/Kerr_Circ"}];
 directoryamp = FileNameJoin[{WaSABI`Waveform`Private`$WaSABIAmplitudeDirectory, "sf_amp_data/1SF/Kerr_Circ"}];
+directorystop=FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/stop_conditions"}];
 
 fluxdata2SF=Get[FileNameJoin[{directory2SF, "2SFCircShwarzDotEInf.m"}]];
 fluxdata1SF=Get[FileNameJoin[{directory1SF,"SMRfluxdata2025_36x36.data"}]];
@@ -600,6 +601,7 @@ fluxdata1SFSchwInf=Get[FileNameJoin[{directory1SFSch,"1SFCircShwarzDotEInf.m"}]]
 fluxdata1SFSchwHor=Get[FileNameJoin[{directory1SFSch,"1SFCircShwarzDotEHorizon.m"}]];
 spinfluxdata=Get[FileNameJoin[{directorySecSpin,"SMRfluxdataWithSecondarySpin2025_36x36.m"}]];
 invardata=Get[FileNameJoin[{directory1SFLocalInvar,"KerrCircularEquatorialInvariants2025b_36x36.data"}]];
+\[Omega]critdata=Get[FileNameJoin[{directorystop,"StopHybridFixedChi.m"}]];
 
 
 (* ::Subsection::Closed:: *)
@@ -607,7 +609,7 @@ invardata=Get[FileNameJoin[{directory1SFLocalInvar,"KerrCircularEquatorialInvari
 
 
 \[ScriptCapitalF]\[ScriptCapitalI]int1SFSchw = Interpolation[fluxdata1SFSchwInf];
-\[ScriptCapitalF]\[ScriptCapitalI]int2SFSchw = Function[{logr0},Re[Exp[Interpolation[fluxdata2SF][logr0]]]];
+\[ScriptCapitalF]\[ScriptCapitalI]int2SFSchw = Function[{logr0},Re[Exp[Interpolation[fluxdata2SF,InterpolationOrder->8][logr0]]]];
 
 \[ScriptCapitalF]\[ScriptCapitalI]int1SFKerr = Interpolation[Table[{{Log[1-fluxdata1SF[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/fluxdata1SF[[i]]["r"]]},N[fluxdata1SF[[i]]["r"]^5 fluxdata1SF[[i]]["inf"]["Value"]]},{i,1,Length[fluxdata1SF]}],Method->"Hermite",InterpolationOrder->{All,All}];
 \[ScriptCapitalF]\[ScriptCapitalI]intS2Kerr = Interpolation[Table[{{Log[1-spinfluxdata[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/spinfluxdata[[i]]["r"]]},N[spinfluxdata[[i]]["r"]^5 spinfluxdata[[i]]["chi2inf"]]},{i,1,Length[spinfluxdata]}],Method->"Hermite",InterpolationOrder->{All,All}];
@@ -617,25 +619,32 @@ invardata=Get[FileNameJoin[{directory1SFLocalInvar,"KerrCircularEquatorialInvari
 (*\[ScriptCapitalF]\[ScriptCapitalH]*)
 
 
-\[ScriptCapitalF]\[ScriptCapitalH]int1SFSchw = Interpolation[fluxdata1SFSchwHor];
+\[ScriptCapitalF]\[ScriptCapitalH]int1SFSchw = Interpolation[fluxdata1SFSchwHor,InterpolationOrder->8];
 
-\[ScriptCapitalF]\[ScriptCapitalH]int1SFKerr = Interpolation[Table[{{Log[1-fluxdata1SF[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/fluxdata1SF[[i]]["r"]]},N[fluxdata1SF[[i]]["r"]^5 fluxdata1SF[[i]]["hor"]["Value"]]},{i,1,Length[fluxdata1SF]}],Method->"Hermite",InterpolationOrder->{All,All}];
-\[ScriptCapitalF]\[ScriptCapitalH]intS2Kerr = Interpolation[Table[{{Log[1-spinfluxdata[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/spinfluxdata[[i]]["r"]]},N[spinfluxdata[[i]]["r"]^5 spinfluxdata[[i]]["chi2hor"]]},{i,1,Length[spinfluxdata]}],Method->"Hermite",InterpolationOrder->{All,All}];
+\[ScriptCapitalF]\[ScriptCapitalH]int1SFKerr = Interpolation[Table[{{Log[1-fluxdata1SF[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/fluxdata1SF[[i]]["r"]]},N[fluxdata1SF[[i]]["r"]^(15/2) fluxdata1SF[[i]]["hor"]["Value"]]},{i,1,Length[fluxdata1SF]}],Method->"Hermite",InterpolationOrder->{All,All}];
+\[ScriptCapitalF]\[ScriptCapitalH]intS2Kerr = Interpolation[Table[{{Log[1-spinfluxdata[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/spinfluxdata[[i]]["r"]]},N[spinfluxdata[[i]]["r"]^(9) spinfluxdata[[i]]["chi2hor"]]},{i,1,Length[spinfluxdata]}],Method->"Hermite",InterpolationOrder->{All,All}];
 
 
 (* ::Subsection::Closed:: *)
 (*Eb*)
 
 
-\[CapitalDelta]Uint = Interpolation[Table[{{Log[1-invardata[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,invardata[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/invardata[[i]]["r"]]},N[invardata[[i]]["\[CapitalDelta]U"]["Value"]]},{i,1,Length[invardata]}]];
+\[CapitalDelta]Uint = Interpolation[Table[{{Log[1-invardata[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,invardata[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/invardata[[i]]["r"]]},N[invardata[[i]]["\[CapitalDelta]U"]["Value"]]},{i,1,Length[invardata]}],Method->"Hermite",InterpolationOrder->{All,All}];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*\[Delta]x*)
 
 
 Re1SFAmp22int=Interpolation[Get[FileNameJoin[{directoryamp, "ReAmp1SFKerr22.m"}]],Method->"Hermite",InterpolationOrder->{All,All}];
 Im1SFAmp22int=Interpolation[Get[FileNameJoin[{directoryamp, "ImAmp1SFKerr22.m"}]],Method->"Hermite",InterpolationOrder->{All,All}];
+
+
+(* ::Subsection::Closed:: *)
+(*Stop Condition*)
+
+
+\[Omega]crit=Interpolation[\[Omega]critdata,InterpolationOrder->All];
 
 
 (* ::Section::Closed:: *)
@@ -654,7 +663,13 @@ m'[t]==Fm[\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t]
 \[Delta]\[Nu]'[t]==F\[Delta]\[Nu][\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]],
 \[Delta]\[Chi]'[t]==F\[Delta]\[Chi][\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]};
 InitialConditionFormat={"\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"};
-stopcondition = \[Omega][t] >= Min[0.0679, 0.05(*6.05 + 4.5 "\[Nu]" - 1.5 "\[Nu]"^2*)];
+stopcondition = {\[Omega][t] >= Min[1/((1.05rISCO["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"])^(3/2)+"\[Chi]1"),1/(6.26^(3/2)+"\[Chi]1")],
+\[Omega][t] >= \[Omega]crit["\[Nu]","\[Chi]1","\[Chi]2"]};
+parameterspacecoverage = {\[Sqrt]((rISCO["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"] x["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"])/(1-"\[Chi]1" x["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"]^(3/2))^(2/3))<.998,
+1/(30^(3/2)+"\[Chi]1")<"\[Omega]"<Min[1/(6.06^(3/2)+"\[Chi]1"),
+"\[Omega]">\[Omega]crit["\[Nu]","\[Chi]1","\[Chi]2"]],
+"\[Nu]"<.248,
+Abs["\[Chi]1"]>.000001};
 
 
 <|"IntegrationVariable"->t, "Parameters"->variables, "InspiralEquations"->evolutionequations, "InitialConditionsFormat"->InitialConditionFormat,"StopCondition" -> stopcondition, "ParameterSpaceCoverage"->parameterspacecoverage|>
