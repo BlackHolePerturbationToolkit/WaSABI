@@ -515,10 +515,10 @@ ReZ2\[ScriptCapitalI]data[ll,mm]=Table[{Z2\[ScriptCapitalI]data[ll,mm][[i]][[1]]
 ImZ2\[ScriptCapitalI]data[ll,mm]=Table[{Z2\[ScriptCapitalI]data[ll,mm][[i]][[1]],Im[Z2\[ScriptCapitalI]data[ll,mm][[i]][[2]]]},{i,1,Length[Z2\[ScriptCapitalI]data[ll,mm]]}];
 ReZ\[ScriptCapitalI]data[ll,mm]=Table[{Z\[ScriptCapitalI]data[ll,mm][[i]][[1]],Re[Z\[ScriptCapitalI]data[ll,mm][[i]][[2]]]},{i,1,Length[Z\[ScriptCapitalI]data[ll,mm]]}];
 ImZ\[ScriptCapitalI]data[ll,mm]=Table[{Z\[ScriptCapitalI]data[ll,mm][[i]][[1]],Im[Z\[ScriptCapitalI]data[ll,mm][[i]][[2]]]},{i,1,Length[Z\[ScriptCapitalI]data[ll,mm]]}];
-ReZ2\[ScriptCapitalI]interpolation[ll,mm]=Interpolation[ReZ2\[ScriptCapitalI]data[ll,mm]];
-ImZ2\[ScriptCapitalI]interpolation[ll,mm]=Interpolation[ImZ2\[ScriptCapitalI]data[ll,mm]];
-ImZ\[ScriptCapitalI][ll,mm]=Interpolation[ImZ\[ScriptCapitalI]data[ll,mm]];
-ReZ\[ScriptCapitalI][ll,mm]=Interpolation[ReZ\[ScriptCapitalI]data[ll,mm]];
+ReZ2\[ScriptCapitalI]interpolation[ll,mm]=Interpolation[ReZ2\[ScriptCapitalI]data[ll,mm],InterpolationOrder->3, Method->"Hermite"];
+ImZ2\[ScriptCapitalI]interpolation[ll,mm]=Interpolation[ImZ2\[ScriptCapitalI]data[ll,mm],InterpolationOrder->3,Method->"Hermite"];
+ImZ\[ScriptCapitalI][ll,mm]=Interpolation[ImZ\[ScriptCapitalI]data[ll,mm],InterpolationOrder->8,Method->"Hermite"];
+ReZ\[ScriptCapitalI][ll,mm]=Interpolation[ReZ\[ScriptCapitalI]data[ll,mm],InterpolationOrder->8,Method->"Hermite"];
 
 , {ll,2,(*5*)2}, {mm,1,ll}];
 
