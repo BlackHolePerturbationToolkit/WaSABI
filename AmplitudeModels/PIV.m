@@ -485,7 +485,7 @@ fluxdata1SF=Get[FileNameJoin[{directory1SF,"SMRfluxdata2025_36x36.data"}]];
 (*\[ScriptCapitalF]\[ScriptCapitalH]*)
 
 
-\[ScriptCapitalF]\[ScriptCapitalH]int1SFKerr = Interpolation[Table[{{Log[1-fluxdata1SF[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/fluxdata1SF[[i]]["r"]]},N[fluxdata1SF[[i]]["r"]^5 fluxdata1SF[[i]]["hor"]["Value"]]},{i,1,Length[fluxdata1SF]}],Method->"Hermite",InterpolationOrder->{All,All}];
+\[ScriptCapitalF]\[ScriptCapitalH]int1SFKerr = Interpolation[Table[{{Log[1-fluxdata1SF[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/fluxdata1SF[[i]]["r"]]},N[fluxdata1SF[[i]]["r"]^(15/2) fluxdata1SF[[i]]["hor"]["Value"]]},{i,1,Length[fluxdata1SF]}],Method->"Hermite",InterpolationOrder->{All,All}];
 
 
 (* ::Subsection::Closed:: *)
@@ -513,10 +513,13 @@ Z2\[ScriptCapitalI]data[ll,mm]=Get[FileNameJoin[{directoryamp3, "2SFTeukampSchwa
 
 ReZ2\[ScriptCapitalI]data[ll,mm]=Table[{Z2\[ScriptCapitalI]data[ll,mm][[i]][[1]],Re[Z2\[ScriptCapitalI]data[ll,mm][[i]][[2]]]},{i,1,Length[Z2\[ScriptCapitalI]data[ll,mm]]}];
 ImZ2\[ScriptCapitalI]data[ll,mm]=Table[{Z2\[ScriptCapitalI]data[ll,mm][[i]][[1]],Im[Z2\[ScriptCapitalI]data[ll,mm][[i]][[2]]]},{i,1,Length[Z2\[ScriptCapitalI]data[ll,mm]]}];
+
 ReZ\[ScriptCapitalI]data[ll,mm]=Table[{Z\[ScriptCapitalI]data[ll,mm][[i]][[1]],Re[Z\[ScriptCapitalI]data[ll,mm][[i]][[2]]]},{i,1,Length[Z\[ScriptCapitalI]data[ll,mm]]}];
 ImZ\[ScriptCapitalI]data[ll,mm]=Table[{Z\[ScriptCapitalI]data[ll,mm][[i]][[1]],Im[Z\[ScriptCapitalI]data[ll,mm][[i]][[2]]]},{i,1,Length[Z\[ScriptCapitalI]data[ll,mm]]}];
+
 ReZ2\[ScriptCapitalI]interpolation[ll,mm]=Interpolation[ReZ2\[ScriptCapitalI]data[ll,mm],InterpolationOrder->3, Method->"Hermite"];
 ImZ2\[ScriptCapitalI]interpolation[ll,mm]=Interpolation[ImZ2\[ScriptCapitalI]data[ll,mm],InterpolationOrder->3,Method->"Hermite"];
+
 ImZ\[ScriptCapitalI][ll,mm]=Interpolation[ImZ\[ScriptCapitalI]data[ll,mm],InterpolationOrder->8,Method->"Hermite"];
 ReZ\[ScriptCapitalI][ll,mm]=Interpolation[ReZ\[ScriptCapitalI]data[ll,mm],InterpolationOrder->8,Method->"Hermite"];
 
@@ -543,7 +546,7 @@ RealAmp2SFSchw22[r0_]:=(Imh0PAamp[2,2][r0] Imh1PAamp[2,2][r0]+Reh0PAamp[2,2][r0]
 (*Hybridised mode amplitudes*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Mode amplitudes*)
 
 
