@@ -531,22 +531,24 @@ ImZ2\[ScriptCapitalI][ll_,mm_][r0_]:=Sin[ImZ2\[ScriptCapitalI]interpolation[ll,m
 
 
 With[{M=1},
-Reh0PAamp[l_,m_][r0_]:=(-2(-ReZ\[ScriptCapitalI][l,m][r0]))/(I m Sqrt[M/r0^3])^2;
-Imh0PAamp[l_,m_][r0_]:=(-2(-ImZ\[ScriptCapitalI][l,m][r0]))/(I m Sqrt[M/r0^3])^2;
-Reh1PAamp[l_,m_][r0_]:= (-2ReZ2\[ScriptCapitalI][l,m][r0])/(I m Sqrt[M/r0^3])^2;
-Imh1PAamp[l_,m_][r0_]:= (-2ImZ2\[ScriptCapitalI][l,m][r0])/(I m Sqrt[M/r0^3])^2;
+Reh0PAamp[ll_,mm_][r0_]:=(-2(-ReZ\[ScriptCapitalI][ll,mm][r0]))/(I mm Sqrt[M/r0^3])^2;
+Imh0PAamp[ll_,mm_][r0_]:=(-2(-ImZ\[ScriptCapitalI][ll,mm][r0]))/(I mm Sqrt[M/r0^3])^2;
+
+Reh1PAamp[ll_,mm_][r0_]:= (-2ReZ2\[ScriptCapitalI][ll,mm][r0])/(I mm Sqrt[M/r0^3])^2;
+Imh1PAamp[ll_,mm_][r0_]:= (-2ImZ2\[ScriptCapitalI][ll,mm][r0])/(I mm Sqrt[M/r0^3])^2;
 ]
 
 
 RealAmp1SFSchw22[r0_]:=((Reh0PAamp[2,2][r0])^2+(Imh0PAamp[2,2][r0])^2)^(1/2);
-RealAmp2SFSchw22[r0_]:=(Imh0PAamp[2,2][r0] Imh1PAamp[2,2][r0]+Reh0PAamp[2,2][r0] Reh1PAamp[2,2][r0])/RealAmp1SFSchw22[r0];
+RealAmp2SFSchw22[r0_]:=(Imh0PAamp[2,2][r0] Imh1PAamp[2,2][r0]+Reh0PAamp[2,2][r0] Reh1PAamp[2,2][r0])/RealAmp1SFSchw22[r0]+2/3  (-1/Sqrt[1-3 1/r0])Derivative[1][RealAmp1SFSchw22][r0];
+(*Hardcoded Berndston mass correction in second term - don't ask.*)
 
 
 (* ::Section::Closed:: *)
 (*Hybridised mode amplitudes*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Mode amplitudes*)
 
 
