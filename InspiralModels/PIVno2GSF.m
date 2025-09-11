@@ -1427,7 +1427,7 @@ d\[Delta]\[Chi]d\[Chi][\[Omega]_,\[Phi]_,\[Nu]_,m_,\[Chi]1_,\[Chi]2_,\[Delta]m_,
 d\[Delta]\[Chi]d\[Nu][\[Omega]_,\[Phi]_,\[Nu]_,m_,\[Chi]1_,\[Chi]2_,\[Delta]m_,\[Delta]\[Nu]_,\[Delta]\[Chi]_]:=-(\[Delta]\[Chi]/\[Nu])
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Construct Interpolations*)
 
 
@@ -1449,7 +1449,7 @@ fluxdata1SFSchwInf=Get[FileNameJoin[{directory1SFSch,"1SFCircShwarzDotEInf.m"}]]
 fluxdata1SFSchwHor=Get[FileNameJoin[{directory1SFSch,"1SFCircShwarzDotEHorizon.m"}]];
 spinfluxdata=Get[FileNameJoin[{directorySecSpin,"SMRfluxdataWithSecondarySpin2025_36x36.m"}]];
 invardata=Get[FileNameJoin[{directory1SFLocalInvar,"KerrCircularEquatorialInvariants2025b_36x36.data"}]];
-\[Omega]critdata=Get[FileNameJoin[{directorystop,"StopHybridFixedChi.m"}]];
+\[Omega]critdata=Get[FileNameJoin[{directorystop,"StopHybridFixedChino2GSF.m"}]];
 
 
 (* ::Subsection::Closed:: *)

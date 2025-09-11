@@ -2146,8 +2146,8 @@ d\[Delta]\[Chi]d\[Chi][\[Omega]_,\[Phi]_,\[Nu]_,m_,s_,\[Sigma]b_,\[Delta]m_,\[De
 d\[Delta]\[Chi]d\[Nu][\[Omega]_,\[Phi]_,\[Nu]_,m_,s_,\[Sigma]b_,\[Delta]m_,\[Delta]\[Nu]_,\[Delta]\[Chi]_]:=-(\[Delta]\[Chi]/\[Nu])
 
 
-(* ::Section::Closed:: *)
-(*Construct Interpolations (To Do: Update Stop Condition)*)
+(* ::Section:: *)
+(*Construct Interpolations*)
 
 
 (* ::Subsection::Closed:: *)
@@ -2168,7 +2168,7 @@ fluxdata1SFSchwInf=Get[FileNameJoin[{directory1SFSch,"1SFCircShwarzDotEInf.m"}]]
 fluxdata1SFSchwHor=Get[FileNameJoin[{directory1SFSch,"1SFCircShwarzDotEHorizon.m"}]];
 spinfluxdata=Get[FileNameJoin[{directorySecSpin,"SMRfluxdataWithSecondarySpin2025_36x36.m"}]];
 invardata=Get[FileNameJoin[{directory1SFLocalInvar,"KerrCircularEquatorialInvariants2025b_36x36.data"}]];
-\[Omega]critdata=Get[FileNameJoin[{directorystop,"StopHybridFixedChi.m"}]];
+\[Omega]critdata=Get[FileNameJoin[{directorystop,"StopHybridFixedSSigma.m"}]];
 
 
 (* ::Subsection::Closed:: *)
@@ -2208,14 +2208,14 @@ Im1SFAmp22intV2=Interpolation[Get[FileNameJoin[{directoryamp, "ImAmp1SFKerr22New
 
 
 (* ::Subsection::Closed:: *)
-(*Stop Condition (UPDATE ME)*)
+(*Stop Condition*)
 
 
 \[Omega]crit=Interpolation[\[Omega]critdata,InterpolationOrder->All];
 
 
 (* ::Section::Closed:: *)
-(*Evolution equations  (To Do: Update Stop Condition, check param space coverage)*)
+(*Evolution equations  *)
 
 
 variables={\[Omega],\[Phi],\[Nu],m,s,\[Sigma]b,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]};
@@ -2232,11 +2232,11 @@ s'[t]==Fs[\[Omega][t],\[Phi][t],\[Nu][t],m[t],s[t],\[Sigma]b[t],\[Delta]m[t],\[D
 InitialConditionFormat={"\[Omega]","\[Phi]", "\[Nu]", "m","s","\[Sigma]b","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"};
 
 stopcondition = {\[Omega][t] >= Min[1/((1.05rISCO["\[Omega]","\[Phi]","\[Nu]","m","s","\[Sigma]b","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"])^(3/2)+"s"),1/(6.26^(3/2)+"s")],
-\[Omega][t] >= \[Omega]crit["\[Nu]","s","\[Sigma]b"]};
+\[Omega][t] >= \[Omega]crit["\[Nu]",(2 "s"+"s" (1+"\[Nu]")-"\[Nu]" "\[Sigma]b"+Sqrt[1-4 "\[Nu]"] (-"s" (1+"\[Nu]")+"\[Nu]" "\[Sigma]b"))/(1+Sqrt[1-4 "\[Nu]"]),(2 "s"-"s" (1+"\[Nu]")+"\[Nu]" "\[Sigma]b"+Sqrt[1-4 "\[Nu]"] (-"s" (1+"\[Nu]")+"\[Nu]" "\[Sigma]b"))/(1-Sqrt[1-4 "\[Nu]"])]};
 
 parameterspacecoverage = {\[Sqrt]((rISCO["\[Omega]","\[Phi]","\[Nu]","m","s","\[Sigma]b","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"] x["\[Omega]","\[Phi]","\[Nu]","m","s","\[Sigma]b","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"])/(1-"s" x["\[Omega]","\[Phi]","\[Nu]","m","s","\[Sigma]b","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"]^(3/2))^(2/3))<.998,
 1/(30^(3/2)+"s")<"\[Omega]"<Min[1/(6.06^(3/2)+"s"),
-"\[Omega]">\[Omega]crit["\[Nu]","s","\[Sigma]b"]],
+"\[Omega]">\[Omega]crit["\[Nu]",(2 "s"+"s" (1+"\[Nu]")-"\[Nu]" "\[Sigma]b"+Sqrt[1-4 "\[Nu]"] (-"s" (1+"\[Nu]")+"\[Nu]" "\[Sigma]b"))/(1+Sqrt[1-4 "\[Nu]"]),(2 "s"-"s" (1+"\[Nu]")+"\[Nu]" "\[Sigma]b"+Sqrt[1-4 "\[Nu]"] (-"s" (1+"\[Nu]")+"\[Nu]" "\[Sigma]b"))/(1-Sqrt[1-4 "\[Nu]"])]],
 "\[Nu]"<.248,
 Abs["s"]>.000001};
 
