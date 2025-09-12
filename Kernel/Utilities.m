@@ -4,11 +4,11 @@
 (*Utilities*)
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Create Package*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*BeginPackage*)
 
 
@@ -17,26 +17,28 @@ BeginPackage["WaSABI`BinaryInspiral`",
 ];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Unprotect symbols*)
 
 
-ClearAttributes[{ForcingTerms,ForcingTermsModel}, {Protected, ReadProtected}];
+ClearAttributes[{ForcingTerms,ForcingTermsModel,InitialConditions}, {Protected, ReadProtected}];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Usage messages*)
 
 
 ForcingTerms::usage = "ForcingTerms[X] generates the forcing functions of the model X. Evaluate it at a given point on parameter space by parsing ics.";
 ForcingTermsModel::usage = "ForcingTermsModel[X] represents the forcing terms/ODE of model X"
+InitialConditions::usage = "InitialConditions[X] returns the list of parameters in model X that require values to evaluate BinaryInspiral or ForcingTerms"
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Error Messages*)
 
 
 ForcingTerms::nomodel = "Unknown model `1`.";
+InitialConditions::nomodel = "Unknown model `1`.";
 
 
 ForcingTerms::ics = "Invalid parameters `1` for model `2`.";
@@ -49,14 +51,14 @@ ForcingTerms::ics = "Invalid parameters `1` for model `2`.";
 Begin["`Private`"];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*ForcingTerms*)
 
 
 Options[ForcingTerms] = {"Precision" -> 10, "Accuracy" -> 10};
 
 
-ForcingTerms[model_,opts:OptionsPattern[]] := Module[{prec,acc,forcingterms,ODElhs,ODErhs,AElhs,AErhs,ODEpos,ODEs,insp,inspeqslhs,inspeqsrhs,params,paramsstr,ics,independentparams},
+ForcingTerms[model_?StringQ,opts:OptionsPattern[]] := Module[{prec,acc,forcingterms,ODElhs,ODErhs,AElhs,AErhs,ODEpos,ODEs,insp,inspeqslhs,inspeqsrhs,params,paramsstr,ics,independentparams},
   prec = OptionValue["Precision"];
   acc = OptionValue["Accuracy"];
   
@@ -81,17 +83,31 @@ ForcingTerms[model_,opts:OptionsPattern[]] := Module[{prec,acc,forcingterms,ODEl
 ];
 
 
+InitialConditions[model_?StringQ]:=Module[{icsformat,values},
+
+  If[!WaSABI`Inspiral`Private`InspiralModelExistsQ[model] || !WaSABI`Waveform`Private`WaveformModelExistsQ[model],
+    Message[InitialConditions::nomodel, model];
+    Return[$Failed];
+  ];
+  
+  icsformat=WaSABI`Inspiral`Private`GetInspiralEquations[model][["InitialConditionsFormat"]];
+  values=Table[_,{i,1 Length[icsformat]}];
+  
+  AssociationThread[icsformat -> values]
+];
+
+
 (*  If[Sort[Keys[ics]] != WaSABI`Inspiral`Private`GetInspiralEquations[model][["InitialConditionsFormat"]],
       Message[BinaryInspiral::ics, ics, model];
       Return[$Failed];
   ];*)
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*ForcingTermsModel*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Output format*)
 
 
@@ -116,7 +132,7 @@ ForcingTermsModel /:
 (*Accessing attributes*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Evaluate forcing terms*)
 
 
@@ -132,7 +148,7 @@ ForcingTermsModel[assoc_][paramvals_] :=Module[{params,paramsstr,paramscond,depe
 ]
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*End Package*)
 
 
@@ -140,10 +156,10 @@ ForcingTermsModel[assoc_][paramvals_] :=Module[{params,paramsstr,paramscond,depe
 (*Protect symbols*)
 
 
-SetAttributes[{ForcingTerms,ForcingTermsModel}, {Protected, ReadProtected}];
+SetAttributes[{ForcingTerms,ForcingTermsModel,InitialConditions}, {Protected, ReadProtected}];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*End*)
 
 
