@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Dependent variables*)
 
 
@@ -649,7 +649,7 @@ invardata=Get[FileNameJoin[{directory1SFLocalInvar,"KerrCircularEquatorialInvari
 (*\[ScriptCapitalF]\[ScriptCapitalI]*)
 
 
-\[ScriptCapitalF]\[ScriptCapitalI]int1SFSchw = Interpolation[fluxdata1SFSchwInf];
+\[ScriptCapitalF]\[ScriptCapitalI]int1SFSchw = Interpolation[fluxdata1SFSchwInf,InterpolationOrder->8];
 \[ScriptCapitalF]\[ScriptCapitalI]int2SFSchw = Function[{logr0},Re[Exp[Interpolation[fluxdata2SF,InterpolationOrder->8][logr0]]]];
 
 \[ScriptCapitalF]\[ScriptCapitalI]int1SFKerr = Interpolation[Table[{{Log[1-fluxdata1SF[[i]]["a"]], Sqrt[rISCO[\[Omega],\[Phi],\[Nu],m,fluxdata1SF[[i]]["a"],\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]]/fluxdata1SF[[i]]["r"]]},N[fluxdata1SF[[i]]["r"]^5 fluxdata1SF[[i]]["inf"]["Value"]]},{i,1,Length[fluxdata1SF]}],Method->"Hermite",InterpolationOrder->{All,All}];
@@ -707,8 +707,7 @@ InitialConditionFormat={"\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[D
 stopcondition = {\[Omega][t] >= Min[1/((1.05rISCO["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"])^(3/2)+"\[Chi]1"),1/(6.26^(3/2)+"\[Chi]1")],
 \[Omega][t] >= \[Omega]crit["\[Nu]","\[Chi]1","\[Chi]2"]};
 parameterspacecoverage = {\[Sqrt]((rISCO["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"] x["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"])/(1-"\[Chi]1" x["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"]^(3/2))^(2/3))<.998,
-1/(30^(3/2)+"\[Chi]1")<"\[Omega]"<Min[1/(6.06^(3/2)+"\[Chi]1"),
-"\[Omega]">\[Omega]crit["\[Nu]","\[Chi]1","\[Chi]2"]],
+1/(30^(3/2)+"\[Chi]1")<"\[Omega]"<Min[1/(6.06^(3/2)+"\[Chi]1"),\[Omega]crit["\[Nu]","\[Chi]1","\[Chi]2"]],
 "\[Nu]"<.248,
 Abs["\[Chi]1"]>.000001};
 
