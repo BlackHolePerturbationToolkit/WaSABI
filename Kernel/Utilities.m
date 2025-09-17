@@ -28,9 +28,10 @@ ClearAttributes[{ForcingTerms,ForcingTermsModel,InitialConditions}, {Protected, 
 (*Usage messages*)
 
 
+ListModels::usage = "Lists available BinaryInspiral models."
 ForcingTerms::usage = "ForcingTerms[X] generates the forcing functions of the model X. Evaluate it at a given point on parameter space by parsing ics.";
-ForcingTermsModel::usage = "ForcingTermsModel[X] represents the forcing terms/ODE of model X"
-InitialConditions::usage = "InitialConditions[X] returns the list of parameters in model X that require values to evaluate BinaryInspiral or ForcingTerms"
+ForcingTermsModel::usage = "ForcingTermsModel[X] represents the forcing terms/ODE of model X.";
+InitialConditions::usage = "InitialConditions[X] returns the list of parameters in model X that require values to evaluate BinaryInspiral or ForcingTerms.";
 
 
 (* ::Subsection::Closed:: *)
@@ -49,6 +50,13 @@ ForcingTerms::ics = "Invalid parameters `1` for model `2`.";
 
 
 Begin["`Private`"];
+
+
+(* ::Section::Closed:: *)
+(*ListModels*)
+
+
+ListModels[]:=WaSABI`Inspiral`Private`ListInspiralModels[];
 
 
 (* ::Section::Closed:: *)

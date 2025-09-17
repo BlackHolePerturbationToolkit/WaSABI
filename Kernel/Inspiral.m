@@ -15,18 +15,18 @@
 BeginPackage["WaSABI`Inspiral`"];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Being Private section*)
 
 
 Begin["`Private`"];
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Usage messages*)
 
 
-ListInspiralModels::usage = "Lists available inspiral models"
+ListInspiralModels::usage = "Lists available inspiral models";
 GetInspiralEquations::usage = "Fetches the coupled equations describing the inspiral evolution.";
 IntInspiral::usage = "Determines the inspiral by integrating the inspiral equations.";
 InspiralEvaluate::usage = "Evaluates symbolic functions along a given timeseries of a given inspiral";
@@ -71,10 +71,8 @@ GetInspiralEquations[model_String] := GetInspiralEquations[model] =
 
 
 (* ::Text:: *)
-(*Takes inspiral equations and integrates. Nothing fancy.*)
-(**)
 (*To do: *)
-(*Add bounds to initial conditions - r0 too big -> Data not available.*)
+(*Add bounds to initial conditions for when data not available.*)
 
 
 IntInspiral[model_, ics_, prec_, acc_] :=
