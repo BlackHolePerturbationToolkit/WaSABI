@@ -1,4 +1,4 @@
-# WaSABI: Waveform Simulations of Asymettric Binary Inspirals
+# WaSABI: Waveform Simulations of Asymmetric Binary Inspirals
 
 Copyright (c) 2025 Black Hole Perturbation Toolkit
 
