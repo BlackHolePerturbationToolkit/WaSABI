@@ -1,7 +1,8 @@
 {% include head.html %}
 
 <p>
- <h1 style="display:inline">WaSABI: Waveform Simulations of Asymmetric Binary Inspirals</h1> <span style="float:right;"><a href="https://bhptoolkit.org/mathematica-install.html" class = "code_btn">Install this package!</a></span>
+ <h1 style="display:inline">WaSABI</h1> <span style="float:right;"><a href="https://bhptoolkit.org/mathematica-install.html" class = "code_btn">Install this package!</a></span>
+ <h2>Waveform Simulations of Asymmetric Binary Inspirals</h2>
 </p>
 
 A package to generate gravitational waveforms from SF theory and SF-PN Hybrids.
