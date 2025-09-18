@@ -1427,7 +1427,7 @@ d\[Delta]\[Chi]d\[Chi][\[Omega]_,\[Phi]_,\[Nu]_,m_,\[Chi]1_,\[Chi]2_,\[Delta]m_,
 d\[Delta]\[Chi]d\[Nu][\[Omega]_,\[Phi]_,\[Nu]_,m_,\[Chi]1_,\[Chi]2_,\[Delta]m_,\[Delta]\[Nu]_,\[Delta]\[Chi]_]:=-(\[Delta]\[Chi]/\[Nu])
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Construct Interpolations*)
 
 

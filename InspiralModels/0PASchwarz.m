@@ -3,8 +3,8 @@
 (* ::Input::Initialization:: *)
 directory1SF = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/1SF_Flux/Schwarz_Circ"}];
 
-\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH] = Interpolation[Get[FileNameJoin[{directory1SF, "1SFCircShwarzDotEHorizon.m"}]]];
-\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI] = Interpolation[Get[FileNameJoin[{directory1SF, "1SFCircShwarzDotEInf.m"}]]];
+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH] = Interpolation[Get[FileNameJoin[{directory1SF, "1SFCircShwarzDotEHorizon.m"}]],InterpolationOrder->8];
+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI] = Interpolation[Get[FileNameJoin[{directory1SF, "1SFCircShwarzDotEInf.m"}]],InterpolationOrder->8];
 
 \[ScriptCapitalF]1[r0_]:=\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalI][r0]+\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][r0];
 
