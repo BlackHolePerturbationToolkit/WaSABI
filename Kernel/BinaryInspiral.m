@@ -35,7 +35,7 @@ BinaryInspiral::usage = "BinaryInspiral[ics] generates a BinaryInspiralModel rep
 BinaryInspiralModel::usage = "BinaryInspiralModel[...] represents a binary inspiral.";
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Error Messages*)
 
 
@@ -49,6 +49,9 @@ BinaryInspiral::icsout = "Initial conditions `1`  out of supported parameter spa
 
 
 BinaryInspiralModel::nomode = "Mode `1` not available in model `2`.";
+
+
+BinaryInspiralModel::endinsp = "Time `1` exceeds inspiral duration.";
 
 
 (* ::Subsection::Closed:: *)
@@ -140,12 +143,24 @@ Keys[m_BinaryInspiralModel] ^:= DeleteCases[Join[Keys[m[[-1]]], {"Waveform", "Tr
 BinaryInspiralModel[assoc_]["Waveform"]["Modes"] := Keys[assoc["Amplitudes"]];
 
 
+outsideDomainQ[t_, tmin_, tmax_] := Min[t]<tmin || Max[t]>tmax;
+
+
 BinaryInspiralModel[assoc_]["Waveform"][l_, m_][t:(_?NumericQ|{_?NumericQ..})] :=
- Module[{params, paramvals, \[Phi]p},
+ Module[{params, paramvals, \[Phi]p,tmax},
+ 
   If[!MemberQ[BinaryInspiralModel[assoc]["Waveform"]["Modes"], {l,m}],
     Message[BinaryInspiralModel::nomode, {l,m}, assoc["Model"]];
     Return[$Failed];
   ];
+  
+  tmax=assoc["Duration"];
+  
+  If[outsideDomainQ[t, 0, tmax],
+    Message[BinaryInspiralModel::endinsp, #]& /@ Select[Flatten[{t}], outsideDomainQ[#, 0, tmax]&];
+    Return[Indeterminate];
+  ];
+  
   params = assoc["Inspiral"]["Parameters"];
   paramvals = Map[# -> assoc["Inspiral"][SymbolName[#]][t] &, params];
   \[Phi]p = SelectFirst[params, SymbolName[#] == "\[Phi]"&];
@@ -157,8 +172,16 @@ BinaryInspiralModel[assoc_]["Waveform"][l_, m_][t:(_?NumericQ|{_?NumericQ..})] :
 (*Trajectory*)
 
 
-BinaryInspiralModel[assoc_]["Trajectory"][param_][t:(_?NumericQ|{_?NumericQ..})] :=
-  assoc["Inspiral"][param][t];
+BinaryInspiralModel[assoc_]["Trajectory"][param_][t:(_?NumericQ|{_?NumericQ..})] :=Module[{tmax},
+
+tmax=assoc["Duration"];
+
+If[outsideDomainQ[t, 0, tmax],
+    Message[BinaryInspiralModel::endinsp, #]& /@ Select[Flatten[{t}], outsideDomainQ[#, 0, tmax]&];
+    Return[Indeterminate];
+  ];
+
+  assoc["Inspiral"][param][t]];
 
 
 (* ::Section::Closed:: *)
