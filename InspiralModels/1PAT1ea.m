@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Construct Interpolations*)
 
 
@@ -63,7 +63,7 @@ z = Interpolation[invardata, InterpolationOrder->8];
 \[CapitalOmega]critea=Interpolation[\[CapitalOmega]critdata,InterpolationOrder->All];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Evolution Equations (FIX ME - M dimensions)*)
 
 
@@ -91,7 +91,7 @@ F0[r0_]:=With[{M=1},(3 ((1-3 M/r0)^(3/2)) Sqrt[M/r0] )/(M^2 (1-6 M/r0)) (\[Scrip
 F1[r0_]:=With[{M=1},(3(1-3 M/r0)^(3/2) Sqrt[M/r0])/(M^2 (1-6 M /r0)) (\[ScriptCapitalF]2\[ScriptCapitalE]\[ScriptCapitalI][r0]+(2(1-3 M/r0)^(3/2))/(1-6M/r0) \[ScriptCapitalF]1[r0](EFLx'[M/r0] ) )];
 F1s1[r0_]:=With[{M=1},(3(1-3 M/r0)^(3/2) Sqrt[M/r0])/(M^2 (1-6 M /r0)) (\[ScriptCapitalF]a[r0])-(2 Sqrt[1-(3 M)/r0] (36 M^2-33 M r0+10 r0^2))/(r0^2 (-6 M+r0)^2) \[ScriptCapitalF]1[r0]]; 
 F1s2[r0_]:=With[{M=1},((3(1-3 M/r0)^(3/2) Sqrt[M/r0])/(M^2 (1-6 M /r0)) (\[ScriptCapitalF]\[Sigma][r0])-3/r0^2 ((1-3 M/r0)^(3/2) (5-12 M/r0))/(1-6 M /r0)^2 \[ScriptCapitalF]1[r0])];
-F1ExtraTerm[r0_]:=With[{M=1},-(1+(2(2-3 M/r0)(M/r0)^3)/(M (1-6 M /r0)) )(\[ScriptCapitalF]\[ScriptCapitalL]\[ScriptCapitalH][r0] )];
+F1ExtraTerm[r0_]:=With[{M=1},-(M/r0)^(3/2)((5-12 M/r0)/(1-6 M/r0) )\[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][r0] ];
 F1\[Delta]M[r0_]:=With[{M=1},(3(1-3 M/r0)^(3/2) Sqrt[M/r0])/(M^2 (1-6 M /r0))  (Sqrt[M/r0^3](-((2 r0^(5/2))/3))\[ScriptCapitalF]1'[r0] )+(Sqrt[1-(3 M)/r0] Sqrt[M/r0](3 (7-6 M/r0) M/r0-2))/ ((-6 (M/r0)+1)^2) \[ScriptCapitalF]1[r0]];
 
 variables={\[CapitalOmega],\[Phi],\[Nu],M,\[Chi]t1,\[Chi]t2,\[Delta]m};
