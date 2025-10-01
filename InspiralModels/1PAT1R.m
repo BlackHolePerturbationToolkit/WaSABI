@@ -1,11 +1,11 @@
 (* ::Package:: *)
 
-(* ::Section::Closed:: *)
-(*Construct Interpolations (FIX ME - stop condition)*)
+(* ::Section:: *)
+(*Construct Interpolations*)
 
 
 (* ::Subsection::Closed:: *)
-(*Fetch data (FIX ME - stop condition)*)
+(*Fetch data*)
 
 
 directory1SFSch = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/1SF_Flux/Schwarz_Circ"}];
@@ -27,7 +27,7 @@ slowspin1fluxdataHor=Get[FileNameJoin[{directoryPrimarySpin,"Slow_chi1_2SFCircSh
 slowspin1fluxdataInf=Get[FileNameJoin[{directoryPrimarySpin,"Slow_chi1_2SFCircShwarzDotEInf.m"}]];
 
 invardata=Get[FileNameJoin[{directory1SFLocalInvar,"1SFCircShwarzRedshfit.m"}]];
-(*\[CapitalOmega]critdata=Get[FileNameJoin[{directorystop,"Stop1PAT1R.m"}]];*)
+\[CapitalOmega]critdata=Get[FileNameJoin[{directorystop,"Stop1PAT1R.m"}]];
 
 
 (* ::Subsection::Closed:: *)
@@ -57,14 +57,14 @@ z = Interpolation[invardata, InterpolationOrder->8];
 
 
 (* ::Subsection::Closed:: *)
-(*Stop Condition (FIX ME - stop condition)*)
+(*Stop Condition*)
 
 
-(*\[CapitalOmega]crit=Interpolation[\[CapitalOmega]critdata,InterpolationOrder->All];*)
+\[CapitalOmega]critR=Interpolation[\[CapitalOmega]critdata,InterpolationOrder->All];
 
 
 (* ::Section:: *)
-(*Evolution Equations (FIX ME - stop condition)*)
+(*Evolution Equations (FIX ME - Mass dimension)*)
 
 
 (* ::Subsubsection::Closed:: *)
@@ -94,15 +94,16 @@ d\[CapitalOmega]dttimesdEd\[CapitalOmega][r0_,\[Nu]_,at1_,at2_,\[Delta]m1_]:=Mod
 
 
 
-(* ::Subsubsection:: *)
-(*Inspiral Force terms (FIX ME - stop condition) (FIX ME - double check M dimensions are restored correctly)*)
+(* ::Subsubsection::Closed:: *)
+(*Inspiral Force terms (FIX ME - double check M dimensions are restored correctly)*)
 
 
 variables={\[CapitalOmega],\[Phi],\[Nu],M,\[Chi]t1,\[Chi]t2,\[Delta]m};
 evolutionequations={\[CapitalOmega]'[t]==d\[CapitalOmega]dttimesdEd\[CapitalOmega][M[t]^(1/3) \[CapitalOmega][t]^(-2/3),\[Nu][t],\[Chi]t1[t],\[Chi]t2[t],\[Delta]m[t]]/dEd\[CapitalOmega][M[t]^(1/3) \[CapitalOmega][t]^(-2/3),\[Nu][t],\[Chi]t1[t],\[Chi]t2[t],\[Delta]m[t]],\[Phi]'[t]==\[CapitalOmega][t],\[Nu]'[t]==0,\[Delta]m'[t]==\[Nu][t] \[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][M[t]^(1/3) \[CapitalOmega][t]^(-2/3)], \[Chi]t1'[t]==\[Nu][t]^2/M[t] \[ScriptCapitalF]\[ScriptCapitalL]\[ScriptCapitalH][M[t]^(1/3) \[CapitalOmega][t]^(-2/3)],\[Chi]t2'[t]==0,M'[t]==0};
 InitialConditionFormat={"\[CapitalOmega]","\[Phi]","\[Nu]","M","\[Chi]t1","\[Chi]t2","\[Delta]m"};
-stopcondition = \[CapitalOmega][t]>=Sqrt[1/6.7^3] (*\[CapitalOmega]crit["\[Nu]","\[Chi]t1","\[Chi]t2"]*);
-parameterspacecoverage ={Sqrt[1/30^3]<"\[CapitalOmega]"<Min[Sqrt[1/6.25^3],Sqrt[1/6.7^2](*\[CapitalOmega]crit["\[Nu]","\[Chi]t1","\[Chi]t2"]*)]};
+stopcondition = {\[CapitalOmega][t] >= Min[1/(6.06^(3/2)),1/(6.26^(3/2))],
+				\[CapitalOmega][t] >= \[CapitalOmega]critR["\[Nu]","\[Chi]t1","\[Chi]t2"]};
+parameterspacecoverage = {Sqrt[1/30^3]<"\[CapitalOmega]"<Min[Sqrt[1/6.25^3],Sqrt[1/6.7^2],\[CapitalOmega]critR["\[Nu]","\[Chi]t1","\[Chi]t2"]]};
 
 
 <|"IntegrationVariable"->t, "Parameters"->variables, "InspiralEquations"->evolutionequations, "InitialConditionsFormat"->InitialConditionFormat,"StopCondition" -> stopcondition, "ParameterSpaceCoverage"->parameterspacecoverage|>
