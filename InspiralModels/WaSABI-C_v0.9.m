@@ -542,7 +542,7 @@ F\[Phi][\[Omega]_,\[Chi]_,\[Nu]_,m_,\[Chi]0_,\[Nu]0_,m0_]:=\[Omega];
 
 
 (* ::Subsection::Closed:: *)
-(*Fetch data (Fix me - stop condition)*)
+(*Fetch data*)
 
 
 directory1SFLocalInvar = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "sf_data/1SF_Local_Invariants/Kerr_Circ"}];
@@ -554,7 +554,7 @@ directory1SF= FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "s
 Inffluxdata1SF=Get[FileNameJoin[{directory1SF,"FIPIIIGrid.m"}]];
 Horfluxdata1SF=Get[FileNameJoin[{directory1SF,"FHPIIIGrid.m"}]];
 invardata=Get[FileNameJoin[{directory1SFLocalInvar,"deltaUPIIIGrid.m"}]];
-(*\[Omega]critdata=Get[FileNameJoin[{directorystop,"StopPIII.m"}]];*)
+\[Omega]critdata=Get[FileNameJoin[{directorystop,"StopPIII.m"}]];
 
 
 (* ::Subsection::Closed:: *)
@@ -587,14 +587,14 @@ Im1SFAmp22int=Interpolation[Get[FileNameJoin[{directoryamp, "ImAmp1SFKerr22.m"}]
 
 
 (* ::Subsection::Closed:: *)
-(*Stop Condition (Fix me - stop condition)*)
+(*Stop Condition*)
 
 
-(*\[Omega]crit=Interpolation[\[Omega]critdata,InterpolationOrder->All];*)
+\[Omega]crit=Interpolation[\[Omega]critdata,InterpolationOrder->All];
 
 
 (* ::Section::Closed:: *)
-(*Evolution equations (Fix me - stop condition)*)
+(*Evolution equations*)
 
 
 variables={\[Omega],\[Phi],\[Nu],m,\[Chi],m0,\[Nu]0,\[Chi]0};
@@ -608,10 +608,10 @@ m0'[t]==0,
 \[Nu]0'[t]==0,
 \[Chi]0'[t]==0};
 InitialConditionFormat={"\[Omega]","\[Phi]","\[Nu]","m","\[Chi]","m0","\[Nu]0","\[Chi]0"};
-stopcondition = {\[Omega][t] >= Min[1/((1.05rISCO["\[Omega]","\[Chi]","\[Nu]","m","\[Chi]0","\[Nu]0","m0"])^(3/2)+"\[Chi]"),1/(6.26^(3/2)+"\[Chi]")](*,
-\[Omega][t] >= \[Omega]crit["\[Nu]","\[Chi]"]*)};
+stopcondition = {\[Omega][t] >= Min[1/((1.05rISCO["\[Omega]","\[Chi]","\[Nu]","m","\[Chi]0","\[Nu]0","m0"])^(3/2)+"\[Chi]")],
+\[Omega][t] >= \[Omega]crit["\[Nu]","\[Chi]"]};
 parameterspacecoverage = {\[Sqrt]((rISCO["\[Omega]","\[Chi]","\[Nu]","m","\[Chi]0","\[Nu]0","m0"] x["\[Omega]","\[Chi]","\[Nu]","m","\[Chi]0","\[Nu]0","m0"])/(1-"\[Chi]" x["\[Omega]","\[Chi]","\[Nu]","m","\[Chi]0","\[Nu]0","m0"]^(3/2))^(2/3))<.998,
-1/(30^(3/2)+"\[Chi]")<"\[Omega]"<Min[1/(6.06^(3/2)+"\[Chi]")(*,\[Omega]crit["\[Nu]","\[Chi]"]*)],
+1/(30^(3/2)+"\[Chi]")<"\[Omega]"<Min[1/(6.06^(3/2)+"\[Chi]"),\[Omega]crit["\[Nu]","\[Chi]"]],
 "\[Nu]"<.248,
 Abs["\[Chi]"]>.000001};
 
