@@ -7,4 +7,4 @@ EndPackage[]
 Get["WaSABI`Inspiral`"];
 Get["WaSABI`Waveform`"];
 Get["WaSABI`BinaryInspiral`"];
-(*Get["WaSABI`Utilities`"];*)
+Get["WaSABI`Utilities`"];

@@ -4,11 +4,11 @@
 (*BinaryInspiral*)
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Create Package*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*BeginPackage*)
 
 
@@ -18,14 +18,14 @@ BeginPackage["WaSABI`BinaryInspiral`",
 ];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Unprotect symbols*)
 
 
 ClearAttributes[{BinaryInspiral, BinaryInspiralModel}, {Protected, ReadProtected}];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Usage messages*)
 
 
@@ -35,7 +35,7 @@ BinaryInspiral::usage = "BinaryInspiral[ics] generates a BinaryInspiralModel rep
 BinaryInspiralModel::usage = "BinaryInspiralModel[...] represents a binary inspiral.";
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Error Messages*)
 
 
@@ -45,7 +45,13 @@ BinaryInspiral::nomodel = "Unknown model `1`.";
 BinaryInspiral::ics = "Invalid initial conditions `1` for model `2`.";
 
 
+BinaryInspiral::icsout = "Initial conditions `1`  out of supported parameter space coverage for model `2`.";
+
+
 BinaryInspiralModel::nomode = "Mode `1` not available in model `2`.";
+
+
+BinaryInspiralModel::endinsp = "Time `1` exceeds inspiral duration.";
 
 
 (* ::Subsection::Closed:: *)
@@ -55,35 +61,43 @@ BinaryInspiralModel::nomode = "Mode `1` not available in model `2`.";
 Begin["`Private`"];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*BinaryInspiral*)
 
 
-Options[BinaryInspiral] = {"Model" -> "1PAT1"};
+Options[BinaryInspiral] = {"Model" -> "1PAT1", "Precision" -> 10, "Accuracy" -> 10};
 
 
-BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model, inspiral, amplitudes, tmax},
+BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model,prec,acc, inspiral, amplitudes, tmax},
   model = OptionValue["Model"];
+  prec = OptionValue["Precision"];
+  acc = OptionValue["Accuracy"];
+  
   If[!WaSABI`Inspiral`Private`InspiralModelExistsQ[model] || !WaSABI`Waveform`Private`WaveformModelExistsQ[model],
     Message[BinaryInspiral::nomodel, model];
     Return[$Failed];
   ];
-  If[Sort[Keys[ics]] != {"M", "r0", "\[Nu]", "\[Phi]"},
+  If[Sort[Keys[ics]] != Sort[WaSABI`Inspiral`Private`GetInspiralEquations[model][["InitialConditionsFormat"]]],
       Message[BinaryInspiral::ics, ics, model];
       Return[$Failed];
   ];
-  inspiral = WaSABI`Inspiral`Private`IntInspiral[model, ics];
+  If[Not@(And@@(WaSABI`Inspiral`Private`GetInspiralEquations[model][["ParameterSpaceCoverage"]]/.ics)),
+      Message[BinaryInspiral::icsout, ics, model];
+      Return[$Failed];
+  ];
+  
+  inspiral = WaSABI`Inspiral`Private`IntInspiral[model, ics, prec, acc];
   amplitudes = KeyMap[First[StringCases[#,"("~~l_~~","~~m_~~")":>{ToExpression[l],ToExpression[m]}]]&, WaSABI`Waveform`Private`GetAmplitudes[model]];
   tmax = Max[inspiral[[1]]["Domain"]];
   BinaryInspiralModel[<|"Model" -> model, "InitialConditions" -> ics, "Inspiral" -> inspiral, "Amplitudes" -> amplitudes, "Duration" -> tmax|>]
 ];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*BinaryInspiralModel*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Output format*)
 
 
@@ -91,7 +105,7 @@ BinaryInspiralModel /:
  MakeBoxes[bim:BinaryInspiralModel[assoc_], form:(StandardForm|TraditionalForm)] :=
  Module[{summary, extended},
   summary = {BoxForm`SummaryItem[{"Model: ", assoc["Model"]}],
-             Row[{BoxForm`SummaryItem[{"M: ", assoc["InitialConditions"]["M"]}], "  ",
+             Row[{BoxForm`SummaryItem[{"M: ", Which[KeyExistsQ[assoc["InitialConditions"],"M"],assoc["InitialConditions"]["M"],KeyExistsQ[assoc["InitialConditions"],"m"],assoc["InitialConditions"]["m"]]}], "  ",
                   BoxForm`SummaryItem[{"\[Nu]: ", assoc["InitialConditions"]["\[Nu]"]}]}]};
   extended = {BoxForm`SummaryItem[{"Trajectory: ", SymbolName /@ assoc["Inspiral"]["Parameters"]}],
               BoxForm`SummaryItem[{"Duration: ", assoc["Duration"]}]};
@@ -106,7 +120,7 @@ BinaryInspiralModel /:
 ];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Accessing attributes*)
 
 
@@ -122,19 +136,31 @@ BinaryInspiralModel[assoc_][key_String] /; !MemberQ[{"Waveform", "Trajectory"}, 
 Keys[m_BinaryInspiralModel] ^:= DeleteCases[Join[Keys[m[[-1]]], {"Waveform", "Trajectory"}], "Inspiral" | "Amplitudes"];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Waveform*)
 
 
 BinaryInspiralModel[assoc_]["Waveform"]["Modes"] := Keys[assoc["Amplitudes"]];
 
 
+outsideDomainQ[t_, tmin_, tmax_] := Min[t]<tmin || Max[t]>tmax;
+
+
 BinaryInspiralModel[assoc_]["Waveform"][l_, m_][t:(_?NumericQ|{_?NumericQ..})] :=
- Module[{params, paramvals, \[Phi]p},
+ Module[{params, paramvals, \[Phi]p,tmax},
+ 
   If[!MemberQ[BinaryInspiralModel[assoc]["Waveform"]["Modes"], {l,m}],
     Message[BinaryInspiralModel::nomode, {l,m}, assoc["Model"]];
     Return[$Failed];
   ];
+  
+  tmax=assoc["Duration"];
+  
+  If[outsideDomainQ[t, 0, tmax],
+    Message[BinaryInspiralModel::endinsp, #]& /@ Select[Flatten[{t}], outsideDomainQ[#, 0, tmax]&];
+    Return[Indeterminate];
+  ];
+  
   params = assoc["Inspiral"]["Parameters"];
   paramvals = Map[# -> assoc["Inspiral"][SymbolName[#]][t] &, params];
   \[Phi]p = SelectFirst[params, SymbolName[#] == "\[Phi]"&];
@@ -142,19 +168,27 @@ BinaryInspiralModel[assoc_]["Waveform"][l_, m_][t:(_?NumericQ|{_?NumericQ..})] :
 ];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Trajectory*)
 
 
-BinaryInspiralModel[assoc_]["Trajectory"][param_][t:(_?NumericQ|{_?NumericQ..})] :=
-  assoc["Inspiral"][param][t];
+BinaryInspiralModel[assoc_]["Trajectory"][param_][t:(_?NumericQ|{_?NumericQ..})] :=Module[{tmax},
+
+tmax=assoc["Duration"];
+
+If[outsideDomainQ[t, 0, tmax],
+    Message[BinaryInspiralModel::endinsp, #]& /@ Select[Flatten[{t}], outsideDomainQ[#, 0, tmax]&];
+    Return[Indeterminate];
+  ];
+
+  assoc["Inspiral"][param][t]];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*End Package*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Protect symbols*)
 
 
