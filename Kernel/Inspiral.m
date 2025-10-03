@@ -43,6 +43,9 @@ InspiralEvaluate::usage = "Evaluates symbolic functions along a given timeseries
 $WaSABIInspiralDirectory = FileNameJoin[{FileNameDrop[FindFile["WaSABI`"], -2], "InspiralModels"}];
 
 
+modelContext[model_String] := "WaSABI`Inspiral`Model"<>StringDelete[model, {"-", ".", "_"}]<>"`";
+
+
 ListInspiralModels[] := ListInspiralModels[] =
  Module[{inspiralmodels},
   inspiralmodels = FileBaseName /@ FileNames["*.m", $WaSABIInspiralDirectory];
@@ -58,7 +61,7 @@ GetInspiralEquations[model_String] := GetInspiralEquations[model] =
  Module[{filelocation, equations},
   filelocation = First[FileNames[model<>".m", $WaSABIInspiralDirectory]];
 
-  Begin["WaSABI`Inspiral`Model"<>model<>"`"];
+  Begin[modelContext[model]];
   equations = Get[filelocation];
   End[];
   

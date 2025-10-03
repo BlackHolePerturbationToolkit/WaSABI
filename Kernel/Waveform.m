@@ -8,21 +8,21 @@
 (*Define usage for public functions*)
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Create Package*)
 
 
 BeginPackage["WaSABI`Waveform`"];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Being Private section*)
 
 
 Begin["`Private`"];
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Usage messages*)
 
 
@@ -32,7 +32,7 @@ GetAmplitudes::usage = "Fetches the waveform amplitudes.";
 WaveformMode::usage = "Returns a given spin weighted spherical harmonic mode amplitude of the gravitaional wave strain";
 
 
-(* ::Subsubsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*Error messages*)
 
 
@@ -40,7 +40,7 @@ GetAmplitudes::nomode = "Mode not available";
 GetAmplitudes::notlist = "Input should be a list of strings for each (l,m) mode";
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Get Amplitudes*)
 
 
@@ -77,7 +77,7 @@ GetAmplitudes[model_, modes_:{}] := GetAmplitudes[model, modes] =
 
   filelocation = First[FileNames[model<>".m", $WaSABIAmplitudeDirectory]];
 
-  Begin["WaSABI`Inspiral`Model"<>model<>"`"];
+  Begin[WaSABI`Inspiral`Private`modelContext[model]];
   amps = Get[filelocation];
   End[];
 
@@ -95,7 +95,7 @@ ModeList[model_] :=
   Keys[GetAmplitudes[model]];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Close the package*)
 
 

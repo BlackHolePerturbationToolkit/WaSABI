@@ -77,11 +77,11 @@ ForcingTerms[model_?StringQ,opts:OptionsPattern[]] := Module[{prec,acc,forcingte
 
   insp = WaSABI`Inspiral`Private`GetInspiralEquations[model];
   {inspeqslhs,inspeqsrhs} = {insp[["InspiralEquations"]][[;;,1]],insp[["InspiralEquations"]][[;;,2]]};
-  ODEpos = Flatten@Position[inspeqslhs,Derivative[1][_Symbol][ToExpression["WaSABI`Inspiral`Model"<>model<>"`t"]]];
-  ODElhs = (inspeqslhs[[ODEpos]])/.Derivative[1][s_Symbol][ToExpression["WaSABI`Inspiral`Model"<>model<>"`t"]]:>"d"~~StringReplace[SymbolName[s], Context[s] -> ""]~~"/dt";
-  ODErhs = (inspeqsrhs[[ODEpos]])/.s_Symbol[ToExpression["WaSABI`Inspiral`Model"<>model<>"`t"]]:>s;
-  AElhs = (Complement[inspeqslhs,inspeqslhs[[ODEpos]]])/.s_Symbol[ToExpression["WaSABI`Inspiral`Model"<>model<>"`t"]]:>s;
-  AErhs = (Complement[inspeqsrhs,inspeqsrhs[[ODEpos]]])/.s_Symbol[ToExpression["WaSABI`Inspiral`Model"<>model<>"`t"]]:>s;
+  ODEpos = Flatten@Position[inspeqslhs,Derivative[1][_Symbol][ToExpression[WaSABI`Inspiral`Private`modelContext[model]<>"t"]]];
+  ODElhs = (inspeqslhs[[ODEpos]])/.Derivative[1][s_Symbol][ToExpression[WaSABI`Inspiral`Private`modelContext[model]<>"t"]]:>"d"~~StringReplace[SymbolName[s], Context[s] -> ""]~~"/dt";
+  ODErhs = (inspeqsrhs[[ODEpos]])/.s_Symbol[ToExpression[WaSABI`Inspiral`Private`modelContext[model]<>"t"]]:>s;
+  AElhs = (Complement[inspeqslhs,inspeqslhs[[ODEpos]]])/.s_Symbol[ToExpression[WaSABI`Inspiral`Private`modelContext[model]<>"t"]]:>s;
+  AErhs = (Complement[inspeqsrhs,inspeqsrhs[[ODEpos]]])/.s_Symbol[ToExpression[WaSABI`Inspiral`Private`modelContext[model]<>"t"]]:>s;
   params = insp["Parameters"];
   paramsstr = SymbolName /@ params;
   ics = insp["InitialConditionsFormat"];
