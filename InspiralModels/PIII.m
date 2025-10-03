@@ -68,10 +68,10 @@ F\[Omega][\[Omega]_,\[Chi]_,\[Nu]_,m_,\[Chi]0_,\[Nu]0_,m0_]:=(-3*((16*\[Nu]^6*\[
           Im[PolyGamma[0, 3 + ((2*I)*\[Chi])/Sqrt[1 - \[Chi]^2]]]))/(5*(6 - (-3 + \[Nu])*\[Omega]^(2/3) + (1 + \[Nu])*\[Chi]*\[Omega] + \[Chi]*Sqrt[(1 - 4*\[Nu])*\[Omega]^2])^3*
         (1 - ((3 + \[Nu])*\[Omega]^(2/3)*(6 - (-3 + \[Nu])*\[Omega]^(2/3) + (1 + \[Nu])*\[Chi]*\[Omega] + \[Chi]*Sqrt[(1 - 4*\[Nu])*\[Omega]^2])^2)/72 - 
          ((1 + Sqrt[1 - 4*\[Nu]])*(3 + Sqrt[1 - 4*\[Nu]])*\[Chi]*\[Omega]*(6 - (-3 + \[Nu])*\[Omega]^(2/3) + (1 + \[Nu])*\[Chi]*\[Omega] + \[Chi]*Sqrt[(1 - 4*\[Nu])*\[Omega]^2])^3)/1728)) + 
-      (m*\[Nu]^2*\[Omega]^4*(1 - Sqrt[(1 - \[Chi]*\[Omega])*(1 + \[Chi]*\[Omega] - 3*\[Omega]*((1 - \[Chi]*\[Omega])/\[Omega])^(1/3))])*\[ScriptCapitalF]\[ScriptCapitalH]int[\[Chi], -1 + (2*\[Omega]^(2/3)*rISCO[\[Omega], \[Chi], \[Nu], m, \[Chi]0, \[Nu]0, m0])/
-           (1 - \[Chi]*\[Omega])^(2/3)])/(1 - \[Chi]*\[Omega])^5)*(-1/138240*(m*\[Nu]^2*\[Omega]^(2/3)*(230400*\[Omega] - 276480*\[Chi]*\[Omega]^(4/3) + 1136640*\[Omega]^(5/3) - 2112000*\[Chi]*\[Omega]^2 + 6912000*\[Omega]^(7/3) + 
-         414720*\[Chi]^2*\[Omega]^(7/3) - 13865600*\[Chi]*\[Omega]^(8/3))) - (m*\[Nu]*\[Omega]^(2/3)*(-3072*\[Omega] + 2304*\[Chi]*\[Omega]^(4/3) - 9216*\[Omega]^(5/3) + 8320*\[Chi]*\[Omega]^2 - 31104*\[Omega]^(7/3) + 45024*\[Chi]*\[Omega]^(8/3)))/
-       2304 - (m*\[Nu]*\[Omega]^(2/3)*(-414720*(-2 + \[Nu])*\[Omega] - 25920*(24*(1 + Sqrt[1 - 4*\[Nu]])*\[Chi] - 48*\[Nu]*\[Chi])*\[Omega]^(4/3) + 34560*(72 - 121*\[Nu] + 2*\[Nu]^2)*\[Omega]^(5/3) - 
+      (m*\[Nu]^2*\[Omega]^4*\[ScriptCapitalF]\[ScriptCapitalH]int[\[Chi], -1 + (2*\[Omega]^(2/3)*rISCO[\[Omega], \[Chi], \[Nu], m, \[Chi]0, \[Nu]0, m0])/(1 - \[Chi]*\[Omega])^(2/3)])/(1 - \[Chi]*\[Omega])^5)*
+     (-1/138240*(m*\[Nu]^2*\[Omega]^(2/3)*(230400*\[Omega] - 276480*\[Chi]*\[Omega]^(4/3) + 1136640*\[Omega]^(5/3) - 2112000*\[Chi]*\[Omega]^2 + 6912000*\[Omega]^(7/3) + 414720*\[Chi]^2*\[Omega]^(7/3) - 13865600*\[Chi]*\[Omega]^(8/3))) - 
+      (m*\[Nu]*\[Omega]^(2/3)*(-3072*\[Omega] + 2304*\[Chi]*\[Omega]^(4/3) - 9216*\[Omega]^(5/3) + 8320*\[Chi]*\[Omega]^2 - 31104*\[Omega]^(7/3) + 45024*\[Chi]*\[Omega]^(8/3)))/2304 - 
+      (m*\[Nu]*\[Omega]^(2/3)*(-414720*(-2 + \[Nu])*\[Omega] - 25920*(24*(1 + Sqrt[1 - 4*\[Nu]])*\[Chi] - 48*\[Nu]*\[Chi])*\[Omega]^(4/3) + 34560*(72 - 121*\[Nu] + 2*\[Nu]^2)*\[Omega]^(5/3) - 
          600*(3744*(1 + Sqrt[1 - 4*\[Nu]])*\[Chi] - 288*(55 + 29*Sqrt[1 - 4*\[Nu]])*\[Nu]*\[Chi] + 4032*\[Nu]^2*\[Chi])*\[Omega]^2 + 25920*\[Chi]*(-48*\[Nu]*\[Chi] + 96*\[Nu]^2*\[Chi])*\[Omega]^(7/3) + 
          25920*(324 + 2*\[Nu]^3 + 8*\[Nu]^2*(43 + 6*\[Chi]^2) - 3*\[Nu]*(373 + 8*\[Chi]^2))*\[Omega]^(7/3) + (-12156480*(1 + Sqrt[1 - 4*\[Nu]])*\[Chi] - 20160*(3017 + 607*Sqrt[1 - 4*\[Nu]])*\[Nu]^2*\[Chi] + 
            2378880*\[Nu]^3*\[Chi] + 36*\[Nu]*(1733200*\[Chi] + 1057840*Sqrt[1 - 4*\[Nu]]*\[Chi]))*\[Omega]^(8/3) + 8640*(96*Sqrt[(1 - 4*\[Nu])*\[Omega]^2] + 288*Sqrt[(1 - 4*\[Nu])*\[Omega]^(10/3)] - 
@@ -503,7 +503,20 @@ Fm[\[Omega]_,\[Chi]_,\[Nu]_,m_,\[Chi]0_,\[Nu]0_,m0_]:=((1 + Sqrt[1 - 4*\[Nu]])^3
 (*Primary spin forcing term*)
 
 
-F\[Chi][\[Omega]_,\[Chi]_,\[Nu]_,m_,\[Chi]0_,\[Nu]0_,m0_]:=(-4*\[Chi]*(((1 + Sqrt[1 - 4*\[Nu]])^3*\[Nu]^3*\[Omega]^5*(30*\[Chi]*\[Omega]^(2/3) + 90*\[Chi]^3*\[Omega]^(2/3) - 36*\[Chi]^2*\[Omega] - 108*\[Chi]^4*\[Omega]))/60 - 
+F\[Chi][\[Omega]_,\[Chi]_,\[Nu]_,m_,\[Chi]0_,\[Nu]0_,m0_]:=(4*((-144*m*\[Nu]^2*\[Omega]^4*(-3*\[Chi]*(16 + 33*\[Chi]^2)*\[Omega]^(2/3) - 4*(-6 - 70*\[Chi]^2 + 3*\[Chi]^4)*\[Omega] + 12*(-\[Chi] - 3*\[Chi]^3 + 2*Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)] + 26*\[Chi]^2*Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)] + 
+         12*\[Chi]^4*Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)]) + 96*\[Chi]*(1 + 3*\[Chi]^2)*\[Omega]*Im[PolyGamma[0, 3 + ((2*I)*\[Chi])/Sqrt[1 - \[Chi]^2]]]))/
+     (5*(6 + 3*\[Omega]^(2/3) + 2*\[Chi]*\[Omega])^3*(1 - (\[Omega]^(2/3)*(6 + 3*\[Omega]^(2/3) + 2*\[Chi]*\[Omega])^2)/24 - (\[Chi]*\[Omega]*(6 + 3*\[Omega]^(2/3) + 2*\[Chi]*\[Omega])^3)/216)) + 
+    (18*m*(1 + Sqrt[1 - 4*\[Nu]])^3*\[Nu]^2*\[Omega]^4*(-3*\[Chi]*(11 + 5*Sqrt[1 - 4*\[Nu]] + 3*(6 + 5*Sqrt[1 - 4*\[Nu]])*\[Chi]^2 - 10*\[Nu]*(1 + 3*\[Chi]^2))*\[Omega]^(2/3) - 
+       2*(-6 + 2*(-35 + 9*\[Nu])*\[Chi]^2 + (3 + 54*\[Nu])*\[Chi]^4)*\[Omega] + 2*(-6*\[Chi] - 18*\[Chi]^3 + 6*(Sqrt[(1 - 4*\[Nu])*\[Omega]^2] + Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)] + 
+           Sqrt[(-1 + 4*\[Nu])*(-1 + \[Chi]^2)*\[Omega]^2]) + \[Chi]^4*(-3*Sqrt[(1 - 4*\[Nu])*\[Omega]^2] + 36*Sqrt[(1 - \[Chi]^2)*\[Omega]^2] + 36*Sqrt[(-1 + 4*\[Nu])*(-1 + \[Chi]^2)*\[Omega]^2]) + 
+         \[Chi]^2*(70*Sqrt[(1 - 4*\[Nu])*\[Omega]^2] + 78*Sqrt[(1 - \[Chi]^2)*\[Omega]^2] + 78*Sqrt[(-1 + 4*\[Nu])*(-1 + \[Chi]^2)*\[Omega]^2])) + 48*(\[Chi] + 3*\[Chi]^3)*(\[Omega] + Sqrt[(1 - 4*\[Nu])*\[Omega]^2])*
+        Im[PolyGamma[0, 3 + ((2*I)*\[Chi])/Sqrt[1 - \[Chi]^2]]]))/(5*(6 - (-3 + \[Nu])*\[Omega]^(2/3) + (1 + \[Nu])*\[Chi]*\[Omega] + \[Chi]*Sqrt[(1 - 4*\[Nu])*\[Omega]^2])^3*
+      (1 - ((3 + \[Nu])*\[Omega]^(2/3)*(6 - (-3 + \[Nu])*\[Omega]^(2/3) + (1 + \[Nu])*\[Chi]*\[Omega] + \[Chi]*Sqrt[(1 - 4*\[Nu])*\[Omega]^2])^2)/72 - 
+       ((1 + Sqrt[1 - 4*\[Nu]])*(3 + Sqrt[1 - 4*\[Nu]])*\[Chi]*\[Omega]*(6 - (-3 + \[Nu])*\[Omega]^(2/3) + (1 + \[Nu])*\[Chi]*\[Omega] + \[Chi]*Sqrt[(1 - 4*\[Nu])*\[Omega]^2])^3)/1728)) + 
+    (m*\[Nu]^2*\[Omega]^4*\[ScriptCapitalF]\[ScriptCapitalH]int[\[Chi], -1 + (2*\[Omega]^(2/3)*(3 + Sqrt[3*\[Chi]^2 + (1 + (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)))^2] - 
+           Sqrt[(2 - (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)))*(4 + (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)) + 2*
+                Sqrt[3*\[Chi]^2 + (1 + (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)))^2])]*Sign[\[Chi]]))/(1 - \[Chi]*\[Omega])^(2/3)])/(1 - \[Chi]*\[Omega])^5))/(m^2*(1 + Sqrt[1 - 4*\[Nu]])^2) - 
+ (4*\[Chi]*(((1 + Sqrt[1 - 4*\[Nu]])^3*\[Nu]^3*\[Omega]^5*(30*\[Chi]*\[Omega]^(2/3) + 90*\[Chi]^3*\[Omega]^(2/3) - 36*\[Chi]^2*\[Omega] - 108*\[Chi]^4*\[Omega]))/60 - 
     (2*\[Nu]^2*\[Omega]^5*(-3*\[Chi]*(16 + 33*\[Chi]^2)*\[Omega]^(2/3) - 4*(-6 - 70*\[Chi]^2 + 3*\[Chi]^4)*\[Omega] + 12*(-\[Chi] - 3*\[Chi]^3 + 2*Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)] + 26*\[Chi]^2*Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)] + 
          12*\[Chi]^4*Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)]) + 96*\[Chi]*(1 + 3*\[Chi]^2)*\[Omega]*Im[PolyGamma[0, 3 + ((2*I)*\[Chi])/Sqrt[1 - \[Chi]^2]]]))/15 + 
     ((1 + Sqrt[1 - 4*\[Nu]])^3*\[Nu]^2*\[Omega]^5*(-12*\[Chi] - 36*\[Chi]^3 - 33*\[Chi]*\[Omega]^(2/3) - 15*Sqrt[1 - 4*\[Nu]]*\[Chi]*\[Omega]^(2/3) - 54*\[Chi]^3*\[Omega]^(2/3) - 45*Sqrt[1 - 4*\[Nu]]*\[Chi]^3*\[Omega]^(2/3) + 12*\[Omega] + 
@@ -514,21 +527,7 @@ F\[Chi][\[Omega]_,\[Chi]_,\[Nu]_,m_,\[Chi]0_,\[Nu]0_,m0_]:=(-4*\[Chi]*(((1 + Sqr
        144*\[Chi]^3*Sqrt[(1 - 4*\[Nu])*\[Omega]^2]*Im[PolyGamma[0, 3 + ((2*I)*\[Chi])/Sqrt[1 - \[Chi]^2]]]))/60 + 
     (\[Nu]^2*\[Omega]^5*\[ScriptCapitalF]\[ScriptCapitalH]int[\[Chi], -1 + (2*\[Omega]^(2/3)*(3 + Sqrt[3*\[Chi]^2 + (1 + (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)))^2] - 
            Sqrt[(2 - (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)))*(4 + (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)) + 2*
-                Sqrt[3*\[Chi]^2 + (1 + (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)))^2])]*Sign[\[Chi]]))/(1 - \[Chi]*\[Omega])^(2/3)])/(1 - \[Chi]*\[Omega])^5))/(m*(1 + Sqrt[1 - 4*\[Nu]])) + 
- (4*((-144*m*\[Nu]^2*\[Omega]^4*(-3*\[Chi]*(16 + 33*\[Chi]^2)*\[Omega]^(2/3) - 4*(-6 - 70*\[Chi]^2 + 3*\[Chi]^4)*\[Omega] + 12*(-\[Chi] - 3*\[Chi]^3 + 2*Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)] + 
-         26*\[Chi]^2*Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)] + 12*\[Chi]^4*Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)]) + 96*\[Chi]*(1 + 3*\[Chi]^2)*\[Omega]*Im[PolyGamma[0, 3 + ((2*I)*\[Chi])/Sqrt[1 - \[Chi]^2]]]))/
-     (5*(6 + 3*\[Omega]^(2/3) + 2*\[Chi]*\[Omega])^3*(1 - (\[Omega]^(2/3)*(6 + 3*\[Omega]^(2/3) + 2*\[Chi]*\[Omega])^2)/24 - (\[Chi]*\[Omega]*(6 + 3*\[Omega]^(2/3) + 2*\[Chi]*\[Omega])^3)/216)) + 
-    (18*m*(1 + Sqrt[1 - 4*\[Nu]])^3*\[Nu]^2*\[Omega]^4*(-3*\[Chi]*(11 + 5*Sqrt[1 - 4*\[Nu]] + 3*(6 + 5*Sqrt[1 - 4*\[Nu]])*\[Chi]^2 - 10*\[Nu]*(1 + 3*\[Chi]^2))*\[Omega]^(2/3) - 
-       2*(-6 + 2*(-35 + 9*\[Nu])*\[Chi]^2 + (3 + 54*\[Nu])*\[Chi]^4)*\[Omega] + 2*(-6*\[Chi] - 18*\[Chi]^3 + 6*(Sqrt[(1 - 4*\[Nu])*\[Omega]^2] + Sqrt[-((-1 + \[Chi]^2)*\[Omega]^2)] + 
-           Sqrt[(-1 + 4*\[Nu])*(-1 + \[Chi]^2)*\[Omega]^2]) + \[Chi]^4*(-3*Sqrt[(1 - 4*\[Nu])*\[Omega]^2] + 36*Sqrt[(1 - \[Chi]^2)*\[Omega]^2] + 36*Sqrt[(-1 + 4*\[Nu])*(-1 + \[Chi]^2)*\[Omega]^2]) + 
-         \[Chi]^2*(70*Sqrt[(1 - 4*\[Nu])*\[Omega]^2] + 78*Sqrt[(1 - \[Chi]^2)*\[Omega]^2] + 78*Sqrt[(-1 + 4*\[Nu])*(-1 + \[Chi]^2)*\[Omega]^2])) + 48*(\[Chi] + 3*\[Chi]^3)*(\[Omega] + Sqrt[(1 - 4*\[Nu])*\[Omega]^2])*
-        Im[PolyGamma[0, 3 + ((2*I)*\[Chi])/Sqrt[1 - \[Chi]^2]]]))/(5*(6 - (-3 + \[Nu])*\[Omega]^(2/3) + (1 + \[Nu])*\[Chi]*\[Omega] + \[Chi]*Sqrt[(1 - 4*\[Nu])*\[Omega]^2])^3*
-      (1 - ((3 + \[Nu])*\[Omega]^(2/3)*(6 - (-3 + \[Nu])*\[Omega]^(2/3) + (1 + \[Nu])*\[Chi]*\[Omega] + \[Chi]*Sqrt[(1 - 4*\[Nu])*\[Omega]^2])^2)/72 - 
-       ((1 + Sqrt[1 - 4*\[Nu]])*(3 + Sqrt[1 - 4*\[Nu]])*\[Chi]*\[Omega]*(6 - (-3 + \[Nu])*\[Omega]^(2/3) + (1 + \[Nu])*\[Chi]*\[Omega] + \[Chi]*Sqrt[(1 - 4*\[Nu])*\[Omega]^2])^3)/1728)) + 
-    (m*\[Nu]^2*\[Omega]^4*(1 - Sqrt[(1 - \[Chi]*\[Omega])*(1 + \[Chi]*\[Omega] - 3*\[Omega]*((1 - \[Chi]*\[Omega])/\[Omega])^(1/3))])*
-      \[ScriptCapitalF]\[ScriptCapitalH]int[\[Chi], -1 + (2*\[Omega]^(2/3)*(3 + Sqrt[3*\[Chi]^2 + (1 + (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)))^2] - 
-           Sqrt[(2 - (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)))*(4 + (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)) + 2*
-                Sqrt[3*\[Chi]^2 + (1 + (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)))^2])]*Sign[\[Chi]]))/(1 - \[Chi]*\[Omega])^(2/3)])/(1 - \[Chi]*\[Omega])^5))/(m^2*(1 + Sqrt[1 - 4*\[Nu]])^2);
+                Sqrt[3*\[Chi]^2 + (1 + (1 - \[Chi]^2)^(1/3)*((1 - \[Chi])^(1/3) + (1 + \[Chi])^(1/3)))^2])]*Sign[\[Chi]]))/(1 - \[Chi]*\[Omega])^(2/3)])/(1 - \[Chi]*\[Omega])^5))/(m*(1 + Sqrt[1 - 4*\[Nu]]));
 
 
 (* ::Subsection::Closed:: *)
