@@ -11,7 +11,7 @@ directory1SF = FileNameJoin[{WaSABI`Inspiral`Private`$WaSABIInspiralDirectory, "
 
 F0[r0_]:=With[{M=1},(3 ((1-3 M/r0)^(3/2)) Sqrt[M/r0] )/(M^2 (1-6 M/r0)) (\[ScriptCapitalF]1[r0])];
 variables={\[CapitalOmega],r0,\[Phi],\[Nu],M};
-evolutionequations={\[CapitalOmega]'[t]==\[Nu][t] F0[r0[t]],\[Phi]'[t]==\[CapitalOmega][t],\[CapitalOmega][t]==Sqrt[M[t]/r0[t]^3],\[Nu]'[t]==0 , M'[t]==0};
+evolutionequations={\[CapitalOmega]'[t]==\[Nu][t]/M[t] F0[r0[t]],\[Phi]'[t]==\[CapitalOmega][t]/M[t],\[CapitalOmega][t]==Sqrt[1/r0[t]^3],\[Nu]'[t]==0 , M'[t]==0};
 InitialConditionFormat={"M", "r0", "\[Nu]", "\[Phi]"};
 stopcondition = r0[t] <= 6.01;
 

@@ -1507,21 +1507,21 @@ Im1SFAmp22intV2=Interpolation[Get[FileNameJoin[{directoryamp, "ImAmp1SFKerr22New
 (*Evolution equations*)
 
 
-variables={\[Omega],\[Phi],\[Nu],m,\[Chi]1,\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]};
+variables={\[Omega],\[Phi],\[Nu],M,\[Chi]1,\[Chi]2,\[Delta]m,\[Delta]\[Nu],\[Delta]\[Chi]};
 evolutionequations={
-\[Omega]'[t]==F\[Omega][\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]],
-\[Phi]'[t]==F\[Phi][\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]],
-\[Nu]'[t]==F\[Nu][\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]],
-m'[t]==Fm[\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]] , 
-\[Chi]1'[t]==F\[Chi]1[\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]],
-\[Chi]2'[t]==F\[Chi]2[\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]],
-\[Delta]m'[t]==F\[Delta]m[\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]],
-\[Delta]\[Nu]'[t]==F\[Delta]\[Nu][\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]],
-\[Delta]\[Chi]'[t]==F\[Delta]\[Chi][\[Omega][t],\[Phi][t],\[Nu][t],m[t],\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]};
-InitialConditionFormat={"\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"};
-stopcondition = {\[Omega][t] >= Min[1/((1.05rISCO["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"])^(3/2)+"\[Chi]1"),1/(6.26^(3/2)+"\[Chi]1")],
+\[Omega]'[t]==F\[Omega][\[Omega][t],\[Phi][t],\[Nu][t],1,\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]/M[t],
+\[Phi]'[t]==F\[Phi][\[Omega][t],\[Phi][t],\[Nu][t],1,\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]/M[t],
+\[Nu]'[t]==F\[Nu][\[Omega][t],\[Phi][t],\[Nu][t],1,\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]/M[t],
+M'[t]==Fm[\[Omega][t],\[Phi][t],\[Nu][t],1,\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]], 
+\[Chi]1'[t]==F\[Chi]1[\[Omega][t],\[Phi][t],\[Nu][t],1,\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]/M[t],
+\[Chi]2'[t]==F\[Chi]2[\[Omega][t],\[Phi][t],\[Nu][t],1,\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]/M[t],
+\[Delta]m'[t]==F\[Delta]m[\[Omega][t],\[Phi][t],\[Nu][t],1,\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]/M[t],
+\[Delta]\[Nu]'[t]==F\[Delta]\[Nu][\[Omega][t],\[Phi][t],\[Nu][t],1,\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]/M[t],
+\[Delta]\[Chi]'[t]==F\[Delta]\[Chi][\[Omega][t],\[Phi][t],\[Nu][t],1,\[Chi]1[t],\[Chi]2[t],\[Delta]m[t],\[Delta]\[Nu][t],\[Delta]\[Chi][t]]/M[t]};
+InitialConditionFormat={"\[Omega]","\[Phi]","\[Nu]","M","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"};
+stopcondition = {\[Omega][t] >= Min[1/((1.05rISCO["\[Omega]","\[Phi]","\[Nu]","M","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"])^(3/2)+"\[Chi]1"),1/(6.26^(3/2)+"\[Chi]1")],
 \[Omega][t] >= \[Omega]crit["\[Nu]","\[Chi]1","\[Chi]2"]};
-parameterspacecoverage = {\[Sqrt]((rISCO["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"] x["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"])/(1-"\[Chi]1" x["\[Omega]","\[Phi]","\[Nu]","m","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"]^(3/2))^(2/3))<.998,
+parameterspacecoverage = {\[Sqrt]((rISCO["\[Omega]","\[Phi]","\[Nu]","M","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"] x["\[Omega]","\[Phi]","\[Nu]","M","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"])/(1-"\[Chi]1" x["\[Omega]","\[Phi]","\[Nu]","M","\[Chi]1","\[Chi]2","\[Delta]m","\[Delta]\[Nu]","\[Delta]\[Chi]"]^(3/2))^(2/3))<.998,
 1/(30^(3/2)+"\[Chi]1")<"\[Omega]"<Min[1/(6.06^(3/2)+"\[Chi]1"),\[Omega]crit["\[Nu]","\[Chi]1","\[Chi]2"]],
 "\[Nu]"<.248,
 Abs["\[Chi]1"]>.000001};

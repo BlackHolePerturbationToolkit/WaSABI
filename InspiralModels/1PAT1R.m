@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Construct Interpolations*)
 
 
@@ -63,8 +63,8 @@ z = Interpolation[invardata, InterpolationOrder->8];
 \[CapitalOmega]critR=Interpolation[\[CapitalOmega]critdata,InterpolationOrder->All];
 
 
-(* ::Section:: *)
-(*Evolution Equations (FIX ME - Mass dimension)*)
+(* ::Section::Closed:: *)
+(*Evolution Equations*)
 
 
 (* ::Subsubsection::Closed:: *)
@@ -95,11 +95,11 @@ d\[CapitalOmega]dttimesdEd\[CapitalOmega][r0_,\[Nu]_,at1_,at2_,\[Delta]m1_]:=Mod
 
 
 (* ::Subsubsection::Closed:: *)
-(*Inspiral Force terms (FIX ME - double check M dimensions are restored correctly)*)
+(*Inspiral Force terms*)
 
 
 variables={\[CapitalOmega],\[Phi],\[Nu],M,\[Chi]t1,\[Chi]t2,\[Delta]m};
-evolutionequations={\[CapitalOmega]'[t]==d\[CapitalOmega]dttimesdEd\[CapitalOmega][M[t]^(1/3) \[CapitalOmega][t]^(-2/3),\[Nu][t],\[Chi]t1[t],\[Chi]t2[t],\[Delta]m[t]]/dEd\[CapitalOmega][M[t]^(1/3) \[CapitalOmega][t]^(-2/3),\[Nu][t],\[Chi]t1[t],\[Chi]t2[t],\[Delta]m[t]],\[Phi]'[t]==\[CapitalOmega][t],\[Nu]'[t]==0,\[Delta]m'[t]==\[Nu][t] \[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][M[t]^(1/3) \[CapitalOmega][t]^(-2/3)], \[Chi]t1'[t]==\[Nu][t]^2/M[t] \[ScriptCapitalF]\[ScriptCapitalL]\[ScriptCapitalH][M[t]^(1/3) \[CapitalOmega][t]^(-2/3)],\[Chi]t2'[t]==0,M'[t]==0};
+evolutionequations={\[CapitalOmega]'[t]==1/M[t] d\[CapitalOmega]dttimesdEd\[CapitalOmega][\[CapitalOmega][t]^(-2/3),\[Nu][t],\[Chi]t1[t],\[Chi]t2[t],\[Delta]m[t]]/dEd\[CapitalOmega][\[CapitalOmega][t]^(-2/3),\[Nu][t],\[Chi]t1[t],\[Chi]t2[t],\[Delta]m[t]],\[Phi]'[t]==\[CapitalOmega][t]/M[t],\[Nu]'[t]==0,\[Delta]m'[t]==(\[Nu][t]/M[t]) \[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][\[CapitalOmega][t]^(-2/3)], \[Chi]t1'[t]==(1/M[t])\[Nu][t]^2 \[ScriptCapitalF]\[ScriptCapitalL]\[ScriptCapitalH][ \[CapitalOmega][t]^(-2/3)],\[Chi]t2'[t]==0,M'[t]==0};
 InitialConditionFormat={"\[CapitalOmega]","\[Phi]","\[Nu]","M","\[Chi]t1","\[Chi]t2","\[Delta]m"};
 stopcondition = {\[CapitalOmega][t] >= Min[1/(6.06^(3/2)),1/(6.26^(3/2))],
 				\[CapitalOmega][t] >= \[CapitalOmega]critR["\[Nu]","\[Chi]t1","\[Chi]t2"]};

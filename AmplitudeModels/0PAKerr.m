@@ -38,4 +38,4 @@ RealAmp1SFKerr22=Interpolation[Get[FileNameJoin[{directoryamp, "1SF_RealAmp_Kerr
 
 
 (* ::Input::Initialization:: *)
-<|"(2,2)"->(1/(2 (1-\[Chi]1 \[Omega])^(2/3)))m \[Nu] \[Omega]^(2/3) RealAmp1SFKerr22[0.7988880369434854` +0.2901432317650783` Log[1-\[Chi]1],-1+2.` Sqrt[(\[Omega]^(2/3) rISCO[\[Chi]1])/(1-\[Chi]1 \[Omega])^(2/3)]]|>
+<|"(2,2)"->(1/(2 (1-\[Chi]1 \[Omega])^(2/3)))M \[Nu] \[Omega]^(2/3) RealAmp1SFKerr22[0.7988880369434854` +0.2901432317650783` Log[1-\[Chi]1],-1+2.` Sqrt[(\[Omega]^(2/3) rISCO[\[Chi]1])/(1-\[Chi]1 \[Omega])^(2/3)]]|>

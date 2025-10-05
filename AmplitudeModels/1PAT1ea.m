@@ -36,7 +36,7 @@ h1PAamp\[Nu]S2[l_,m_][r0_]:=h1PASpinamp[l,m][r0];
 h1PAamp\[Nu]\[Delta]m[l_,m_][r0_]:=Sqrt[M/r0^3](-((2 r0^(5/2))/3)) h0PAamp[l,m]'[r0];]
 
 
-h1PAAmp\[CapitalOmega][l_,m_]/;EvenQ[m]:=\[Nu] h0PAamp[l,m][1/(M \[CapitalOmega])^(2/3)]+\[Nu] \[Chi]t1 h1PAamp\[Nu]S1[l,m][1/(M \[CapitalOmega])^(2/3)]+\[Nu] \[Chi]t2 h1PAamp\[Nu]S2[l,m][1/(M \[CapitalOmega])^(2/3)]+\[Nu]^2 (h1PAamp\[Nu][l,m][1/(M \[CapitalOmega])^(2/3)]+\[Delta]m h1PAamp\[Nu]\[Delta]m[l,m][1/(M \[CapitalOmega])^(2/3)]);
-h1PAAmp\[CapitalOmega][l_,m_]/;OddQ[m]:=Sqrt[1-4 \[Nu]] (\[Nu] h0PAamp[l,m][1/(M \[CapitalOmega])^(2/3)]+\[Nu] \[Chi]t1 h1PAamp\[Nu]S1[l,m][1/(M \[CapitalOmega])^(2/3)]+\[Nu] \[Chi]t2 h1PAamp\[Nu]S2[l,m][1/(M \[CapitalOmega])^(2/3)]+\[Nu]^2 (2 h0PAamp[l,m][1/(M \[CapitalOmega])^(2/3)]+h1PAamp\[Nu][l,m][1/(M \[CapitalOmega])^(2/3)]+\[Delta]m h1PAamp\[Nu]\[Delta]m[l,m][1/(M \[CapitalOmega])^(2/3)]));
+h1PAAmp\[CapitalOmega][l_,m_]/;EvenQ[m]:=M(\[Nu] h0PAamp[l,m][1/(\[CapitalOmega])^(2/3)]+\[Nu] \[Chi]t1 h1PAamp\[Nu]S1[l,m][1/(\[CapitalOmega])^(2/3)]+\[Nu] \[Chi]t2 h1PAamp\[Nu]S2[l,m][1/(\[CapitalOmega])^(2/3)]+\[Nu]^2 (h1PAamp\[Nu][l,m][1/(\[CapitalOmega])^(2/3)]+\[Delta]m h1PAamp\[Nu]\[Delta]m[l,m][1/(\[CapitalOmega])^(2/3)]));
+h1PAAmp\[CapitalOmega][l_,m_]/;OddQ[m]:=Sqrt[1-4 \[Nu]]M(\[Nu] h0PAamp[l,m][1/(\[CapitalOmega])^(2/3)]+\[Nu] \[Chi]t1 h1PAamp\[Nu]S1[l,m][1/(\[CapitalOmega])^(2/3)]+\[Nu] \[Chi]t2 h1PAamp\[Nu]S2[l,m][1/(\[CapitalOmega])^(2/3)]+\[Nu]^2 (2 h0PAamp[l,m][1/(\[CapitalOmega])^(2/3)]+h1PAamp\[Nu][l,m][1/(\[CapitalOmega])^(2/3)]+\[Delta]m h1PAamp\[Nu]\[Delta]m[l,m][1/(\[CapitalOmega])^(2/3)]));
 
 AssociationThread[Flatten[Table["("<>ToString[ll]<>","<>ToString[mm]<>")",{ll,2,5},{mm,1,ll}]],Flatten[Table[h1PAAmp\[CapitalOmega][ll,mm],{ll,2,5},{mm,1,ll}]]]

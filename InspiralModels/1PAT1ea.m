@@ -64,7 +64,7 @@ z = Interpolation[invardata, InterpolationOrder->8];
 
 
 (* ::Section::Closed:: *)
-(*Evolution Equations (FIX ME - M dimensions)*)
+(*Evolution Equations*)
 
 
 (* ::Subsubsection::Closed:: *)
@@ -84,7 +84,7 @@ EFLx[x_]:=(1/2 z[x]-x/3z'[x]-1+Sqrt[1-3x]+x/6  (7-24x)/(1-3x)^(3/2));
 
 
 (* ::Subsubsection::Closed:: *)
-(*Inspiral Force terms (FIX ME - double check M dimensions are restored correctly)*)
+(*Inspiral Force terms*)
 
 
 F0[r0_]:=With[{M=1},(3 ((1-3 M/r0)^(3/2)) Sqrt[M/r0] )/(M^2 (1-6 M/r0)) (\[ScriptCapitalF]1[r0])];
@@ -95,11 +95,11 @@ F1ExtraTerm[r0_]:=With[{M=1},-(M/r0)^(3/2)((5-12 M/r0)/(1-6 M/r0) )\[ScriptCapit
 F1\[Delta]M[r0_]:=With[{M=1},(3(1-3 M/r0)^(3/2) Sqrt[M/r0])/(M^2 (1-6 M /r0))  (Sqrt[M/r0^3](-((2 r0^(5/2))/3))\[ScriptCapitalF]1'[r0] )+(Sqrt[1-(3 M)/r0] Sqrt[M/r0](3 (7-6 M/r0) M/r0-2))/ ((-6 (M/r0)+1)^2) \[ScriptCapitalF]1[r0]];
 
 variables={\[CapitalOmega],\[Phi],\[Nu],M,\[Chi]t1,\[Chi]t2,\[Delta]m};
-evolutionequations={\[CapitalOmega]'[t]==\[Nu][t] F0[M[t]^(1/3) \[CapitalOmega][t]^(-2/3)]+\[Nu][t]^2 (F1[M[t]^(1/3) \[CapitalOmega][t]^(-2/3)]+(F1ExtraTerm[M[t]^(1/3) \[CapitalOmega][t]^(-2/3)])+\[Delta]m[t]F1\[Delta]M[M[t]^(1/3) \[CapitalOmega][t]^(-2/3)])+\[Nu][t] \[Chi]t1[t] F1s1[M[t]^(1/3) \[CapitalOmega][t]^(-2/3)]+\[Nu][t] \[Chi]t2[t] F1s2[M[t]^(1/3) \[CapitalOmega][t]^(-2/3)],
-\[Phi]'[t]==\[CapitalOmega][t],
+evolutionequations={\[CapitalOmega]'[t]==1/M[t] (\[Nu][t] F0[\[CapitalOmega][t]^(-2/3)]+\[Nu][t]^2 (F1[\[CapitalOmega][t]^(-2/3)]+(F1ExtraTerm[\[CapitalOmega][t]^(-2/3)])+\[Delta]m[t]F1\[Delta]M[\[CapitalOmega][t]^(-2/3)])+\[Nu][t] \[Chi]t1[t] F1s1[\[CapitalOmega][t]^(-2/3)]+\[Nu][t] \[Chi]t2[t] F1s2[\[CapitalOmega][t]^(-2/3)]),
+\[Phi]'[t]==\[CapitalOmega][t]/M[t],
 \[Nu]'[t]==0,
-\[Delta]m'[t]==\[Nu][t] \[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][M[t]^(1/3) \[CapitalOmega][t]^(-2/3)],
-\[Chi]t1'[t]==\[Nu][t]^2/M[t] \[ScriptCapitalF]\[ScriptCapitalL]\[ScriptCapitalH][M[t]^(1/3) \[CapitalOmega][t]^(-2/3)],
+\[Delta]m'[t]==(\[Nu][t]/M[t]) \[ScriptCapitalF]\[ScriptCapitalE]\[ScriptCapitalH][\[CapitalOmega][t]^(-2/3)] (*Note we have defined \[Delta]m to be dimensionless*),
+\[Chi]t1'[t]==(\[Nu][t]^2/M[t]) \[ScriptCapitalF]\[ScriptCapitalL]\[ScriptCapitalH][\[CapitalOmega][t]^(-2/3)],
 \[Chi]t2'[t]==0,
 M'[t]==0};
 InitialConditionFormat={"\[CapitalOmega]","\[Phi]","\[Nu]","M","\[Chi]t1","\[Chi]t2","\[Delta]m"};
