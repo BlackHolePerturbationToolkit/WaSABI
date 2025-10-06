@@ -22,7 +22,7 @@ BeginPackage["WaSABI`Waveform`"];
 Begin["`Private`"];
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Usage messages*)
 
 
@@ -32,7 +32,7 @@ GetAmplitudes::usage = "Fetches the waveform amplitudes.";
 WaveformMode::usage = "Returns a given spin weighted spherical harmonic mode amplitude of the gravitaional wave strain";
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*Error messages*)
 
 

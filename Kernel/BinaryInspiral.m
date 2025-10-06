@@ -61,17 +61,18 @@ BinaryInspiralModel::endinsp = "Time `1` exceeds inspiral duration.";
 Begin["`Private`"];
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*BinaryInspiral*)
 
 
-Options[BinaryInspiral] = {"Model" -> "1PAT1", "Precision" -> 10, "Accuracy" -> 10};
+Options[BinaryInspiral] = {"Model" -> "1PAT1", "Precision" -> 10, "Accuracy" -> 10, "StopCondition"->Missing[]};
 
 
-BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model,prec,acc, inspiral, amplitudes, tmax},
+BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model,prec,acc,stopcon, inspiral, amplitudes, tmax},
   model = OptionValue["Model"];
   prec = OptionValue["Precision"];
   acc = OptionValue["Accuracy"];
+  stopcon=OptionValue["StopCondition"];
   
   If[!WaSABI`Inspiral`Private`InspiralModelExistsQ[model] || !WaSABI`Waveform`Private`WaveformModelExistsQ[model],
     Message[BinaryInspiral::nomodel, model];
@@ -86,14 +87,14 @@ BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model,prec,acc, inspiral,
       Return[$Failed];
   ];
   
-  inspiral = WaSABI`Inspiral`Private`IntInspiral[model, ics, prec, acc];
+  inspiral = WaSABI`Inspiral`Private`IntInspiral[model, ics, prec, acc, stopcon];
   amplitudes = KeyMap[First[StringCases[#,"("~~l_~~","~~m_~~")":>{ToExpression[l],ToExpression[m]}]]&, WaSABI`Waveform`Private`GetAmplitudes[model]];
   tmax = Max[inspiral[[1]]["Domain"]];
   BinaryInspiralModel[<|"Model" -> model, "InitialConditions" -> ics, "Inspiral" -> inspiral, "Amplitudes" -> amplitudes, "Duration" -> tmax|>]
 ];
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*BinaryInspiralModel*)
 
 

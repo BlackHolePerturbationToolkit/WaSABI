@@ -60,6 +60,13 @@ ListModels[]:=WaSABI`Inspiral`Private`ListInspiralModels[];
 
 
 (* ::Section::Closed:: *)
+(*List Available l and m modes*)
+
+
+ListModes[model_]:=WaSABI`Waveform`Private`ModeList[model];
+
+
+(* ::Section::Closed:: *)
 (*ForcingTerms*)
 
 

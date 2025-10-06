@@ -15,7 +15,7 @@
 BeginPackage["WaSABI`Inspiral`"];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Being Private section*)
 
 
@@ -73,9 +73,8 @@ GetInspiralEquations[model_String] := GetInspiralEquations[model] =
 (*Integrate Inspiral*)
 
 
-IntInspiral[model_, ics_, prec_, acc_] :=
- Module[{insp, tparam, params, equations, integrations, paramsstr, initparams, initialconds, stopcond},
-
+IntInspiral[model_, ics_, prec_, acc_, stopcon_] :=
+ Module[{insp, tparam, params, equations, integrations, paramsstr, initparams, initialconds,stopparams, stopcond},
 
   insp = GetInspiralEquations[model];
   tparam = insp["IntegrationVariable"];
@@ -84,7 +83,9 @@ IntInspiral[model_, ics_, prec_, acc_] :=
   paramsstr = SymbolName /@ params;
   initparams = Pick[params, paramsstr, Alternatives@@Keys[ics]];
   initialconds = Map[#[0] == SymbolName[#]&, initparams] /. ics;
-  stopcond = {WhenEvent[Evaluate[insp["StopCondition"] /. ics], "StopIntegration"]};
+  stopparams= If[MissingQ[stopcon],Missing[],Pick[params, paramsstr, Alternatives@@Keys[stopcon]]];
+  stopcond = If[MissingQ[stopcon],{WhenEvent[Evaluate[insp["StopCondition"]/. ics], "StopIntegration"]},
+  {WhenEvent[Evaluate[Map[Between[#[tparam], SymbolName[#]/. stopcon]==False&, stopparams]] , "StopIntegration","LocationMethod" -> "LinearInterpolation"]}];
   integrations = NDSolveValue[Join[equations, initialconds, stopcond], params, {tparam, 0, \[Infinity]}, PrecisionGoal->prec, AccuracyGoal->acc];
 
   Append[AssociationThread[paramsstr -> integrations], "Parameters" -> params]
