@@ -7,7 +7,7 @@
 
 A package to generate gravitational waveforms from SF theory and SF-PN Hybrids.
 
-Currently 0PA and 1PAT1 quasicircular, non-spinning models are available. As an example, the gravitational waveform for the $l=2,m=2$ mode is easily computed using:
+Currently 0PA and 1PAT1 quasicircular, non-spinning models are available as well as version 1.0 of the WaSABI-C hybrid model. As an example, the gravitational waveform for the $l=2,m=2$ mode is easily computed using:
 ```Mathematica
 inspiral = BinaryInspiral[<|"r0" -> 10, "M" -> 1, "\[Nu]" -> 1/10, "\[Phi]" -> 0|>, "Model" -> "1PAT1"];
 tmax = inspiral["Duration"];
