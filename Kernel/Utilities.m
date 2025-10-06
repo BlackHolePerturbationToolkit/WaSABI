@@ -29,6 +29,7 @@ ClearAttributes[{ForcingTerms,ForcingTermsModel,InitialConditions}, {Protected, 
 
 
 ListModels::usage = "Lists available BinaryInspiral models."
+ListModes::usage = "ListModel[X] lists available (\[ScriptL],m) modes in model X."
 ForcingTerms::usage = "ForcingTerms[X] generates the forcing functions of the model X. Evaluate it at a given point on parameter space by parsing ics.";
 ForcingTermsModel::usage = "ForcingTermsModel[X] represents the forcing terms/ODE of model X.";
 InitialConditions::usage = "InitialConditions[X] returns the list of parameters in model X that require values to evaluate BinaryInspiral or ForcingTerms.";
@@ -40,6 +41,7 @@ InitialConditions::usage = "InitialConditions[X] returns the list of parameters 
 
 ForcingTerms::nomodel = "Unknown model `1`.";
 InitialConditions::nomodel = "Unknown model `1`.";
+ListModes::nomodel = "Unknown model `1`.";
 
 
 ForcingTerms::ics = "Invalid parameters `1` for model `2`.";
@@ -63,7 +65,14 @@ ListModels[]:=WaSABI`Inspiral`Private`ListInspiralModels[];
 (*List Available l and m modes*)
 
 
-ListModes[model_]:=WaSABI`Waveform`Private`ModeList[model];
+ListModes[model_]:=Module[{},
+
+  If[!WaSABI`Inspiral`Private`InspiralModelExistsQ[model] || !WaSABI`Waveform`Private`WaveformModelExistsQ[model],
+    Message[ListModes::nomodel, model];
+    Return[$Failed];
+  ];
+
+WaSABI`Waveform`Private`ModeList[model]];
 
 
 (* ::Section::Closed:: *)
