@@ -21,7 +21,7 @@ BeginPackage["WaSABI`BinaryInspiral`",
 (*Unprotect symbols*)
 
 
-ClearAttributes[{ForcingTerms,ForcingTermsModel,InitialConditions}, {Protected, ReadProtected}];
+ClearAttributes[{ForcingTerms,ForcingTermsModel,InitialConditions,CiteModel}, {Protected, ReadProtected}];
 
 
 (* ::Subsection::Closed:: *)
@@ -33,6 +33,7 @@ ListModes::usage = "ListModel[X] lists available (\[ScriptL],m) modes in model X
 ForcingTerms::usage = "ForcingTerms[X] generates the forcing functions of the model X. Evaluate it at a given point on parameter space by parsing ics.";
 ForcingTermsModel::usage = "ForcingTermsModel[X] represents the forcing terms/ODE of model X.";
 InitialConditions::usage = "InitialConditions[X] returns the list of parameters in model X that require values to evaluate BinaryInspiral or ForcingTerms.";
+CiteModel::usage = "CiteModel[X] returns the bib keys of the papers to cite if you make use of model X";
 
 
 (* ::Subsection::Closed:: *)
@@ -42,6 +43,7 @@ InitialConditions::usage = "InitialConditions[X] returns the list of parameters 
 ForcingTerms::nomodel = "Unknown model `1`.";
 InitialConditions::nomodel = "Unknown model `1`.";
 ListModes::nomodel = "Unknown model `1`.";
+CiteModel::nomodel = "No citation guideline found for model `1`."
 
 
 ForcingTerms::ics = "Invalid parameters `1` for model `2`.";
@@ -169,6 +171,22 @@ ForcingTermsModel[assoc_][paramvals_] :=Module[{params,paramsstr,paramscond,depe
   dependentparamsvals = Association@MapThread[(#1->#2)&,{dependentparamsstr[[;;,2]],(assoc["AErhs"]/.paramscond)}];
   dependentparamscond = Table[dependentparamstr[[1]] -> dependentparamsvals[[dependentparamstr[[2]]]],{dependentparamstr,dependentparamsstr}];
   Association@MapThread[(#1->#2)&,{assoc["ODElhs"],(assoc["ODErhs"]/.paramscond/.dependentparamscond//N)}]
+]
+
+
+(* ::Section::Closed:: *)
+(*Citation guideline*)
+
+
+$WaSABIMetadataDirectory = FileNameJoin[{FileNameDrop[FindFile["WaSABI`"], -2], "MetadataModels"}];
+
+
+CiteModel[model_String]:=Module[{metadatamodels},
+	metadatamodels = FileBaseName /@ FileNames["*.m",$WaSABIMetadataDirectory];
+	If[MemberQ[metadatamodels,model],
+		Import[$WaSABIMetadataDirectory<>"/"<>model<>".m"]["Citation"],
+		Message[CiteModel::nomodel,model]
+	]
 ]
 
 
