@@ -19,8 +19,6 @@ Among self-force/post-Newtonian hybrids, you can find:
 
 
  <h2>A workflow example</h2>
-</p>
-
 
  <h3>Getting information about a model</h3>
 
