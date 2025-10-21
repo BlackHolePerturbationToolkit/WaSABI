@@ -2,13 +2,13 @@
 
 <|
 "Citation"->
-"@article{Mathews:2025nyb,
-    author = \"Mathews, Josh and Pound, Adam\",
-    title = \"{Post-adiabatic waveform-generation framework for asymmetric precessing binaries}\",
-    eprint = \"2501.01413\",
+"@article{Mathews:2025txc,
+    author = \"Mathews, Josh and Wardell, Barry and Pound, Adam and Warburton, Niels\",
+    title = \"{Post-adiabatic self-force waveforms: slowly spinning primary and precessing secondary}\",
+    eprint = \"2510.16113\",
     archivePrefix = \"arXiv\",
     primaryClass = \"gr-qc\",
-    month = \"1\",
+    month = \"10\",
     year = \"2025\"
 }"
 |>
