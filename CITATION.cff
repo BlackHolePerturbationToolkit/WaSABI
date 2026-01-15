@@ -30,4 +30,4 @@ date-released: 2025-07-23
 abstract: >-
   A package to generate gravitational waveforms from SF theory and SF-PN Hybrids.
 license: MIT
-version: 1.1.0
+version: 1.1.2
