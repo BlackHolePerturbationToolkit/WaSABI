@@ -20,7 +20,7 @@ Za\[ScriptCapitalI][l_,m_?Negative][r0_]:=(-1)^l Conjugate[Za\[ScriptCapitalI][l
 
 Do[C2\[Sigma]\[ScriptCapitalI][ll,mm]=Interpolation[Get[FileNameJoin[{directoryS2, "chi2_2SF_RWZampSchwarzCirc"<>ToString[ll]<>ToString[mm]<>".m"}]],InterpolationOrder->8], {ll,2,5}, {mm,1,ll}]
 
-C2\[Sigma]\[ScriptCapitalI][l_,m_?Negative][r0_]:=(-1)^m Conjugate[C2\[Sigma]\[ScriptCapitalI][l,-m][r0]];
+C2\[Sigma]\[ScriptCapitalI][l_,m_?Negative][r0_]:=(-1)^l Conjugate[C2\[Sigma]\[ScriptCapitalI][l,-m][r0]];
 
 
 With[{M=1},
