@@ -29,7 +29,7 @@ ClearAttributes[{ForcingTerms,ForcingTermsModel,InitialConditions,CiteModel}, {P
 
 
 ListModels::usage = "Lists available BinaryInspiral models."
-ListModes::usage = "ListModel[X] lists available (\[ScriptL],m) modes in model X."
+ListModes::usage = "ListModel[X] lists available (\[ScriptL],|m|) modes in model X."
 ForcingTerms::usage = "ForcingTerms[X] generates the forcing functions of the model X. Evaluate it at a given point on parameter space by parsing ics.";
 ForcingTermsModel::usage = "ForcingTermsModel[X] represents the forcing terms/ODE of model X.";
 InitialConditions::usage = "InitialConditions[X] returns the list of parameters in model X that require values to evaluate BinaryInspiral or ForcingTerms.";

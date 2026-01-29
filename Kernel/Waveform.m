@@ -8,14 +8,14 @@
 (*Define usage for public functions*)
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Create Package*)
 
 
 BeginPackage["WaSABI`Waveform`"];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Being Private section*)
 
 
@@ -40,7 +40,7 @@ GetAmplitudes::nomode = "Mode not available";
 GetAmplitudes::notlist = "Input should be a list of strings for each (l,m) mode";
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Get Amplitudes*)
 
 
@@ -70,7 +70,7 @@ WaveformModelExistsQ[model_String] :=
 
 GetAmplitudes[model_, modes_:{}] := GetAmplitudes[model, modes] =
  Module[{filelocation, amps, selectedamps},
-  If[!ListQ[modes],
+  If[!ListQ[Abs[modes]],
     Message[GetAmplitudes::notlist];
     Return[];
   ];

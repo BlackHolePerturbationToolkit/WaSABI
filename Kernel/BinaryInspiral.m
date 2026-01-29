@@ -61,7 +61,7 @@ BinaryInspiralModel::endinsp = "Time `1` exceeds inspiral duration.";
 Begin["`Private`"];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*BinaryInspiral*)
 
 
@@ -94,7 +94,7 @@ BinaryInspiral[ics_, opts:OptionsPattern[]] := Module[{model,prec,acc,stopcon, i
 ];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*BinaryInspiralModel*)
 
 
@@ -167,6 +167,9 @@ BinaryInspiralModel[assoc_]["Waveform"][l_, m_][t:(_?NumericQ|{_?NumericQ..})] :
   \[Phi]p = SelectFirst[params, SymbolName[#] == "\[Phi]"&];
   assoc["Amplitudes"][{l,m}] Exp[-I m \[Phi]p] /. paramvals
 ];
+
+(*Need to update the below symmetry when including off-equatorial models, this easiest for now*)
+BinaryInspiralModel[assoc_]["Waveform"][l_, m_?Negative][t:(_?NumericQ|{_?NumericQ..})]:=(-1)^l Conjugate[BinaryInspiralModel[assoc]["Waveform"][l, -m][t]];
 
 
 (* ::Subsection::Closed:: *)
